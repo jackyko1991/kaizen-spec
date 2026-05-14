@@ -1,0 +1,21 @@
+{
+  "feature": "{{FEATURE_NAME}}",
+  "spec_committed": null,
+  "tasks": [
+    {
+      "id": "task-001",
+      "title": "{{First task title}}",
+      "phase": "impl",
+      "status": "backlog",
+      "agent": null,
+      "wip_column": "backlog",
+      "blocked_reason": null,
+      "started_at": null,
+      "completed_at": null
+    }
+  ],
+  "wip_limits": {
+    "in-progress": 3,
+    "review": 2
+  }
+}

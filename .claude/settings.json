@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /home/jackyko/Projects/kaizen-spec/.claude/commands \\\\ *)"
+    ],
+    "additionalDirectories": [
+      "/home/jackyko/Projects/kaizen-spec/.claude"
+    ]
+  }
+}

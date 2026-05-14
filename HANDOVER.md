@@ -1,6 +1,6 @@
 # kaizen-spec — Design Handover
 
-**Status:** Pre-design discussion. No code written. Continue this conversation inside this repo.
+**Status:** All architecture decisions locked. Ready for implementation. Continue this conversation inside this repo.
 
 ---
 
@@ -17,51 +17,77 @@
 
 ---
 
-## Decisions Made So Far
+## All Decisions — Final
 
-1. **Repo name:** `kaizen-spec` — chosen by user
-2. **Interaction pattern:** All design alignment, brainstorming, and option-presenting MUST use `AskUserQuestion` tool with structured options + a recommendation. This applies both in this design conversation AND inside the generated skill itself.
+### A. Kanban UI Framework
+**Decision:** Plain HTML + Bootstrap 5 (CDN, no build step) + SortableJS for drag-and-drop.
+
+Rationale: lowest token cost for agents writing/patching the board. Bootstrap's pre-built components (cards, badges, `bg-danger`/`bg-warning`) map 1-to-1 to Toyota Kanban visual signals. No bundler, no `node_modules`.
+
+Board lives at `.kaizen/board.html`. Agents patch it surgically.
 
 ---
 
-## Decisions Still Pending (continue here)
+### B. Skill Architecture — 5-Phase Structure
+**Decision:** Confirmed.
 
-Work through these in order using `AskUserQuestion` for each:
+| # | Phase | Description |
+|---|---|---|
+| 1 | Spec Alignment | AskUserQuestion-driven: intention, target output, scope, out-of-scope warnings |
+| 2 | Test Strategy | User chooses test framework; all initial tests must fail first (red), then go green |
+| 3 | Implementation | Subagent-parallelised code writing |
+| 4 | Acceptance | Constrained by passing tests; user notified when manual verification needed |
+| 5 | Docs in Parallel | Doc writing runs alongside phase 3 |
 
-### A. Web-based Kanban Framework
-- Must use existing common frameworks (not raw HTML/JS/CSS)
-- Must be spec-driven and work with the agentic skill loop
-- Toyota Kanban / Kaizen philosophy must inform the board design (WIP limits, pull-not-push, continuous flow, visual management)
-- Options to evaluate: React + shadcn/ui, SvelteKit, Next.js, Nuxt, or a headless board library (e.g. dnd-kit, @hello-pangea/dnd) + Tailwind
+Each phase gates the next.
 
-### B. Skill Architecture / Phase Design
-The skill loop phases (draft, to be confirmed with user):
-1. **Spec Alignment** — AskUserQuestion-driven: intention, target output, scope, out-of-scope warnings, optional questions one at a time with recommendations
-2. **Test Strategy** — Help user choose optimal E2E + integration test framework; ALL initial tests must fail first (red), then implementation drives them green
-3. **Implementation** — Subagent-parallelised code writing
-4. **Acceptance** — Constrained by passing tests (not just unit tests — real-world / E2E). Notify user when manual verification needed.
-5. **Docs in Parallel** — Doc writing runs alongside code writing; framework TBD (options: Docusaurus, VitePress, MkDocs); includes GitHub wiki, CI/CD for doc build/serve, machine + human readable outputs
+---
 
-### C. Test Framework Selection
-- Must support automated E2E (not just unit tests)
-- Must integrate with CI/CD
-- Candidates: Playwright (recommended), Cypress, Vitest + Testing Library, pytest + Playwright (if Python)
+### C. Test Framework
+**Decision:** Playwright as the default recommendation. The Test Strategy phase (phase 2) uses `AskUserQuestion` to let the user choose based on their project stack. The skill never hardcodes a framework.
 
-### D. Kanban Kaizen Design Details
-- WIP limits per column (Toyota: never exceed capacity)
-- Pull-not-push: agents pick up next ticket only when capacity exists
-- Andon cord equivalent: agent flags blockers visually on board
-- Kaizen log: persistent record of process improvements per cycle
-- Live update: kanban reflects real-time agent state (not manual updates)
+Stack-to-framework mapping the skill presents:
+- TypeScript/JS project → Playwright (TS)
+- Python project → pytest + Playwright
+- React-heavy project → Playwright or Cypress (user's choice)
 
-### E. Subagent Orchestration Pattern
-- Based on Superpowers' worktree-per-ticket + Ralph's fresh-context loops
-- State persisted in files (git-tracked), not agent memory
-- Options: OpenSpec slash-command interface vs custom CLAUDE.md hooks vs both
+---
 
-### F. Doc Framework
-- Must cover: GitHub README, GitHub Wiki, CI-built docs site, machine-readable spec outputs
-- Candidates: Docusaurus (recommended), VitePress, MkDocs, or Mintlify
+### D. Kaizen Board Features (Day One)
+**Decision:** Three features ship from day one:
+
+1. **WIP limits per column** — configurable cap per column; exceeding it turns the column header `bg-danger` (red). Agents cannot move cards in if the column is full.
+2. **Andon cord / blocker flag** — agents flag a card as blocked with a red badge + desktop notification. Visual equivalent of Toyota's stop-the-line cord.
+3. **Kaizen log** — append-only syslog-format file at `.kaizen/kaizen.log` (NOT markdown). Example entry:
+   ```
+   2026-05-14T10:23:45Z INFO [kaizen] phase=implementation task=auth-login status=blocked reason="DB timeout"
+   ```
+
+Pull-not-push flow is implied by WIP limits — not a separate feature.
+
+---
+
+### E. Subagent State Coordination
+**Decision:** Files in git only. No shared agent memory.
+
+State directory `.kaizen/`:
+```
+.kaizen/
+  board.html        — live kanban board (Bootstrap)
+  tasks.json        — task list + status + assignments
+  kaizen.log        — syslog-format event log
+  spec.md           — aligned spec from phase 1
+  test-strategy.md  — chosen test framework + plan
+```
+
+Fresh-context agents reconstruct full state from these files alone. Inspired by Ralph.
+
+---
+
+### F. Documentation Framework
+**Decision:** VitePress with both dark and light themes configured. Deployed to GitHub Pages via CI.
+
+Doc scope: GitHub README, VitePress site, machine-readable spec outputs from `.kaizen/spec.md`.
 
 ---
 
@@ -69,7 +95,9 @@ The skill loop phases (draft, to be confirmed with user):
 
 Open this repo in Claude Code and say:
 
-> "Continue the kaizen-spec skill design from HANDOVER.md — pick up from section A (Web-based Kanban Framework) and work through each pending decision using AskUserQuestion."
+> "All decisions are locked in HANDOVER.md. Start implementation planning for kaizen-spec."
+
+Next step: create the implementation plan — file structure, skill entrypoint, phase orchestration logic, board template, and VitePress scaffold.
 
 ---
 
