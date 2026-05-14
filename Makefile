@@ -36,14 +36,17 @@ test: eval ## Alias for eval
 board: ## Serve .kaizen/board.html — auto-finds a free port (override: PORT=9090 make board)
 	@p=$${PORT:-8081}; \
 	while ss -tlnH "sport = :$$p" 2>/dev/null | grep -q .; do p=$$((p + 1)); done; \
-	URL="http://localhost:$$p/board.html"; \
+	LAN=$$(hostname -I 2>/dev/null | awk '{print $$1}'); \
+	HOST=$${LAN:-localhost}; \
 	echo ""; \
-	echo "  Board → $$URL"; \
+	echo "  Board (local)  → http://localhost:$$p/board.html"; \
+	echo "  Board (network)→ http://$$HOST:$$p/board.html"; \
+	echo "  SSH tunnel     → ssh -L $$p:localhost:$$p $$(whoami)@$$HOST"; \
 	echo "  Ctrl-C to stop"; \
 	echo ""; \
-	xdg-open "$$URL" 2>/dev/null || open "$$URL" 2>/dev/null || true; \
+	xdg-open "http://localhost:$$p/board.html" 2>/dev/null || open "http://localhost:$$p/board.html" 2>/dev/null || true; \
 	if command -v python3 >/dev/null 2>&1; then \
-		python3 -m http.server --directory .kaizen $$p; \
+		python3 -m http.server --directory .kaizen --bind 0.0.0.0 $$p; \
 	elif command -v npx >/dev/null 2>&1; then \
 		npx serve .kaizen -p $$p; \
 	else \

@@ -60,6 +60,9 @@ Before starting, check if `.kaizen/` exists in the current repo:
 - If acceptance is logged but docs are missing → resume at Phase 5
 - If nothing exists → start at Phase 1
 
+Also check the current branch. If already on a `kaizen/*` branch, continue on it.
+If resuming Phase 2+ but on the base branch, check out the matching `kaizen/*` branch before proceeding.
+
 Tell the user which phase you are resuming from before proceeding.
 
 ---
@@ -151,11 +154,15 @@ The regression test written in Phase 2 passes. No manual exceptions.
 
 Then run:
 ```bash
+# Create a feature branch — all kaizen work stays off main until acceptance
+git checkout -b kaizen/{feature-slug}
 git add .kaizen/spec.md
 git commit -m "kaizen: spec aligned for {feature name}"
 ```
 
-Tell the user the spec is committed, then proceed to Phase 2.
+The feature slug is the feature name lowercased with spaces replaced by hyphens (e.g. `kaizen/user-auth-endpoint`).
+
+Tell the user: "Branch `kaizen/{feature-slug}` created. Spec committed. Proceeding to Phase 2."
 
 ---
 
@@ -340,19 +347,25 @@ less code means less context for future agents to load — faster, cheaper sessi
 
 → Use the **5S Cleanup Agent** prompt template in `references/agent-prompts.md`.
 
-### Step 4: Log acceptance
+### Step 4: Log acceptance and merge
 
 ```
 {now} INFO [kaizen] phase=acceptance status=done duration={total_seconds}s tests={N}
 ```
 
-Commit:
+Commit the acceptance state, then merge the feature branch back to the base branch:
+
 ```bash
 git add .kaizen/
 git commit -m "kaizen: acceptance passed for {feature name}"
+
+# Merge back — squash if the branch has many small commits, merge-commit otherwise
+BASE=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|.*/||' || echo "main")
+git checkout $BASE
+git merge --no-ff kaizen/{feature-slug} -m "kaizen: merge {feature name} → $BASE"
 ```
 
-Tell the user: "Acceptance complete. All {N} tests pass. 5S cleanup done. Moving to docs."
+Tell the user: "Acceptance complete. All {N} tests pass. 5S cleanup done. Branch merged to `$BASE`. Moving to docs."
 
 ---
 
