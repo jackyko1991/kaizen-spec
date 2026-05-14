@@ -4,7 +4,10 @@ An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agent
 
 **The skill is only done when it can be used to develop itself.**
 
-📖 **[Documentation](https://jackyko1991.github.io/kaizen-spec/)** 
+📖 **[Documentation](https://jackyko1991.github.io/kaizen-spec/)** · 🐙 **[GitHub](https://github.com/jackyko1991/kaizen-spec)** · 📄 **[MIT License](LICENSE)**
+
+![kaizen-spec kanban board](docs/public/board-preview.svg)
+
 ---
 
 ## What it does

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 420" font-family="ui-monospace,SFMono-Regular,Menlo,monospace">
+  <!-- Background -->
+  <rect width="900" height="420" fill="#0d1117" rx="10"/>
+
+  <!-- Navbar -->
+  <rect x="0" y="0" width="900" height="44" fill="#161b22" rx="10"/>
+  <rect x="0" y="34" width="900" height="10" fill="#161b22"/>
+  <!-- Navbar icon -->
+  <circle cx="20" cy="22" r="11" fill="#1a1a2e" stroke="#4a9eff" stroke-width="1.2"/>
+  <text x="20" y="27" font-family="serif" font-size="12" fill="#4a9eff" text-anchor="middle">改</text>
+  <text x="38" y="27" font-size="13" font-weight="bold" fill="#e6edf3">kaizen-spec</text>
+  <text x="145" y="27" font-size="11" fill="#8b949e">Development Board</text>
+  <text x="720" y="27" font-size="10" fill="#8b949e">Updated: 2026-05-14T15:10Z</text>
+  <text x="840" y="27" font-size="11" fill="#8b949e">↻</text>
+  <text x="860" y="27" font-size="11" fill="#8b949e">◐</text>
+
+  <!-- COLUMN: Backlog -->
+  <rect x="12" y="56" width="200" height="350" fill="#161b22" rx="6"/>
+  <rect x="12" y="56" width="200" height="36" fill="#21262d" rx="6"/>
+  <rect x="12" y="80" width="200" height="12" fill="#21262d"/>
+  <text x="24" y="79" font-size="12" font-weight="600" fill="#8b949e">Backlog</text>
+  <text x="28" y="90" font-size="9" fill="#6e7681">待辦</text>
+  <text x="183" y="79" font-size="9" fill="#8b949e" text-anchor="middle">1</text>
+  <rect x="183" y="67" width="16" height="16" fill="#30363d" rx="8"/>
+  <text x="195" y="79" font-size="9" fill="#8b949e">?</text>
+  <!-- Card: compliance logging -->
+  <rect x="20" y="100" width="184" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="28" y="115" font-size="8" fill="#6e7681">task-005</text>
+  <text x="28" y="129" font-size="10" font-weight="600" fill="#e6edf3">Compliance logging</text>
+  <text x="28" y="143" font-size="9" fill="#e6edf3">ISO/IEC standard</text>
+  <text x="28" y="155" font-size="8" fill="#6e7681">spec · Phase 1 Q5</text>
+  <text x="28" y="165" font-size="8" fill="#388bfd">CT: —</text>
+  <text x="72" y="165" font-size="8" fill="#d29922">LT: —</text>
+
+  <!-- COLUMN: In Progress -->
+  <rect x="224" y="56" width="200" height="350" fill="#161b22" rx="6"/>
+  <rect x="224" y="56" width="200" height="36" fill="#1f2d45" rx="6"/>
+  <rect x="224" y="80" width="200" height="12" fill="#1f2d45"/>
+  <text x="236" y="79" font-size="12" font-weight="600" fill="#388bfd">In Progress</text>
+  <text x="240" y="90" font-size="9" fill="#6e7681">在製品</text>
+  <text x="390" y="79" font-size="9" fill="#388bfd" text-anchor="middle">2</text>
+  <rect x="390" y="67" width="16" height="16" fill="#1f2d45" stroke="#388bfd" stroke-width="1" rx="8"/>
+  <text x="407" y="79" font-size="9" fill="#388bfd">?</text>
+  <!-- Card 1 -->
+  <rect x="232" y="100" width="184" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="240" y="115" font-size="8" fill="#6e7681">task-006</text>
+  <text x="240" y="129" font-size="10" font-weight="600" fill="#e6edf3">Branch-per-feature</text>
+  <text x="240" y="143" font-size="9" fill="#e6edf3">git worktree isolation</text>
+  <text x="240" y="155" font-size="8" fill="#6e7681">impl · self-hosting</text>
+  <text x="240" y="165" font-size="8" fill="#388bfd">CT: 12m</text>
+  <text x="284" y="165" font-size="8" fill="#d29922">LT: 18m</text>
+  <!-- Card 2 (BLOCKED) -->
+  <rect x="232" y="180" width="184" height="82" fill="#0d1117" stroke="#f85149" stroke-width="1.5" rx="4"/>
+  <text x="240" y="194" font-size="8" fill="#f85149" font-weight="700">安燈 ⚠ BLOCKED</text>
+  <text x="240" y="207" font-size="8" fill="#6e7681">task-007</text>
+  <text x="240" y="221" font-size="10" font-weight="600" fill="#e6edf3">Executable spec schema</text>
+  <text x="240" y="235" font-size="9" fill="#e6edf3">Poka-Yoke validation</text>
+  <text x="240" y="247" font-size="8" fill="#6e7681">impl · spec-design</text>
+  <text x="240" y="257" font-size="8" fill="#388bfd">CT: 8m</text>
+  <text x="280" y="257" font-size="8" fill="#d29922">LT: 31m</text>
+
+  <!-- COLUMN: Review -->
+  <rect x="436" y="56" width="200" height="350" fill="#161b22" rx="6"/>
+  <rect x="436" y="56" width="200" height="36" fill="#2d2208" rx="6"/>
+  <rect x="436" y="80" width="200" height="12" fill="#2d2208"/>
+  <text x="448" y="79" font-size="12" font-weight="600" fill="#d29922">Review</text>
+  <text x="452" y="90" font-size="9" fill="#6e7681">審査</text>
+  <text x="602" y="79" font-size="9" fill="#d29922" text-anchor="middle">1</text>
+  <rect x="602" y="67" width="16" height="16" fill="#2d2208" stroke="#d29922" stroke-width="1" rx="8"/>
+  <text x="619" y="79" font-size="9" fill="#d29922">?</text>
+  <!-- Card -->
+  <rect x="444" y="100" width="184" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="452" y="115" font-size="8" fill="#6e7681">task-003</text>
+  <text x="452" y="129" font-size="10" font-weight="600" fill="#e6edf3">Philosophy rewrite</text>
+  <text x="452" y="143" font-size="9" fill="#e6edf3">TPS → software mapping</text>
+  <text x="452" y="155" font-size="8" fill="#6e7681">impl · README</text>
+  <text x="452" y="165" font-size="8" fill="#388bfd">CT: 3m</text>
+  <text x="488" y="165" font-size="8" fill="#d29922">LT: 4m</text>
+
+  <!-- COLUMN: Done -->
+  <rect x="648" y="56" width="240" height="350" fill="#161b22" rx="6"/>
+  <rect x="648" y="56" width="240" height="36" fill="#0d2818" rx="6"/>
+  <rect x="648" y="80" width="240" height="12" fill="#0d2818"/>
+  <text x="660" y="79" font-size="12" font-weight="600" fill="#3fb950">Done</text>
+  <text x="664" y="90" font-size="9" fill="#6e7681">完了</text>
+  <text x="860" y="79" font-size="9" fill="#3fb950" text-anchor="middle">3</text>
+  <rect x="857" y="67" width="16" height="16" fill="#0d2818" stroke="#3fb950" stroke-width="1" rx="8"/>
+  <text x="875" y="79" font-size="9" fill="#3fb950">?</text>
+  <!-- Card 1 -->
+  <rect x="656" y="100" width="224" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="664" y="115" font-size="8" fill="#6e7681">task-001</text>
+  <text x="664" y="129" font-size="10" font-weight="600" fill="#e6edf3">CLAUDE.md + Makefile</text>
+  <text x="664" y="143" font-size="9" fill="#e6edf3">Self-hosting loop</text>
+  <text x="664" y="155" font-size="8" fill="#6e7681">impl · self-hosting</text>
+  <text x="664" y="165" font-size="8" fill="#388bfd">CT: 5m</text>
+  <text x="700" y="165" font-size="8" fill="#d29922">LT: 6m</text>
+  <!-- Card 2 -->
+  <rect x="656" y="180" width="224" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="664" y="195" font-size="8" fill="#6e7681">task-002</text>
+  <text x="664" y="209" font-size="10" font-weight="600" fill="#e6edf3">curl install script</text>
+  <text x="664" y="223" font-size="9" fill="#e6edf3">One-command onboarding</text>
+  <text x="664" y="235" font-size="8" fill="#6e7681">impl · curl install</text>
+  <text x="664" y="245" font-size="8" fill="#388bfd">CT: 4m</text>
+  <text x="700" y="245" font-size="8" fill="#d29922">LT: 5m</text>
+  <!-- Card 3 -->
+  <rect x="656" y="260" width="224" height="72" fill="#0d1117" stroke="#30363d" stroke-width="1" rx="4"/>
+  <text x="664" y="275" font-size="8" fill="#6e7681">task-004</text>
+  <text x="664" y="289" font-size="10" font-weight="600" fill="#e6edf3">Live kanban board</text>
+  <text x="664" y="303" font-size="9" fill="#e6edf3">WIP limits · CT · LT · Andon</text>
+  <text x="664" y="315" font-size="8" fill="#6e7681">impl · board</text>
+  <text x="664" y="325" font-size="8" fill="#388bfd">CT: 26m</text>
+  <text x="706" y="325" font-size="8" fill="#d29922">LT: 26m</text>
+</svg>
