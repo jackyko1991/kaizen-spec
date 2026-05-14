@@ -9,17 +9,39 @@ An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agent
 
 ## What it does
 
-`/kaizen-spec` enforces a five-phase workflow before any code is written:
+`/kaizen-spec` enforces a gated workflow — no code before spec is committed, no acceptance before all tests pass:
 
-| Phase | What happens |
-|---|---|
-| 1. Spec Alignment | Structured questions lock in intent, scope, and out-of-scope boundaries |
-| 2. Test Strategy | You choose a test framework; failing tests are written first (red) |
-| 3. Implementation | Subagents work in parallel; a live kanban board tracks their progress |
-| 4. Acceptance | All tests must pass before the skill declares done |
-| 5. Docs in Parallel | VitePress doc page written alongside the code |
+```mermaid
+flowchart LR
+    S([Start]) --> P1
 
-State is persisted in `.kaizen/` (git-tracked) so fresh-context agents can resume at any point.
+    P1["🗒 1. Spec Alignment\nLock intent, scope,\nout-of-scope boundaries"]
+    P2["🔴 2. Test Strategy\nWrite failing tests first\nConfirm all red"]
+    P3["⚙️ 3. Implementation\nParallel subagents\nLive kanban board"]
+    P4["✅ 4. Acceptance\nAll tests green\n5S cleanup"]
+    P5["📄 5. Docs\nVitePress page\n(parallel with 3)"]
+    E([Done])
+
+    P1 --> P2 --> P3 --> P4 --> E
+    P3 -.->|parallel| P5
+    P5 -.-> E
+
+    classDef spec    fill:#b8d4e8,stroke:#7aaec8,color:#1a3a4a
+    classDef test    fill:#c5dfc5,stroke:#7aad7a,color:#1a3a1a
+    classDef impl    fill:#f5d4a0,stroke:#d4a054,color:#3a2a0a
+    classDef accept  fill:#f0bec8,stroke:#c87890,color:#3a0a18
+    classDef docs    fill:#d4c4e8,stroke:#9878c8,color:#1e0a3a
+    classDef cap     fill:#f5f0e8,stroke:#b0a890,color:#3a3228
+
+    class P1 spec
+    class P2 test
+    class P3 impl
+    class P4 accept
+    class P5 docs
+    class S,E cap
+```
+
+State is persisted in `.kaizen/` (git-tracked) so fresh-context agents can resume at any phase.
 
 ---
 
