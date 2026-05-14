@@ -1,7 +1,6 @@
 #!/usr/bin/env /tmp/bats-install/bin/bats
 # kaizen-spec self-hosting acceptance tests
 # Framework: bats-core (installed locally at /tmp/bats-install/bin/bats)
-# Run: /tmp/bats-install/bin/bats tests/test_selfhost.bats
 #
 # ALL tests are expected to FAIL before implementation is complete.
 
@@ -47,9 +46,7 @@ REPO_ROOT="/home/jackyko/Projects/kaizen-spec"
   # We allow up to 30 s for network-based installs.
   INSTALL_DIR="$tmp_dir" bash "$REPO_ROOT/install.sh" >/dev/null 2>&1
   local result=$?
-  # Check that the installed file exists at the expected path.
   local installed_file
-  # install.sh should place the skill at $INSTALL_DIR/.claude/commands/kaizen-spec.md
   installed_file="$tmp_dir/.claude/commands/kaizen-spec.md"
   [ -f "$installed_file" ]
   rm -rf "$tmp_dir"

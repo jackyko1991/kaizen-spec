@@ -4,24 +4,21 @@ set -e
 
 SKILL_URL="https://raw.githubusercontent.com/jackyko1991/kaizen-spec/main/.claude/commands/kaizen-spec.md"
 
-# Resolve install directory
 if [ -n "$INSTALL_DIR" ]; then
   TARGET_DIR="$INSTALL_DIR/.claude/commands"
 else
   TARGET_DIR="$HOME/.claude/commands"
 fi
 
-# Create directory if needed
 mkdir -p "$TARGET_DIR"
 
 DEST="$TARGET_DIR/kaizen-spec.md"
 
-# Determine the directory this script lives in, to allow local installs
+# Prefer local copy so cloned-repo installs never need network
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 LOCAL_SKILL="$SCRIPT_DIR/.claude/commands/kaizen-spec.md"
 
 if [ -f "$LOCAL_SKILL" ]; then
-  # Local copy found (e.g. running from a cloned repo) — use it directly
   cp "$LOCAL_SKILL" "$DEST"
 elif command -v curl >/dev/null 2>&1; then
   curl -fsSL "$SKILL_URL" -o "$DEST"
