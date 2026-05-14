@@ -29,6 +29,10 @@
     .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
     .col-help { font-size: .7rem; color: var(--bs-secondary-color); cursor: help; border: 1px solid var(--bs-border-color); border-radius: 50%; width: 1.1rem; height: 1.1rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .col-help:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
+    .test-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 5px; vertical-align: middle; flex-shrink: 0; }
+    .test-passing { background: #56d364; box-shadow: 0 0 3px #56d36488; }
+    .test-failing  { background: #f85149; box-shadow: 0 0 3px #f8514988; }
+    .test-pending  { background: #e3b341; box-shadow: 0 0 3px #e3b34188; }
     /* Column-tinted tooltips */
     .tooltip-backlog    .tooltip-inner { background: #21262d; color: #8b949e; border: 1px solid #30363d; }
     .tooltip-backlog    .tooltip-arrow::before { border-right-color: #21262d; }
@@ -53,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T16:06:57Z</span>
+    <span id="last-updated">Updated: 2026-05-14T16:13:17Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -119,7 +123,7 @@
            data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T18:15:00Z" data-completed-at="2026-05-14T18:25:00Z">
         <div class="card-id">task-017</div>
         <div class="fw-semibold">Regression tests for hook live-update fix</div>
-        <div class="text-secondary card-phase">test</div>
+        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
@@ -141,7 +145,7 @@
            data-created-at="2026-05-14T17:35:00Z" data-started-at="2026-05-14T17:35:00Z" data-completed-at="2026-05-14T17:45:00Z">
         <div class="card-id">task-015</div>
         <div class="fw-semibold">Install: curl-only, no git clone</div>
-        <div class="text-secondary card-phase">fix</div>
+        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
@@ -152,7 +156,7 @@
            data-created-at="2026-05-14T17:25:00Z" data-started-at="2026-05-14T17:25:00Z" data-completed-at="2026-05-14T17:35:00Z">
         <div class="card-id">task-014</div>
         <div class="fw-semibold">Board card on spec commit (Phase 1 immediate)</div>
-        <div class="text-secondary card-phase">fix</div>
+        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
@@ -163,7 +167,7 @@
            data-created-at="2026-05-14T17:10:00Z" data-started-at="2026-05-14T17:10:00Z" data-completed-at="2026-05-14T17:25:00Z">
         <div class="card-id">task-013</div>
         <div class="fw-semibold">Done column rolling archive (done_visible_max=10)</div>
-        <div class="text-secondary card-phase">feat</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
@@ -174,7 +178,7 @@
            data-created-at="2026-05-14T16:35:00Z" data-started-at="2026-05-14T16:35:00Z" data-completed-at="2026-05-14T17:10:00Z">
         <div class="card-id">task-012</div>
         <div class="fw-semibold">render_board.py — tasks.json single source of truth</div>
-        <div class="text-secondary card-phase">feat</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 35m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
@@ -185,7 +189,7 @@
            data-created-at="2026-05-14T16:34:00Z" data-started-at="2026-05-14T16:34:00Z" data-completed-at="2026-05-14T16:35:00Z">
         <div class="card-id">task-011</div>
         <div class="fw-semibold">GitHub Pages docs site regression test (Playwright)</div>
-        <div class="text-secondary card-phase">test</div>
+        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 1m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 1m</span>
@@ -196,7 +200,7 @@
            data-created-at="2026-05-14T16:30:00Z" data-started-at="2026-05-14T16:30:00Z" data-completed-at="2026-05-14T16:33:08Z">
         <div class="card-id">task-010</div>
         <div class="fw-semibold">Playwright regression tests for kanban board (14 tests)</div>
-        <div class="text-secondary card-phase">test</div>
+        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 3m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
@@ -218,7 +222,7 @@
            data-created-at="2026-05-14T16:15:00Z" data-started-at="2026-05-14T16:15:00Z" data-completed-at="2026-05-14T16:20:00Z">
         <div class="card-id">task-008</div>
         <div class="fw-semibold">GitHub Pages fix: master branch trigger + base URL</div>
-        <div class="text-secondary card-phase">fix</div>
+        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 5m</span>

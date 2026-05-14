@@ -40,17 +40,30 @@ def sort_key(task):
     )
 
 
+_TEST_DOT_CLASS = {'passing': 'test-passing', 'failing': 'test-failing', 'pending': 'test-pending'}
+_TEST_DOT_LABEL = {'passing': 'Tests passing', 'failing': 'Tests failing', 'pending': 'Tests pending'}
+
+
+def render_test_dot(test_status):
+    cls = _TEST_DOT_CLASS.get(test_status or '')
+    if not cls:
+        return ''
+    label = _TEST_DOT_LABEL[test_status]
+    return f'<span class="test-dot {cls}" title="{label}"></span>'
+
+
 def render_card(task):
-    task_id   = escape(task['id'])
-    title     = escape(task.get('title', ''))
-    phase     = escape(task.get('phase', ''))
-    desc      = escape(task.get('description', ''))
-    blocked   = 'true' if task.get('status') == 'blocked' or task.get('blocked_reason') else 'false'
-    created   = task.get('created_at', '') or ''
-    started   = task.get('started_at', '') or ''
-    completed = task.get('completed_at', '') or ''
-    ct        = fmt_duration(task.get('cycle_time_s'))
-    lt        = fmt_duration(task.get('lead_time_s'))
+    task_id     = escape(task['id'])
+    title       = escape(task.get('title', ''))
+    phase       = escape(task.get('phase', ''))
+    desc        = escape(task.get('description', ''))
+    blocked     = 'true' if task.get('status') == 'blocked' or task.get('blocked_reason') else 'false'
+    created     = task.get('created_at', '') or ''
+    started     = task.get('started_at', '') or ''
+    completed   = task.get('completed_at', '') or ''
+    ct          = fmt_duration(task.get('cycle_time_s'))
+    lt          = fmt_duration(task.get('lead_time_s'))
+    test_dot    = render_test_dot(task.get('test_status'))
 
     return (
         f'      <div class="kaizen-card" data-task-id="{task_id}" data-blocked="{blocked}"\n'
@@ -58,7 +71,7 @@ def render_card(task):
         f'           data-created-at="{created}" data-started-at="{started}" data-completed-at="{completed}">\n'
         f'        <div class="card-id">{task_id}</div>\n'
         f'        <div class="fw-semibold">{title}</div>\n'
-        f'        <div class="text-secondary card-phase">{phase}</div>\n'
+        f'        <div class="text-secondary card-phase">{phase}{test_dot}</div>\n'
         f'        <div class="card-times">\n'
         f'          <span class="ct" title="Cycle Time 週期時間">CT: {ct}</span>\n'
         f'          <span class="lt" title="Lead Time 交付周期">LT: {lt}</span>\n'

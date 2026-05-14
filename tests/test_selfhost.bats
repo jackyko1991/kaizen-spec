@@ -284,14 +284,54 @@ PYEOF
   [ "$before" = "$after" ]
 }
 
-@test "l4: settings.json hooks include Write and Edit matchers (not Agent-only)" {
+@test "l4: settings.json hooks include Write, Edit, and Bash matchers (not Agent-only)" {
   local settings="$REPO_ROOT/.claude/settings.json"
-  # Both Write and Edit must appear as matchers
   grep -q '"matcher": "Write"' "$settings"
   grep -q '"matcher": "Edit"' "$settings"
+  grep -q '"matcher": "Bash"' "$settings"
 }
 
 @test "l5: hook script calls render_board.py (not just sed)" {
   grep -q "render_board.py" "$REPO_ROOT/.claude/hooks/update-board.sh"
   ! grep -q 'sed -i.*Updated' "$REPO_ROOT/.claude/hooks/update-board.sh"
+}
+
+# ---------------------------------------------------------------------------
+# m) Test status dots on kanban cards (task-018)
+# ---------------------------------------------------------------------------
+
+@test "m1: render_board.py renders test-passing dot for passing tasks" {
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$REPO_ROOT/.kaizen/tasks.json" \
+    --out /tmp/board-test-dots.html
+  grep -q 'class="test-dot test-passing"' /tmp/board-test-dots.html
+  rm -f /tmp/board-test-dots.html
+}
+
+@test "m2: render_board.py does NOT render a dot for tasks with test_status=none" {
+  # Create a minimal tasks.json with one task having test_status=none
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "dot-test",
+  "tasks": [
+    {"id":"t-none","title":"No dot","phase":"feat","wip_column":"backlog",
+     "status":"backlog","test_status":"none",
+     "created_at":"2026-01-01T00:00:00Z","started_at":null,"completed_at":null}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-test-nodot.html
+  ! grep -q 'class="test-dot' /tmp/board-test-nodot.html
+  rm -f "$tmp_tasks" /tmp/board-test-nodot.html
+}
+
+@test "m3: templates/board.html defines CSS for test-passing, test-failing, test-pending" {
+  grep -q '\.test-passing' "$REPO_ROOT/templates/board.html"
+  grep -q '\.test-failing'  "$REPO_ROOT/templates/board.html"
+  grep -q '\.test-pending'  "$REPO_ROOT/templates/board.html"
 }
