@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>kaizen-spec board — Self-Hosting & Developer Experience</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+  <style>
+    body { background: var(--bs-body-bg); }
+    .board { display: flex; gap: 1rem; padding: 1rem; min-height: calc(100vh - 80px); align-items: flex-start; }
+    .column { flex: 1; min-width: 220px; }
+    .column-header { padding: .5rem .75rem; border-radius: .375rem .375rem 0 0; font-weight: 600; font-size: .85rem; display: flex; justify-content: space-between; align-items: center; }
+    .column-body { background: var(--bs-secondary-bg); border-radius: 0 0 .375rem .375rem; min-height: 300px; padding: .5rem; }
+    .wip-exceeded .column-header { background-color: var(--bs-danger) !important; color: white !important; }
+    .kaizen-card { background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: .375rem; padding: .6rem .75rem; margin-bottom: .5rem; cursor: grab; font-size: .875rem; position: relative; }
+    .kaizen-card:active { cursor: grabbing; }
+    .kaizen-card[data-blocked="true"] { border-color: var(--bs-danger); }
+    .kaizen-card[data-blocked="true"]::before { content: "安燈 ⚠ BLOCKED"; font-size: .7rem; color: var(--bs-danger); font-weight: 700; display: block; margin-bottom: .25rem; }
+    .card-id { font-size: .7rem; color: var(--bs-secondary-color); font-family: monospace; }
+    .card-phase { font-size: .7rem; }
+    .card-times { font-size: .68rem; color: var(--bs-secondary-color); margin-top: .25rem; display: flex; gap: .5rem; flex-wrap: wrap; }
+    .card-times .ct { color: var(--bs-info-text-emphasis); }
+    .card-times .lt { color: var(--bs-warning-text-emphasis); }
+    .wip-badge { font-size: .7rem; }
+    .theme-toggle { cursor: pointer; }
+    #last-updated { font-size: .75rem; color: var(--bs-secondary-color); }
+    .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg bg-body-secondary px-3">
+  <span class="navbar-brand fw-bold">kaizen-spec</span>
+  <span class="ms-2 text-secondary">Self-Hosting &amp; Developer Experience</span>
+  <div class="ms-auto d-flex align-items-center gap-3">
+    <span id="last-updated">Updated: 2026-05-14T14:44:00Z</span>
+    <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
+  </div>
+</nav>
+
+<div class="board" id="board">
+
+  <!-- BACKLOG 待辦 -->
+  <div class="column" id="col-backlog">
+    <div class="column-header bg-secondary-subtle text-secondary-emphasis">
+      <span>Backlog <span class="col-label-jp">待辦</span></span>
+      <span class="badge bg-secondary wip-badge" id="count-backlog">0</span>
+    </div>
+    <div class="column-body" data-status="backlog" data-wip-limit="0" id="body-backlog">
+
+      <div class="kaizen-card" data-task-id="task-004" data-blocked="false"
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="" data-completed-at="">
+        <div class="card-id">task-004</div>
+        <div class="fw-semibold">Seed board for this repo's backlog</div>
+        <div class="text-secondary card-phase">impl · depends: task-001</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+          <span class="lt" title="Lead Time 交付周期">LT: —</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- IN PROGRESS 在製品 -->
+  <div class="column" id="col-in-progress">
+    <div class="column-header bg-primary-subtle text-primary-emphasis" id="header-in-progress">
+      <span>In Progress <span class="col-label-jp">在製品</span></span>
+      <span class="badge bg-primary wip-badge" id="count-in-progress">0</span>
+    </div>
+    <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
+
+      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="">
+        <div class="card-id">task-001</div>
+        <div class="fw-semibold">CLAUDE.md + Makefile eval target</div>
+        <div class="text-secondary card-phase">impl · self-hosting loop</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+          <span class="lt" title="Lead Time 交付周期">LT: —</span>
+        </div>
+      </div>
+
+      <div class="kaizen-card" data-task-id="task-002" data-blocked="false"
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="">
+        <div class="card-id">task-002</div>
+        <div class="fw-semibold">install.sh + docs update</div>
+        <div class="text-secondary card-phase">impl · curl install</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+          <span class="lt" title="Lead Time 交付周期">LT: —</span>
+        </div>
+      </div>
+
+      <div class="kaizen-card" data-task-id="task-003" data-blocked="false"
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="">
+        <div class="card-id">task-003</div>
+        <div class="fw-semibold">Philosophy rewrite (TPS mapping)</div>
+        <div class="text-secondary card-phase">impl · README</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+          <span class="lt" title="Lead Time 交付周期">LT: —</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- REVIEW 審査 -->
+  <div class="column" id="col-review">
+    <div class="column-header bg-warning-subtle text-warning-emphasis" id="header-review">
+      <span>Review <span class="col-label-jp">審査</span></span>
+      <span class="badge bg-warning text-dark wip-badge" id="count-review">0</span>
+    </div>
+    <div class="column-body" data-status="review" data-wip-limit="2" id="body-review">
+      <!-- cards injected here -->
+    </div>
+  </div>
+
+  <!-- DONE 完了 -->
+  <div class="column" id="col-done">
+    <div class="column-header bg-success-subtle text-success-emphasis">
+      <span>Done <span class="col-label-jp">完了</span></span>
+      <span class="badge bg-success wip-badge" id="count-done">0</span>
+    </div>
+    <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <!-- cards injected here -->
+    </div>
+  </div>
+
+</div>
+
+<!-- WIP exceeded toast -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="wipToast" class="toast align-items-center text-bg-danger border-0" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="wipToastMsg">WIP limit reached.</div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script>
+  function toggleTheme() {
+    const html = document.documentElement;
+    html.setAttribute('data-bs-theme', html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
+    localStorage.setItem('kaizen-theme', html.getAttribute('data-bs-theme'));
+  }
+  (function() {
+    const saved = localStorage.getItem('kaizen-theme');
+    if (saved) document.documentElement.setAttribute('data-bs-theme', saved);
+  })();
+
+  const COLUMN_HEADERS = {
+    'in-progress': document.getElementById('header-in-progress'),
+    'review':      document.getElementById('header-review'),
+  };
+
+  function updateCounts() {
+    ['backlog','in-progress','review','done'].forEach(status => {
+      const body = document.getElementById('body-' + status);
+      const count = body ? body.querySelectorAll('.kaizen-card').length : 0;
+      const badge = document.getElementById('count-' + status);
+      if (badge) badge.textContent = count;
+
+      const limit = body ? parseInt(body.dataset.wipLimit, 10) : 0;
+      const header = COLUMN_HEADERS[status];
+      if (header && limit > 0) {
+        if (count >= limit) {
+          header.classList.add('bg-danger', 'text-white');
+          header.classList.remove('bg-primary-subtle','text-primary-emphasis','bg-warning-subtle','text-warning-emphasis');
+        } else {
+          if (status === 'in-progress') {
+            header.classList.add('bg-primary-subtle','text-primary-emphasis');
+            header.classList.remove('bg-danger','text-white');
+          } else if (status === 'review') {
+            header.classList.add('bg-warning-subtle','text-warning-emphasis');
+            header.classList.remove('bg-danger','text-white');
+          }
+        }
+      }
+    });
+  }
+
+  function showWipToast(colName, limit) {
+    document.getElementById('wipToastMsg').textContent =
+      `WIP limit (${limit}) reached for "${colName}". Finish a task first.`;
+    new bootstrap.Toast(document.getElementById('wipToast'), { delay: 4000 }).show();
+  }
+
+  document.querySelectorAll('.column-body').forEach(col => {
+    Sortable.create(col, {
+      group: 'kaizen',
+      animation: 150,
+      ghostClass: 'opacity-50',
+      onEnd(evt) {
+        const toCol = evt.to;
+        const limit = parseInt(toCol.dataset.wipLimit, 10);
+        const count = toCol.querySelectorAll('.kaizen-card').length;
+        if (limit > 0 && count > limit) {
+          evt.from.insertBefore(evt.item, evt.from.children[evt.oldIndex] || null);
+          showWipToast(toCol.closest('.column').querySelector('.column-header span').textContent.trim(), limit);
+        }
+        updateCounts();
+      }
+    });
+  });
+
+  updateCounts();
+
+  function fmtDuration(ms) {
+    if (!ms || ms < 0) return '—';
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s + 's';
+    if (s < 3600) return Math.round(s / 60) + 'm';
+    return (s / 3600).toFixed(1) + 'h';
+  }
+
+  function updateTimings() {
+    document.querySelectorAll('.kaizen-card').forEach(card => {
+      const created = card.dataset.createdAt;
+      const started = card.dataset.startedAt;
+      const completed = card.dataset.completedAt;
+      const ctEl = card.querySelector('.ct');
+      const ltEl = card.querySelector('.lt');
+      if (!ctEl || !ltEl) return;
+      const now = Date.now();
+      const createdMs = created ? new Date(created).getTime() : null;
+      const startedMs = started ? new Date(started).getTime() : null;
+      const completedMs = completed ? new Date(completed).getTime() : null;
+      if (startedMs) {
+        ctEl.textContent = 'CT: ' + fmtDuration((completedMs || now) - startedMs);
+      }
+      if (createdMs) {
+        ltEl.textContent = 'LT: ' + fmtDuration((completedMs || now) - createdMs);
+      }
+    });
+  }
+
+  updateTimings();
+  setInterval(() => { location.reload(); }, 5000);
+</script>
+</body>
+</html>

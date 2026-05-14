@@ -1,11 +1,24 @@
 {
   "permissions": {
     "allow": [
-      "Bash(mkdir -p /home/jackyko/Projects/kaizen-spec/.claude/commands \\\\ *)",
+      "Bash(mkdir -p /home/jackyko/Projects/kaizen-spec/.claude/commands \\ *)",
       "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "additionalDirectories": [
       "/home/jackyko/Projects/kaizen-spec/.claude"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Agent",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/jackyko/Projects/kaizen-spec/.claude/hooks/update-board.sh"
+          }
+        ]
+      }
     ]
   }
 }

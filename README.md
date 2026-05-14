@@ -4,6 +4,8 @@ An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agent
 
 **The skill is only done when it can be used to develop itself.**
 
+📖 **[Documentation](https://jackyko1991.github.io/kaizen-spec/)** · 🐙 **[GitHub](https://github.com/jackyko1991/kaizen-spec)** · 📄 **[MIT License](LICENSE)**
+
 ---
 
 ## What it does
@@ -60,10 +62,16 @@ Or visit the GitHub Pages site once deployed.
 
 ## Philosophy
 
-- **Toyota Kanban**: WIP limits, pull-not-push, visual management, Andon cord for blockers
-- **Kaizen**: Continuous improvement — every run logs cycle times and blockers to `kaizen.log`
-- **Ralph-style continuity**: State in files, not agent memory — agents restart cleanly
-- **OpenSpec alignment**: No code before the spec is committed and agreed
+kaizen-spec is grounded in the Toyota Production System (TPS) as translated to software by Mary and Tom Poppendieck in *Lean Software Development*.
+
+- **Muda (無駄) → Unshipped code is waste.** In TPS, inventory piling up on the factory floor is the canonical waste. In software, it is code written but not deployed — accruing maintenance cost and obsolescence risk.
+- **Just-in-Time (JIT) → CI/CD.** Features are developed only when pulled by demand, and immediately enter the pipeline for validation. Push-based big-batch releases are the software equivalent of overproduction.
+- **Jidoka (自働化) → TDD.** When code breaks an existing feature, the test suite pulls the Andon cord and stops the line — exactly as a Toyota worker stops the assembly line on detecting a defect. Defects never reach production.
+- **Poka-Yoke (防呆) → Static typing, linting, schema validation.** Errors are made impossible at the moment of writing, not caught at runtime.
+- **Kaizen → Spec Kaizen.** When agent-generated tests fail, the failure feeds back into the spec. The spec itself improves — not just the code.
+- **One-piece flow → Atomic Specs.** One agent, one task, one responsibility. Small atomic specs maximise agent accuracy and shorten Cycle Time.
+- **Decide late → Lean Spec.** Avoid big-upfront design. Define only what the next task needs (Just-in-Time Spec); keep the rest as high-level interface definitions until tests and data demand specifics.
+- **State in files, not memory → Fresh-context continuity.** Agents restart; files don't. Everything important is written to `.kaizen/` so any fresh agent can resume without asking the user to re-explain context.
 
 ## License
 
