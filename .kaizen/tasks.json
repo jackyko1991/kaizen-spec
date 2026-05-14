@@ -51,14 +51,16 @@
       "id": "task-004",
       "title": "Seed .kaizen/board.html for this repo's backlog",
       "phase": "impl",
-      "status": "backlog",
-      "agent": null,
-      "wip_column": "backlog",
+      "status": "done",
+      "agent": "orchestrator",
+      "wip_column": "done",
       "depends_on": ["task-001"],
       "blocked_reason": null,
       "created_at": "2026-05-14T14:43:59Z",
-      "started_at": null,
-      "completed_at": null
+      "started_at": "2026-05-14T14:44:00Z",
+      "completed_at": "2026-05-14T15:10:00Z",
+      "cycle_time_s": 1560,
+      "lead_time_s": 1561
     }
   ],
   "wip_limits": {
