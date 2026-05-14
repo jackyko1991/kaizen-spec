@@ -16,7 +16,8 @@
       "completed_at": "2026-05-14T14:49:30Z",
       "description": "Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion.",
       "cycle_time_s": 300,
-      "lead_time_s": 331
+      "lead_time_s": 331,
+      "test_status": "passing"
     },
     {
       "id": "task-002",
@@ -32,7 +33,8 @@
       "completed_at": "2026-05-14T14:48:30Z",
       "description": "Wrote install.sh (curl/wget, INSTALL_DIR override, chmod +x). Promoted curl one-liner as Option A in getting-started.md, demoting git clone to Option B.",
       "cycle_time_s": 240,
-      "lead_time_s": 271
+      "lead_time_s": 271,
+      "test_status": "passing"
     },
     {
       "id": "task-003",
@@ -46,9 +48,10 @@
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:30Z",
       "completed_at": "2026-05-14T14:47:50Z",
-      "description": "Replaced 'Ralph-style continuity' jargon with a TPS→software mapping table: Muda→unshipped code, JIT→CI/CD, Jidoka→TDD, Poka-Yoke→typing/linting, Kaizen→Spec Kaizen, One-piece flow→Atomic Specs.",
+      "description": "Replaced 'Ralph-style continuity' jargon with a TPS\u2192software mapping table: Muda\u2192unshipped code, JIT\u2192CI/CD, Jidoka\u2192TDD, Poka-Yoke\u2192typing/linting, Kaizen\u2192Spec Kaizen, One-piece flow\u2192Atomic Specs.",
       "cycle_time_s": 200,
-      "lead_time_s": 231
+      "lead_time_s": 231,
+      "test_status": "none"
     },
     {
       "id": "task-004",
@@ -57,14 +60,17 @@
       "status": "done",
       "agent": "orchestrator",
       "wip_column": "done",
-      "depends_on": ["task-001"],
+      "depends_on": [
+        "task-001"
+      ],
       "blocked_reason": null,
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:00Z",
       "completed_at": "2026-05-14T15:10:00Z",
       "description": "Bootstrapped .kaizen/board.html (dark, Bootstrap 5, SortableJS, WIP limits, CT/LT timers, 5s auto-reload) and tasks.json as the persistent development kanban for this repo.",
       "cycle_time_s": 1560,
-      "lead_time_s": 1561
+      "lead_time_s": 1561,
+      "test_status": "none"
     },
     {
       "id": "task-005",
@@ -80,7 +86,8 @@
       "completed_at": "2026-05-14T15:30:00Z",
       "description": "Fixed make board: auto port-finding via ss loop (default 8081), --directory flag so python serves .kaizen/ not repo root, dark theme default, network IP + SSH tunnel instructions.",
       "cycle_time_s": 1200,
-      "lead_time_s": 1200
+      "lead_time_s": 1200,
+      "test_status": "none"
     },
     {
       "id": "task-006",
@@ -96,7 +103,8 @@
       "completed_at": "2026-05-14T15:45:00Z",
       "description": "Updated skill Phase 1 to create kaizen/{feature-slug} branch before any commits; Phase 4 acceptance merges back to base with --no-ff. Resume logic checks current branch.",
       "cycle_time_s": 900,
-      "lead_time_s": 900
+      "lead_time_s": 900,
+      "test_status": "none"
     },
     {
       "id": "task-007",
@@ -110,9 +118,10 @@
       "created_at": "2026-05-14T15:45:00Z",
       "started_at": "2026-05-14T15:45:00Z",
       "completed_at": "2026-05-14T16:15:00Z",
-      "description": "Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (改), navbar 改 icon, manual ↻ refresh button.",
+      "description": "Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (\u6539), navbar \u6539 icon, manual \u21bb refresh button.",
       "cycle_time_s": 1800,
-      "lead_time_s": 1800
+      "lead_time_s": 1800,
+      "test_status": "passing"
     },
     {
       "id": "task-008",
@@ -126,9 +135,10 @@
       "created_at": "2026-05-14T16:15:00Z",
       "started_at": "2026-05-14T16:15:00Z",
       "completed_at": "2026-05-14T16:20:00Z",
-      "description": "Fixed GitHub Pages: docs.yml trigger changed from main→master (repo uses master). Added base: '/kaizen-spec/' to VitePress config so assets resolve correctly on gh-pages subdirectory.",
+      "description": "Fixed GitHub Pages: docs.yml trigger changed from main\u2192master (repo uses master). Added base: '/kaizen-spec/' to VitePress config so assets resolve correctly on gh-pages subdirectory.",
       "cycle_time_s": 300,
-      "lead_time_s": 300
+      "lead_time_s": 300,
+      "test_status": "passing"
     },
     {
       "id": "task-009",
@@ -142,9 +152,10 @@
       "created_at": "2026-05-14T16:20:00Z",
       "started_at": "2026-05-14T16:20:00Z",
       "completed_at": "2026-05-14T16:30:00Z",
-      "description": "Created board-preview.svg (dark-theme mock with all four columns, blocked Andon card, CT/LT badges, 改 navbar icon) and added it to README as the above-the-fold banner image.",
+      "description": "Created board-preview.svg (dark-theme mock with all four columns, blocked Andon card, CT/LT badges, \u6539 navbar icon) and added it to README as the above-the-fold banner image.",
       "cycle_time_s": 600,
-      "lead_time_s": 600
+      "lead_time_s": 600,
+      "test_status": "none"
     },
     {
       "id": "task-010",
@@ -160,7 +171,8 @@
       "started_at": "2026-05-14T16:30:00Z",
       "completed_at": "2026-05-14T16:33:08Z",
       "cycle_time_s": 188,
-      "lead_time_s": 188
+      "lead_time_s": 188,
+      "test_status": "passing"
     },
     {
       "id": "task-011",
@@ -169,18 +181,21 @@
       "status": "done",
       "agent": "orchestrator",
       "wip_column": "done",
-      "depends_on": ["task-010"],
+      "depends_on": [
+        "task-010"
+      ],
       "blocked_reason": null,
       "description": "Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible.",
       "created_at": "2026-05-14T16:34:00Z",
       "started_at": "2026-05-14T16:34:00Z",
       "completed_at": "2026-05-14T16:35:00Z",
       "cycle_time_s": 60,
-      "lead_time_s": 60
+      "lead_time_s": 60,
+      "test_status": "passing"
     },
     {
       "id": "task-012",
-      "title": "render_board.py — tasks.json single source of truth",
+      "title": "render_board.py \u2014 tasks.json single source of truth",
       "phase": "feat",
       "status": "done",
       "wip_column": "done",
@@ -192,7 +207,8 @@
       "started_at": "2026-05-14T16:35:00Z",
       "completed_at": "2026-05-14T17:10:00Z",
       "cycle_time_s": 2100,
-      "lead_time_s": 2100
+      "lead_time_s": 2100,
+      "test_status": "passing"
     },
     {
       "id": "task-013",
@@ -201,14 +217,17 @@
       "status": "done",
       "wip_column": "done",
       "agent": "orchestrator",
-      "depends_on": ["task-012"],
+      "depends_on": [
+        "task-012"
+      ],
       "blocked_reason": null,
       "description": "Render script caps Done column at done_visible_max cards (default 10). Older cards stay in tasks.json for metrics; board shows a faded archive stub. Two new bats tests i3/i4.",
       "created_at": "2026-05-14T17:10:00Z",
       "started_at": "2026-05-14T17:10:00Z",
       "completed_at": "2026-05-14T17:25:00Z",
       "cycle_time_s": 900,
-      "lead_time_s": 900
+      "lead_time_s": 900,
+      "test_status": "passing"
     },
     {
       "id": "task-014",
@@ -224,7 +243,8 @@
       "started_at": "2026-05-14T17:25:00Z",
       "completed_at": "2026-05-14T17:35:00Z",
       "cycle_time_s": 600,
-      "lead_time_s": 600
+      "lead_time_s": 600,
+      "test_status": "passing"
     },
     {
       "id": "task-015",
@@ -235,12 +255,13 @@
       "agent": "orchestrator",
       "depends_on": [],
       "blocked_reason": null,
-      "description": "Removed git clone Option B from README and getting-started.md. curl one-liner is now the sole install method. Fixed branch reference main→master in curl URLs. Test g2 updated.",
+      "description": "Removed git clone Option B from README and getting-started.md. curl one-liner is now the sole install method. Fixed branch reference main\u2192master in curl URLs. Test g2 updated.",
       "created_at": "2026-05-14T17:35:00Z",
       "started_at": "2026-05-14T17:35:00Z",
       "completed_at": "2026-05-14T17:45:00Z",
       "cycle_time_s": 600,
-      "lead_time_s": 600
+      "lead_time_s": 600,
+      "test_status": "passing"
     },
     {
       "id": "task-016",
@@ -256,7 +277,8 @@
       "started_at": "2026-05-14T17:55:00Z",
       "completed_at": "2026-05-14T18:15:00Z",
       "cycle_time_s": 1200,
-      "lead_time_s": 1500
+      "lead_time_s": 1500,
+      "test_status": "none"
     },
     {
       "id": "task-017",
@@ -265,14 +287,68 @@
       "status": "done",
       "wip_column": "done",
       "agent": "orchestrator",
-      "depends_on": ["task-016"],
+      "depends_on": [
+        "task-016"
+      ],
       "blocked_reason": null,
       "description": "Bats tests verifying: hook script exists, fires on tasks.json write, runs render_board.py, skips non-tasks.json files. Guard against the matcher regression (Agent-only) and timestamp-only action.",
       "created_at": "2026-05-14T17:50:00Z",
       "started_at": "2026-05-14T18:15:00Z",
       "completed_at": "2026-05-14T18:25:00Z",
       "cycle_time_s": 600,
-      "lead_time_s": 2100
+      "lead_time_s": 2100,
+      "test_status": "passing"
+    },
+    {
+      "id": "task-018",
+      "title": "Test status dots on kanban cards (green/red/yellow)",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": ["task-012"],
+      "blocked_reason": null,
+      "description": "render_board.py renders coloured dot per card: passing=green, failing=red, pending=yellow, none=no dot. CSS added to board template with glow. Bats m1–m3 guard the behaviour.",
+      "created_at": "2026-05-14T18:25:00Z",
+      "started_at": "2026-05-14T18:25:00Z",
+      "completed_at": "2026-05-14T18:40:00Z",
+      "cycle_time_s": 900,
+      "lead_time_s": 900,
+      "test_status": "passing"
+    },
+    {
+      "id": "task-019",
+      "title": "install.sh writes to project CLAUDE.md + make update",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "install.sh appends kaizen-spec reference block to project CLAUDE.md (only when present, no duplicates). Makefile: make update target. Bats n1–n3 guard the behaviour.",
+      "created_at": "2026-05-14T18:40:00Z",
+      "started_at": "2026-05-14T18:40:00Z",
+      "completed_at": "2026-05-14T18:55:00Z",
+      "cycle_time_s": 900,
+      "lead_time_s": 900,
+      "test_status": "passing"
+    },
+    {
+      "id": "task-020",
+      "title": "Hook Agent-event fix: backlog/in-progress cards now live-update",
+      "phase": "fix",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": ["task-017"],
+      "blocked_reason": null,
+      "description": "Hook now re-renders unconditionally on Agent tool events (subagent JSON never contains tasks.json in tool_input, so old grep silently skipped backlog/in-progress moves). Bats l6 guards.",
+      "created_at": "2026-05-14T18:55:00Z",
+      "started_at": "2026-05-14T18:55:00Z",
+      "completed_at": "2026-05-14T19:10:00Z",
+      "cycle_time_s": 900,
+      "lead_time_s": 900,
+      "test_status": "passing"
     }
   ],
   "wip_limits": {

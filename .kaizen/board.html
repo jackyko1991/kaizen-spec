@@ -57,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T16:13:17Z</span>
+    <span id="last-updated">Updated: 2026-05-14T16:17:15Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -118,6 +118,39 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-020" data-blocked="false"
+           data-description="Hook now re-renders unconditionally on Agent tool events (subagent JSON never contains tasks.json in tool_input, so old grep silently skipped backlog/in-progress moves). Bats l6 guards."
+           data-created-at="2026-05-14T18:55:00Z" data-started-at="2026-05-14T18:55:00Z" data-completed-at="2026-05-14T19:10:00Z">
+        <div class="card-id">task-020</div>
+        <div class="fw-semibold">Hook Agent-event fix: backlog/in-progress cards now live-update</div>
+        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-019" data-blocked="false"
+           data-description="install.sh appends kaizen-spec reference block to project CLAUDE.md (only when present, no duplicates). Makefile: make update target. Bats n1–n3 guard the behaviour."
+           data-created-at="2026-05-14T18:40:00Z" data-started-at="2026-05-14T18:40:00Z" data-completed-at="2026-05-14T18:55:00Z">
+        <div class="card-id">task-019</div>
+        <div class="fw-semibold">install.sh writes to project CLAUDE.md + make update</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-018" data-blocked="false"
+           data-description="render_board.py renders coloured dot per card: passing=green, failing=red, pending=yellow, none=no dot. CSS added to board template with glow. Bats m1–m3 guard the behaviour."
+           data-created-at="2026-05-14T18:25:00Z" data-started-at="2026-05-14T18:25:00Z" data-completed-at="2026-05-14T18:40:00Z">
+        <div class="card-id">task-018</div>
+        <div class="fw-semibold">Test status dots on kanban cards (green/red/yellow)</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-017" data-blocked="false"
            data-description="Bats tests verifying: hook script exists, fires on tasks.json write, runs render_board.py, skips non-tasks.json files. Guard against the matcher regression (Agent-only) and timestamp-only action."
            data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T18:15:00Z" data-completed-at="2026-05-14T18:25:00Z">
@@ -195,41 +228,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 1m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-010" data-blocked="false"
-           data-description="Full Playwright test suite covering all 4 kanban columns: structure, card hover tooltips, column ? tooltips, WIP enforcement, theme toggle. Fixed 2 bugs: col ReferenceError + Bootstrap sanitizer."
-           data-created-at="2026-05-14T16:30:00Z" data-started-at="2026-05-14T16:30:00Z" data-completed-at="2026-05-14T16:33:08Z">
-        <div class="card-id">task-010</div>
-        <div class="fw-semibold">Playwright regression tests for kanban board (14 tests)</div>
-        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 3m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-009" data-blocked="false"
-           data-description="Created board-preview.svg (dark-theme mock with all four columns, blocked Andon card, CT/LT badges, 改 navbar icon) and added it to README as the above-the-fold banner image."
-           data-created-at="2026-05-14T16:20:00Z" data-started-at="2026-05-14T16:20:00Z" data-completed-at="2026-05-14T16:30:00Z">
-        <div class="card-id">task-009</div>
-        <div class="fw-semibold">README SVG kanban banner + docs favicon</div>
-        <div class="text-secondary card-phase">feat</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-008" data-blocked="false"
-           data-description="Fixed GitHub Pages: docs.yml trigger changed from main→master (repo uses master). Added base: &#x27;/kaizen-spec/&#x27; to VitePress config so assets resolve correctly on gh-pages subdirectory."
-           data-created-at="2026-05-14T16:15:00Z" data-started-at="2026-05-14T16:15:00Z" data-completed-at="2026-05-14T16:20:00Z">
-        <div class="card-id">task-008</div>
-        <div class="fw-semibold">GitHub Pages fix: master branch trigger + base URL</div>
-        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        7 older cards archived — see tasks.json
+        10 older cards archived — see tasks.json
       </div>
     </div>
   </div>
