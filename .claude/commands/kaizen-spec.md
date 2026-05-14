@@ -107,8 +107,17 @@ Ask: "Are there any known risks, unknowns, or dependencies to flag?" Options:
 - Requires new package/library
 - Touches authentication or security
 - Performance-sensitive path
+- Regulatory / compliance requirements (ISO 13485, IEC 62443, ISO 9001, FDA 21 CFR Part 11, DO-178C, IEC 61508 …)
 - No known risks
 Allow multiselect.
+
+**If "Regulatory / compliance requirements" is selected**, ask a follow-up:
+
+> "Which standard(s) apply? Name the clause if known (e.g. ISO 13485 §7.3, IEC 62443-4-1 SD-2)."
+
+Accept free text. Record the answer in the spec under **Risks / Unknowns** and set
+`"compliance_mode": true` in `.kaizen/tasks.json`. This activates extended log fields
+(see Kaizen Log Format Reference — Compliance Mode below).
 
 ### After Q5: Write the spec
 
@@ -439,6 +448,27 @@ Standard events:
 **Lead Time** = `completed_at − created_at` (total time in system, including backlog wait)
 **Cycle Time** = `completed_at − started_at` (active work time only)
 Both are derived from `tasks.json` timestamps and logged on task-done events.
+
+### Compliance Mode (when `compliance_mode: true` in tasks.json)
+
+When a project is subject to a regulatory standard, every log line must additionally carry:
+
+| Key | Description | Example |
+|---|---|---|
+| `requirement_id` | Standard clause this event satisfies | `ISO13485-7.3.2`, `IEC62443-4-1-SD-2`, `DO178C-A.5` |
+| `change_type` | Nature of the change | `design-input`, `design-output`, `verification`, `validation`, `review`, `code-change` |
+| `actor` | Agent ID + human reviewer if applicable | `agent:subagent-1`, `agent:subagent-1 review:human` |
+| `artifact` | File path and git commit hash of affected output | `spec.md@abc1234`, `src/auth.ts@def5678` |
+| `justification` | Pointer to the requirement that motivated the change | `spec.md#intent`, `tasks.json#task-003` |
+
+**Compliance log example (ISO 13485 — medical device software):**
+```
+2026-05-14T10:23:45Z INFO [kaizen] phase=implementation task=task-003 agent=subagent-1 status=started change_type=code-change requirement_id=ISO13485-7.3.5 actor="agent:subagent-1" artifact="src/device_driver.py@abc1234" justification="spec.md#in-scope"
+2026-05-14T10:48:33Z INFO [kaizen] phase=implementation task=task-003 agent=subagent-1 status=done cycle_time=1488s lead_time=1531s change_type=code-change requirement_id=ISO13485-7.3.5 actor="agent:subagent-1 review:human" artifact="src/device_driver.py@def5678" justification="spec.md#acceptance-criterion"
+2026-05-14T11:02:44Z INFO [kaizen] phase=acceptance count=14 status=done change_type=validation requirement_id=ISO13485-7.3.6 actor="agent:orchestrator review:human" artifact="tests/device.spec.ts@ghi9012" justification="spec.md#acceptance-criterion"
+```
+
+Compliance fields are **additive** — standard log consumers ignore unknown keys. The base format is unchanged; only the key set grows.
 
 ---
 

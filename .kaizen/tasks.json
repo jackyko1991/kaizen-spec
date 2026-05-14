@@ -241,11 +241,44 @@
       "completed_at": "2026-05-14T17:45:00Z",
       "cycle_time_s": 600,
       "lead_time_s": 600
+    },
+    {
+      "id": "task-016",
+      "title": "Industrial compliance logging (Q5 + skill + docs)",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "Add regulatory/compliance option to Phase 1 Q5. Extended log fields: requirement_id, change_type, actor, artifact, justification. Update kaizen-log.md reference doc. Covers ISO 13485, IEC 62443, ISO 9001, FDA 21 CFR Part 11, DO-178C, IEC 61508.",
+      "created_at": "2026-05-14T17:50:00Z",
+      "started_at": "2026-05-14T17:55:00Z",
+      "completed_at": "2026-05-14T18:15:00Z",
+      "cycle_time_s": 1200,
+      "lead_time_s": 1500
+    },
+    {
+      "id": "task-017",
+      "title": "Regression tests for hook live-update fix",
+      "phase": "test",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": ["task-016"],
+      "blocked_reason": null,
+      "description": "Bats tests verifying: hook script exists, fires on tasks.json write, runs render_board.py, skips non-tasks.json files. Guard against the matcher regression (Agent-only) and timestamp-only action.",
+      "created_at": "2026-05-14T17:50:00Z",
+      "started_at": "2026-05-14T18:15:00Z",
+      "completed_at": "2026-05-14T18:25:00Z",
+      "cycle_time_s": 600,
+      "lead_time_s": 2100
     }
   ],
   "wip_limits": {
     "in-progress": 3,
     "review": 2
   },
-  "done_visible_max": 10
+  "done_visible_max": 10,
+  "compliance_mode": false
 }

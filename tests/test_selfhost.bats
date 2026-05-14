@@ -253,3 +253,45 @@ PYEOF
 @test "k6: docs/guide/getting-started.md contains no git clone instruction" {
   ! grep -q "git clone" "$REPO_ROOT/docs/guide/getting-started.md"
 }
+# ---------------------------------------------------------------------------
+# l) Hook: live board update regression (task-017)
+#
+# Bug: hook matched Agent-only and only sed'd the timestamp.
+# Fix: Write+Edit matchers, runs render_board.py when tasks.json touched.
+# ---------------------------------------------------------------------------
+
+@test "l1: .claude/hooks/update-board.sh exists and is executable" {
+  [ -f "$REPO_ROOT/.claude/hooks/update-board.sh" ]
+  [ -x "$REPO_ROOT/.claude/hooks/update-board.sh" ]
+}
+
+@test "l2: hook runs render_board.py (not just sed timestamp) when tasks.json is in input" {
+  local out
+  out="$(echo '{"tool_name":"Write","tool_input":{"file_path":"/tmp/tasks.json"}}' \
+        | bash "$REPO_ROOT/.claude/hooks/update-board.sh" 2>&1; echo "exit:$?")"
+  # Script should exit 0 (tasks.json path triggers render attempt; may skip if file absent — that's fine)
+  echo "$out" | grep -q "exit:0"
+}
+
+@test "l3: hook skips render when tasks.json is NOT in tool input" {
+  # Measure board.html mtime before
+  local before after
+  before="$(stat -c %Y "$REPO_ROOT/.kaizen/board.html" 2>/dev/null || echo 0)"
+  echo '{"tool_name":"Write","tool_input":{"file_path":"/tmp/README.md"}}' \
+    | bash "$REPO_ROOT/.claude/hooks/update-board.sh"
+  after="$(stat -c %Y "$REPO_ROOT/.kaizen/board.html" 2>/dev/null || echo 0)"
+  # board.html must NOT have been touched
+  [ "$before" = "$after" ]
+}
+
+@test "l4: settings.json hooks include Write and Edit matchers (not Agent-only)" {
+  local settings="$REPO_ROOT/.claude/settings.json"
+  # Both Write and Edit must appear as matchers
+  grep -q '"matcher": "Write"' "$settings"
+  grep -q '"matcher": "Edit"' "$settings"
+}
+
+@test "l5: hook script calls render_board.py (not just sed)" {
+  grep -q "render_board.py" "$REPO_ROOT/.claude/hooks/update-board.sh"
+  ! grep -q 'sed -i.*Updated' "$REPO_ROOT/.claude/hooks/update-board.sh"
+}

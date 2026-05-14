@@ -53,7 +53,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T15:55:38Z</span>
+    <span id="last-updated">Updated: 2026-05-14T16:06:57Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -114,6 +114,28 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-017" data-blocked="false"
+           data-description="Bats tests verifying: hook script exists, fires on tasks.json write, runs render_board.py, skips non-tasks.json files. Guard against the matcher regression (Agent-only) and timestamp-only action."
+           data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T18:15:00Z" data-completed-at="2026-05-14T18:25:00Z">
+        <div class="card-id">task-017</div>
+        <div class="fw-semibold">Regression tests for hook live-update fix</div>
+        <div class="text-secondary card-phase">test</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-016" data-blocked="false"
+           data-description="Add regulatory/compliance option to Phase 1 Q5. Extended log fields: requirement_id, change_type, actor, artifact, justification. Update kaizen-log.md reference doc. Covers ISO 13485, IEC 62443, ISO 9001, FDA 21 CFR Part 11, DO-178C, IEC 61508."
+           data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T17:55:00Z" data-completed-at="2026-05-14T18:15:00Z">
+        <div class="card-id">task-016</div>
+        <div class="fw-semibold">Industrial compliance logging (Q5 + skill + docs)</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 20m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 25m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-015" data-blocked="false"
            data-description="Removed git clone Option B from README and getting-started.md. curl one-liner is now the sole install method. Fixed branch reference main→master in curl URLs. Test g2 updated."
            data-created-at="2026-05-14T17:35:00Z" data-started-at="2026-05-14T17:35:00Z" data-completed-at="2026-05-14T17:45:00Z">
@@ -202,30 +224,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-007" data-blocked="false"
-           data-description="Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (改), navbar 改 icon, manual ↻ refresh button."
-           data-created-at="2026-05-14T15:45:00Z" data-started-at="2026-05-14T15:45:00Z" data-completed-at="2026-05-14T16:15:00Z">
-        <div class="card-id">task-007</div>
-        <div class="fw-semibold">Kanban UX: scroll, ? tooltips, card hover, favicon, refresh</div>
-        <div class="text-secondary card-phase">feat</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 30m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 30m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-006" data-blocked="false"
-           data-description="Updated skill Phase 1 to create kaizen/{feature-slug} branch before any commits; Phase 4 acceptance merges back to base with --no-ff. Resume logic checks current branch."
-           data-created-at="2026-05-14T15:30:00Z" data-started-at="2026-05-14T15:30:00Z" data-completed-at="2026-05-14T15:45:00Z">
-        <div class="card-id">task-006</div>
-        <div class="fw-semibold">Branch-per-feature workflow in skill (kaizen/* branches)</div>
-        <div class="text-secondary card-phase">feat</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        5 older cards archived — see tasks.json
+        7 older cards archived — see tasks.json
       </div>
     </div>
   </div>
