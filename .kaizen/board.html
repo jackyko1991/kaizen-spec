@@ -53,7 +53,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T15:51:51Z</span>
+    <span id="last-updated">Updated: 2026-05-14T15:55:38Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -114,6 +114,50 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-015" data-blocked="false"
+           data-description="Removed git clone Option B from README and getting-started.md. curl one-liner is now the sole install method. Fixed branch reference main→master in curl URLs. Test g2 updated."
+           data-created-at="2026-05-14T17:35:00Z" data-started-at="2026-05-14T17:35:00Z" data-completed-at="2026-05-14T17:45:00Z">
+        <div class="card-id">task-015</div>
+        <div class="fw-semibold">Install: curl-only, no git clone</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-014" data-blocked="false"
+           data-description="Skill Phase 1 now creates a backlog card in tasks.json + re-renders board immediately after spec commit. Board is never empty while a spec exists. Phase 3 updated to note card already exists."
+           data-created-at="2026-05-14T17:25:00Z" data-started-at="2026-05-14T17:25:00Z" data-completed-at="2026-05-14T17:35:00Z">
+        <div class="card-id">task-014</div>
+        <div class="fw-semibold">Board card on spec commit (Phase 1 immediate)</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-013" data-blocked="false"
+           data-description="Render script caps Done column at done_visible_max cards (default 10). Older cards stay in tasks.json for metrics; board shows a faded archive stub. Two new bats tests i3/i4."
+           data-created-at="2026-05-14T17:10:00Z" data-started-at="2026-05-14T17:10:00Z" data-completed-at="2026-05-14T17:25:00Z">
+        <div class="card-id">task-013</div>
+        <div class="fw-semibold">Done column rolling archive (done_visible_max=10)</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-012" data-blocked="false"
+           data-description="Python render script reads tasks.json + templates/board.html and generates board.html deterministically. Agents edit JSON only. make board auto-renders before serving. make ci-local added for local Actions testing."
+           data-created-at="2026-05-14T16:35:00Z" data-started-at="2026-05-14T16:35:00Z" data-completed-at="2026-05-14T17:10:00Z">
+        <div class="card-id">task-012</div>
+        <div class="fw-semibold">render_board.py — tasks.json single source of truth</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 35m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-011" data-blocked="false"
            data-description="Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible."
            data-created-at="2026-05-14T16:34:00Z" data-started-at="2026-05-14T16:34:00Z" data-completed-at="2026-05-14T16:35:00Z">
@@ -180,52 +224,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-005" data-blocked="false"
-           data-description="Fixed make board: auto port-finding via ss loop (default 8081), --directory flag so python serves .kaizen/ not repo root, dark theme default, network IP + SSH tunnel instructions."
-           data-created-at="2026-05-14T15:10:00Z" data-started-at="2026-05-14T15:10:00Z" data-completed-at="2026-05-14T15:30:00Z">
-        <div class="card-id">task-005</div>
-        <div class="fw-semibold">make board: port fix, --directory, dark theme, network/SSH</div>
-        <div class="text-secondary card-phase">fix</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 20m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 20m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-004" data-blocked="false"
-           data-description="Bootstrapped .kaizen/board.html (dark, Bootstrap 5, SortableJS, WIP limits, CT/LT timers, 5s auto-reload) and tasks.json as the persistent development kanban for this repo."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:00Z" data-completed-at="2026-05-14T15:10:00Z">
-        <div class="card-id">task-004</div>
-        <div class="fw-semibold">Seed .kaizen/board.html for this repo&#x27;s backlog</div>
-        <div class="text-secondary card-phase">impl</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 26m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 26m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
-           data-description="Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:49:30Z">
-        <div class="card-id">task-001</div>
-        <div class="fw-semibold">CLAUDE.md + Makefile eval target (self-hosting loop)</div>
-        <div class="text-secondary card-phase">impl</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
-        </div>
-      </div>
-      <div class="kaizen-card" data-task-id="task-002" data-blocked="false"
-           data-description="Wrote install.sh (curl/wget, INSTALL_DIR override, chmod +x). Promoted curl one-liner as Option A in getting-started.md, demoting git clone to Option B."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:48:30Z">
-        <div class="card-id">task-002</div>
-        <div class="fw-semibold">install.sh curl install script + docs update</div>
-        <div class="text-secondary card-phase">impl</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 4m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 4m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        1 older card archived — see tasks.json
+        5 older cards archived — see tasks.json
       </div>
     </div>
   </div>
