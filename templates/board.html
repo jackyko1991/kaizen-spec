@@ -245,15 +245,26 @@
       const started = card.dataset.startedAt  ? card.dataset.startedAt.replace('T',' ').replace('Z',' UTC')  : '—';
       const completed = card.dataset.completedAt ? card.dataset.completedAt.replace('T',' ').replace('Z',' UTC') : '—';
       const blocked = card.dataset.blocked === 'true';
+      const ctEl = card.querySelector('.ct')?.textContent?.trim() || '—';
+      const ltEl = card.querySelector('.lt')?.textContent?.trim() || '—';
+      const statusLine = completed !== '—'
+        ? '<span class="text-success">✓ Done</span>'
+        : started !== '—'
+          ? '<span class="text-primary">⚙ In Progress</span>'
+          : '<span class="text-secondary">○ Backlog</span>';
       const lines = [
-        '<b>' + title + '</b>',
-        '<small class="text-secondary">' + phase + '</small>',
-        '<hr style="margin:.25rem 0;opacity:.3">',
-        'Created: '   + created,
-        'Started: '   + started,
-        'Completed: ' + completed,
-        blocked ? '<span class="text-danger fw-bold">⚠ BLOCKED</span>' : null,
-      ].filter(Boolean).join('<br>');
+        '<b style="font-size:1em">' + title + '</b>',
+        '<span class="text-secondary">' + phase + '</span> &nbsp;' + statusLine,
+        '<hr style="margin:.3rem 0;opacity:.25">',
+        '<table style="border-spacing:2px 1px;font-size:.85em">',
+        '<tr><td class="text-secondary pe-2">Created</td><td>' + created + '</td></tr>',
+        '<tr><td class="text-secondary pe-2">Started</td><td>' + started + '</td></tr>',
+        '<tr><td class="text-secondary pe-2">Completed</td><td>' + completed + '</td></tr>',
+        '<tr><td class="text-secondary pe-2">Cycle Time</td><td>' + ctEl + '</td></tr>',
+        '<tr><td class="text-secondary pe-2">Lead Time</td><td>' + ltEl + '</td></tr>',
+        '</table>',
+        blocked ? '<div class="text-danger fw-bold mt-1">⚠ BLOCKED — pull the Andon cord</div>' : null,
+      ].filter(Boolean).join('\n');
       card.setAttribute('data-bs-toggle', 'tooltip');
       card.setAttribute('data-bs-html', 'true');
       card.setAttribute('data-bs-placement', 'right');
