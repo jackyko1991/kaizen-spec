@@ -3,8 +3,9 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: 'kaizen-spec',
   description: 'Spec-driven, kaizen-informed agentic development for Claude Code',
+  base: '/kaizen-spec/',
   appearance: 'auto',
-  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
+  head: [['link', { rel: 'icon', href: '/kaizen-spec/favicon.svg' }]],
 
   themeConfig: {
     nav: [
