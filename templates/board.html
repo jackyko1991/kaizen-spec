@@ -249,6 +249,7 @@
   // Build tooltip on each card from its data attributes
   function initCardTooltips() {
     document.querySelectorAll('.kaizen-card').forEach(card => {
+      const col = card.closest('.column-body');
       const title = card.querySelector('.fw-semibold')?.textContent?.trim() || '';
       const phase = card.querySelector('.card-phase')?.textContent?.trim() || '';
       const created = card.dataset.createdAt ? card.dataset.createdAt.replace('T',' ').replace('Z',' UTC') : '—';
@@ -280,7 +281,6 @@
         '</table>',
         blocked ? '<div class="text-danger fw-bold mt-1">⚠ BLOCKED — pull the Andon cord</div>' : null,
       ].filter(Boolean).join('\n');
-      const col = card.closest('.column-body');
       const status = col ? col.dataset.status : 'backlog';
       const colClass = { backlog: 'tooltip-backlog', 'in-progress': 'tooltip-in-progress', review: 'tooltip-review', done: 'tooltip-done' }[status] || 'tooltip-backlog';
       card.setAttribute('data-bs-toggle', 'tooltip');
@@ -309,7 +309,12 @@
 
   // Initialise all Bootstrap tooltips
   document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
-    new bootstrap.Tooltip(el, { trigger: 'hover', delay: { show: 150, hide: 100 } });
+    new bootstrap.Tooltip(el, {
+      trigger: 'hover',
+      delay: { show: 150, hide: 100 },
+      sanitize: false,   // table/dl elements used in card tooltips
+      html: true,
+    });
   });
 
   // ── Auto-reload (agents rewrite this file; browser picks up changes) ───────
