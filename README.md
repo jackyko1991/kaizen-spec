@@ -90,17 +90,6 @@ The board auto-reloads every 5 seconds as agents move cards.
 
 ---
 
-## Documentation
-
-Full docs live in `docs/`. Run locally:
-
-```bash
-npm install
-npx vitepress dev docs
-```
-
-Or visit the GitHub Pages site once deployed.
-
 ## Philosophy
 
 kaizen-spec is grounded in the Toyota Production System (TPS) as translated to software by Mary and Tom Poppendieck in *Lean Software Development*. Each Toyota concept maps directly to a software practice enforced by this skill:
