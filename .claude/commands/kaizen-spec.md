@@ -166,7 +166,31 @@ git commit -m "kaizen: spec aligned for {feature name}"
 
 The feature slug is the feature name lowercased with spaces replaced by hyphens (e.g. `kaizen/user-auth-endpoint`).
 
-Tell the user: "Branch `kaizen/{feature-slug}` created. Spec committed. Proceeding to Phase 2."
+**Immediately after the spec commit**, add a backlog card to `.kaizen/tasks.json` and render the board:
+
+1. Append a new task entry to the `tasks` array in `.kaizen/tasks.json`:
+```json
+{
+  "id": "task-{N}",
+  "title": "{feature name}",
+  "phase": "spec",
+  "status": "backlog",
+  "wip_column": "backlog",
+  "agent": null,
+  "depends_on": [],
+  "blocked_reason": null,
+  "description": "{one-sentence summary from Q1}",
+  "created_at": "{ISO8601 now}",
+  "started_at": null,
+  "completed_at": null
+}
+```
+2. Run `python3 scripts/render_board.py` — the card appears in Backlog immediately.
+3. Commit: `git add .kaizen/tasks.json .kaizen/board.html && git commit -m "kaizen: board card added for {feature name}"`
+
+The board must always reflect reality. A spec that exists without a board card is invisible work (Muda).
+
+Tell the user: "Branch `kaizen/{feature-slug}` created. Spec committed. Board card visible in Backlog. Proceeding to Phase 2."
 
 ---
 
@@ -251,7 +275,7 @@ Proceed to Phase 3.
 
 Read `.kaizen/spec.md` and the test list in `.kaizen/test-strategy.md`. Break the work into independent tasks (target: 2–5 per feature, each completable in one subagent session).
 
-Write `.kaizen/tasks.json` using this schema:
+The Phase 1 backlog card already exists in `tasks.json`. Replace it (or add alongside it) with the full implementation task breakdown. Update `.kaizen/tasks.json`:
 
 ```json
 {
