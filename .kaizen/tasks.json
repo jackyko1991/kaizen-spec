@@ -19,14 +19,16 @@
       "id": "task-002",
       "title": "install.sh curl install script + docs update",
       "phase": "impl",
-      "status": "in-progress",
+      "status": "done",
       "agent": "task-002-agent",
-      "wip_column": "in-progress",
+      "wip_column": "done",
       "depends_on": [],
       "blocked_reason": null,
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:30Z",
-      "completed_at": null
+      "completed_at": "2026-05-14T14:48:30Z",
+      "cycle_time_s": 240,
+      "lead_time_s": 271
     },
     {
       "id": "task-003",
