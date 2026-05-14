@@ -22,7 +22,7 @@ This guide walks you through installing kaizen-spec and running your first `/kai
 The fastest way to install. Run this in your terminal:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
 ```
 
 This downloads and runs `install.sh`, which installs `kaizen-spec.md` into `~/.claude/commands/` automatically.
@@ -30,29 +30,11 @@ This downloads and runs `install.sh`, which installs `kaizen-spec.md` into `~/.c
 If you prefer not to pipe scripts from the internet, you can download the skill file directly:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/main/.claude/commands/kaizen-spec.md \
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/.claude/commands/kaizen-spec.md \
   > ~/.claude/commands/kaizen-spec.md
 ```
 
-Note: with this option you will not receive updates automatically. Re-run the command to upgrade.
-
-### Option B — Clone and link (for git-based updates)
-
-Clone kaizen-spec into a stable location, then symlink the command file so Claude Code picks it up.
-
-```bash
-# 1. Clone to a permanent location
-git clone https://github.com/jackyko1991/kaizen-spec ~/.claude/skills/kaizen-spec
-
-# 2. Create the commands directory if it doesn't exist
-mkdir -p ~/.claude/commands
-
-# 3. Symlink the skill into Claude Code's commands folder
-ln -s ~/.claude/skills/kaizen-spec/.claude/commands/kaizen-spec.md \
-      ~/.claude/commands/kaizen-spec.md
-```
-
-That's it. Claude Code automatically discovers any `.md` file in `~/.claude/commands/` as a slash command.
+To upgrade later, re-run the same command. Claude Code automatically discovers any `.md` file in `~/.claude/commands/` as a slash command.
 
 ---
 

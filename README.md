@@ -50,26 +50,17 @@ State is persisted in `.kaizen/` (git-tracked) so fresh-context agents can resum
 
 ## Install
 
-### 1. Clone the repo
-
 ```bash
-git clone https://github.com/jackyko/kaizen-spec ~/.claude/skills/kaizen-spec
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
 ```
 
-### 2. Link the command
-
-```bash
-mkdir -p ~/.claude/commands
-ln -s ~/.claude/skills/kaizen-spec/.claude/commands/kaizen-spec.md ~/.claude/commands/kaizen-spec.md
-```
-
-### 3. Use it
-
-Open any project in your coding agent and run:
+Then open any project in Claude Code and run:
 
 ```
 /kaizen-spec
 ```
+
+To upgrade, re-run the same command.
 
 ---
 

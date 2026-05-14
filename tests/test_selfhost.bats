@@ -93,16 +93,17 @@ REPO_ROOT="/home/jackyko/Projects/kaizen-spec"
   [ -f "$REPO_ROOT/docs/guide/getting-started.md" ]
 }
 
-@test "g2: getting-started.md mentions curl before git clone" {
+@test "g2: getting-started.md mentions curl as primary install (git clone absent or appears after curl)" {
   local file="$REPO_ROOT/docs/guide/getting-started.md"
   local curl_line git_line
   curl_line=$(grep -n "curl" "$file" | head -1 | cut -d: -f1)
   git_line=$(grep -n "git clone" "$file" | head -1 | cut -d: -f1)
-  # Both must exist
+  # curl must be present
   [ -n "$curl_line" ]
-  [ -n "$git_line" ]
-  # curl must appear on an earlier line than git clone
-  [ "$curl_line" -lt "$git_line" ]
+  # if git clone appears, it must be after curl
+  if [ -n "$git_line" ]; then
+    [ "$curl_line" -lt "$git_line" ]
+  fi
 }
 
 # ---------------------------------------------------------------------------
