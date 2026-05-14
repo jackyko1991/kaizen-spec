@@ -9,7 +9,7 @@ help: ## Show available targets
 	@echo "--------------------"
 	@echo "  make eval          Run bats acceptance tests"
 	@echo "  make test          Alias for eval"
-	@echo "  make board         Serve .kaizen/board.html at http://localhost:8080"
+	@echo "  make board         Serve .kaizen/board.html (auto-finds free port)"
 	@echo "  make install-bats  Install bats-core to /tmp/bats-install"
 	@echo "  make help          Show this help"
 	@echo ""
@@ -33,9 +33,19 @@ eval: ## Run bats acceptance tests
 
 test: eval ## Alias for eval
 
-board: ## Serve .kaizen/board.html on a local HTTP server (default port 8080)
-	@PORT=$${PORT:-8080}; \
-	echo "Board: http://localhost:$$PORT/board.html"; \
+board: ## Serve .kaizen/board.html — auto-finds a free port (override: PORT=9090 make board)
+	@find_free_port() { \
+		local p=$${PORT:-8080}; \
+		while ss -tlnH "sport = :$$p" 2>/dev/null | grep -q .; do \
+			p=$$((p + 1)); \
+		done; \
+		echo $$p; \
+	}; \
+	PORT=$$(find_free_port); \
+	echo ""; \
+	echo "  Board → http://localhost:$$PORT/board.html"; \
+	echo "  Ctrl-C to stop"; \
+	echo ""; \
 	if command -v python3 >/dev/null 2>&1; then \
 		cd .kaizen && python3 -m http.server $$PORT; \
 	elif command -v python >/dev/null 2>&1; then \
