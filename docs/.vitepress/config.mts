@@ -8,6 +8,7 @@ export default defineConfig({
   head: [['link', { rel: 'icon', href: '/kaizen-spec/favicon.svg' }]],
 
   themeConfig: {
+    logo: '/favicon.svg',
     nav: [
       { text: 'Guide', link: '/guide/getting-started' },
       { text: 'Reference', link: '/reference/state-schema' },
