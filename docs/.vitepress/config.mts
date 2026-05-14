@@ -20,6 +20,8 @@ export default defineConfig({
           text: 'Guide',
           items: [
             { text: 'Getting Started', link: '/guide/getting-started' },
+            { text: 'Philosophy', link: '/guide/philosophy' },
+            { text: 'Glossary', link: '/guide/glossary' },
             { text: 'The Five Phases', link: '/guide/phases' },
             { text: 'Kanban Board', link: '/guide/kanban' },
           ],
