@@ -28,6 +28,16 @@
     .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
     .col-help { font-size: .7rem; color: var(--bs-secondary-color); cursor: help; border: 1px solid var(--bs-border-color); border-radius: 50%; width: 1.1rem; height: 1.1rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .col-help:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
+    /* Column-tinted tooltips */
+    .tooltip-backlog    .tooltip-inner { background: #21262d; color: #8b949e; border: 1px solid #30363d; }
+    .tooltip-backlog    .tooltip-arrow::before { border-right-color: #21262d; }
+    .tooltip-in-progress .tooltip-inner { background: #1f2d45; color: #79b8ff; border: 1px solid #388bfd55; }
+    .tooltip-in-progress .tooltip-arrow::before { border-right-color: #1f2d45; }
+    .tooltip-review     .tooltip-inner { background: #2d2208; color: #e3b341; border: 1px solid #d2992255; }
+    .tooltip-review     .tooltip-arrow::before { border-right-color: #2d2208; }
+    .tooltip-done       .tooltip-inner { background: #0d2818; color: #56d364; border: 1px solid #3fb95055; }
+    .tooltip-done       .tooltip-arrow::before { border-right-color: #0d2818; }
+    .tooltip-inner { max-width: 320px; text-align: left; padding: .5rem .65rem; border-radius: .4rem; }
   </style>
 </head>
 <body>
@@ -350,9 +360,13 @@
         '</table>',
         blocked ? '<div class="text-danger fw-bold mt-1">⚠ BLOCKED — pull the Andon cord</div>' : null,
       ].filter(Boolean).join('\n');
+      const col = card.closest('.column-body');
+      const status = col ? col.dataset.status : 'backlog';
+      const colClass = { backlog: 'tooltip-backlog', 'in-progress': 'tooltip-in-progress', review: 'tooltip-review', done: 'tooltip-done' }[status] || 'tooltip-backlog';
       card.setAttribute('data-bs-toggle', 'tooltip');
       card.setAttribute('data-bs-html', 'true');
       card.setAttribute('data-bs-placement', 'right');
+      card.setAttribute('data-bs-custom-class', colClass);
       card.setAttribute('data-bs-title', lines);
     });
   }
