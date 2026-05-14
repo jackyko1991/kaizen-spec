@@ -25,7 +25,11 @@ Before doing anything else, classify the incoming request:
 - Any task the user explicitly calls "quick", "just", or "simple"
 
 For TRIVIAL requests: do the task directly. Do not write `.kaizen/spec.md`. Do not run phases.
-Tell the user: "This is a quick task — skipping the kaizen workflow." then act.
+But **always** add a task card to `.kaizen/tasks.json` and `.kaizen/board.html` before starting,
+and mark it done when complete. Every piece of work must be visible on the board — this is the
+principle of Standard Work (標準作業): nothing happens outside the system.
+
+Tell the user: "Quick task — skipping full workflow but adding a board card." then act.
 
 **FULL WORKFLOW** — run all five phases:
 - New feature or capability
