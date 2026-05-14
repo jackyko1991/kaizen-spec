@@ -34,26 +34,20 @@ eval: ## Run bats acceptance tests
 test: eval ## Alias for eval
 
 board: ## Serve .kaizen/board.html — auto-finds a free port (override: PORT=9090 make board)
-	@find_free_port() { \
-		local p=$${PORT:-8080}; \
-		while ss -tlnH "sport = :$$p" 2>/dev/null | grep -q .; do \
-			p=$$((p + 1)); \
-		done; \
-		echo $$p; \
-	}; \
-	PORT=$$(find_free_port); \
+	@p=$${PORT:-8081}; \
+	while ss -tlnH "sport = :$$p" 2>/dev/null | grep -q .; do p=$$((p + 1)); done; \
+	URL="http://localhost:$$p/board.html"; \
 	echo ""; \
-	echo "  Board → http://localhost:$$PORT/board.html"; \
+	echo "  Board → $$URL"; \
 	echo "  Ctrl-C to stop"; \
 	echo ""; \
+	xdg-open "$$URL" 2>/dev/null || open "$$URL" 2>/dev/null || true; \
 	if command -v python3 >/dev/null 2>&1; then \
-		cd .kaizen && python3 -m http.server $$PORT; \
-	elif command -v python >/dev/null 2>&1; then \
-		cd .kaizen && python -m SimpleHTTPServer $$PORT; \
+		python3 -m http.server --directory .kaizen $$p; \
 	elif command -v npx >/dev/null 2>&1; then \
-		npx serve .kaizen -p $$PORT; \
+		npx serve .kaizen -p $$p; \
 	else \
-		echo "No python3, python, or npx found. Install one to serve the board."; \
+		echo "No python3 or npx found. Install one to serve the board."; \
 		exit 1; \
 	fi
 
