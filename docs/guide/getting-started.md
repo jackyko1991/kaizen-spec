@@ -1,5 +1,8 @@
 # Getting Started
 
+**Documentation site:** [jackyko1991.github.io/kaizen-spec](https://jackyko1991.github.io/kaizen-spec/)
+**GitHub:** [github.com/jackyko1991/kaizen-spec](https://github.com/jackyko1991/kaizen-spec)
+
 This guide walks you through installing kaizen-spec and running your first `/kaizen-spec` session.
 
 ---
@@ -14,13 +17,32 @@ This guide walks you through installing kaizen-spec and running your first `/kai
 
 ## Install
 
-### Option A — Clone and link (recommended)
+### Option A — curl one-liner (recommended)
+
+The fastest way to install. Run this in your terminal:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/main/install.sh | bash
+```
+
+This downloads and runs `install.sh`, which installs `kaizen-spec.md` into `~/.claude/commands/` automatically.
+
+If you prefer not to pipe scripts from the internet, you can download the skill file directly:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/main/.claude/commands/kaizen-spec.md \
+  > ~/.claude/commands/kaizen-spec.md
+```
+
+Note: with this option you will not receive updates automatically. Re-run the command to upgrade.
+
+### Option B — Clone and link (for git-based updates)
 
 Clone kaizen-spec into a stable location, then symlink the command file so Claude Code picks it up.
 
 ```bash
 # 1. Clone to a permanent location
-git clone https://github.com/jackyko/kaizen-spec ~/.claude/skills/kaizen-spec
+git clone https://github.com/jackyko1991/kaizen-spec ~/.claude/skills/kaizen-spec
 
 # 2. Create the commands directory if it doesn't exist
 mkdir -p ~/.claude/commands
@@ -31,18 +53,6 @@ ln -s ~/.claude/skills/kaizen-spec/.claude/commands/kaizen-spec.md \
 ```
 
 That's it. Claude Code automatically discovers any `.md` file in `~/.claude/commands/` as a slash command.
-
-### Option B — Copy the command file directly
-
-If you prefer not to symlink:
-
-```bash
-mkdir -p ~/.claude/commands
-curl -sL https://raw.githubusercontent.com/jackyko/kaizen-spec/main/.claude/commands/kaizen-spec.md \
-  > ~/.claude/commands/kaizen-spec.md
-```
-
-Note: with this option you will not receive updates automatically. Re-run the command to upgrade.
 
 ---
 
@@ -105,7 +115,7 @@ If all five phases complete and the board shows all cards in Done, the install i
 
 ## Updating
 
-If you installed with Option A (symlink):
+If you installed with Option B (symlink):
 
 ```bash
 cd ~/.claude/skills/kaizen-spec
