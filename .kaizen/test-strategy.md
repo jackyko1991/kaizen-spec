@@ -1,42 +1,38 @@
-# Test Strategy: kaizen-spec Self-Hosting & Developer Experience
+# Test Strategy: Playwright Kanban Regression Tests
 
-**Framework:** bats-core (installed from source at /tmp/bats-install)
-**Install:** `git clone https://github.com/bats-core/bats-core /tmp/bats-install && /tmp/bats-install/install.sh /tmp/bats-install`
-**Test files:** `tests/test_selfhost.bats`
-**Tests written:** 13
-**Status:** 11 failing (red) ✓ — 2 passing on pre-existing files (correct)
+**Framework:** Playwright (TypeScript)
+**Install:** `npm install -D @playwright/test && npx playwright install chromium --with-deps`
+**Test files:** `tests/kanban.spec.ts`
+**Config:** `playwright.config.ts` (webServer: python3 serves .kaizen/ on port 9999)
+**Tests written:** 14
+**Status:** All passing ✓
 
 ## Test List
 
-| Test | What it covers |
-|------|---------------|
-| a1: CLAUDE.md exists | Self-hosting: CLAUDE.md present at repo root |
-| a2: CLAUDE.md references .claude/commands | Self-hosting: CLAUDE.md tells Claude to use local skill |
-| b1: install.sh exists | curl install: script present |
-| b2: install.sh is executable | curl install: chmod +x applied |
-| b3: install.sh contains curl/wget | curl install: script uses curl or wget to download |
-| c1: install.sh installs kaizen-spec.md | curl install: running install.sh (with INSTALL_DIR override) creates the file |
-| d1: Makefile exists | Self-hosting: Makefile present |
-| d2: Makefile has `eval` target | Self-hosting: `make eval` entry point exists |
-| e1: README no "Ralph-style" | Philosophy: jargon removed |
-| f1: README has 2+ TPS concepts | Philosophy: Jidoka/Muda/Poka-Yoke/JIT/TPS present |
-| g1: getting-started.md exists | Pre-existing — must not break |
-| g2: curl before git clone | curl install: docs promote curl as Option A |
-| h1: templates/board.html exists | Pre-existing — must not break |
+| # | Group | Test | Covers |
+|---|-------|------|--------|
+| 1 | Column structure | English headers visible | Backlog/In Progress/Review/Done headers render |
+| 2 | Column structure | Japanese subtitles visible | 待辦/在製品/審査/完了 labels present |
+| 3 | Column structure | WIP badges present | Count badges exist on all 4 columns |
+| 4 | Column structure | ? help badges present | `.col-help` on all 4 columns |
+| 5 | Card tooltips | Tooltip appears on hover | `.tooltip.show` in DOM after hover |
+| 6 | Card tooltips | Tooltip contains ✓ Done status | Status badge matches column position |
+| 7 | Card tooltips | Tooltip contains description | `<p>` with task description text |
+| 8 | Card tooltips | Tooltip contains "Completed" | Timestamp table rows render (sanitize:false) |
+| 9 | Column ? tooltips | Backlog ? shows 待辦/Backlog | Column explanation tooltip |
+| 10 | Column ? tooltips | Done ? shows 完了/CT/Lead Time | Done column explanation |
+| 11 | WIP enforcement | 4th card into In Progress shows toast | #wipToast visible |
+| 12 | WIP enforcement | Toast text contains "WIP limit" | Andon message correct |
+| 13 | Theme toggle | data-bs-theme flips on click | ◐ button works |
+| 14 | Theme toggle | localStorage written | Preference persists |
 
-## Jidoka verification
+## Bugs found and fixed during test writing
 
-Tests a1–f1 and g2 all fail on current code — they correctly cannot detect features that don't exist yet. ✓
-
-Tests g1 and h1 pass on pre-existing files — these are NOT defect-targeting tests, so they do NOT trigger the stop rule.
+1. **`col` declared after use** — `initCardTooltips()` used `col` on line 355 but declared it on line 377, causing a `ReferenceError` that silently aborted all tooltip initialisation.
+2. **Bootstrap sanitizer stripping `<table>`** — Bootstrap tooltips strip table elements by default. Fixed with `sanitize: false` in tooltip init (content is internal, not user-generated).
 
 ## Run command
 
 ```bash
-/tmp/bats-install/bin/bats tests/test_selfhost.bats
-```
-
-Or after installing bats globally:
-```bash
-bats tests/test_selfhost.bats
+npx playwright test tests/kanban.spec.ts
 ```
