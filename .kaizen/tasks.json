@@ -14,6 +14,7 @@
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:30Z",
       "completed_at": "2026-05-14T14:49:30Z",
+      "description": "Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion.",
       "cycle_time_s": 300,
       "lead_time_s": 331
     },
@@ -29,6 +30,7 @@
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:30Z",
       "completed_at": "2026-05-14T14:48:30Z",
+      "description": "Wrote install.sh (curl/wget, INSTALL_DIR override, chmod +x). Promoted curl one-liner as Option A in getting-started.md, demoting git clone to Option B.",
       "cycle_time_s": 240,
       "lead_time_s": 271
     },
@@ -44,6 +46,7 @@
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:30Z",
       "completed_at": "2026-05-14T14:47:50Z",
+      "description": "Replaced 'Ralph-style continuity' jargon with a TPS→software mapping table: Muda→unshipped code, JIT→CI/CD, Jidoka→TDD, Poka-Yoke→typing/linting, Kaizen→Spec Kaizen, One-piece flow→Atomic Specs.",
       "cycle_time_s": 200,
       "lead_time_s": 231
     },
@@ -59,6 +62,7 @@
       "created_at": "2026-05-14T14:43:59Z",
       "started_at": "2026-05-14T14:44:00Z",
       "completed_at": "2026-05-14T15:10:00Z",
+      "description": "Bootstrapped .kaizen/board.html (dark, Bootstrap 5, SortableJS, WIP limits, CT/LT timers, 5s auto-reload) and tasks.json as the persistent development kanban for this repo.",
       "cycle_time_s": 1560,
       "lead_time_s": 1561
     },
@@ -74,6 +78,7 @@
       "created_at": "2026-05-14T15:10:00Z",
       "started_at": "2026-05-14T15:10:00Z",
       "completed_at": "2026-05-14T15:30:00Z",
+      "description": "Fixed make board: auto port-finding via ss loop (default 8081), --directory flag so python serves .kaizen/ not repo root, dark theme default, network IP + SSH tunnel instructions.",
       "cycle_time_s": 1200,
       "lead_time_s": 1200
     },
@@ -89,6 +94,7 @@
       "created_at": "2026-05-14T15:30:00Z",
       "started_at": "2026-05-14T15:30:00Z",
       "completed_at": "2026-05-14T15:45:00Z",
+      "description": "Updated skill Phase 1 to create kaizen/{feature-slug} branch before any commits; Phase 4 acceptance merges back to base with --no-ff. Resume logic checks current branch.",
       "cycle_time_s": 900,
       "lead_time_s": 900
     },
@@ -104,6 +110,7 @@
       "created_at": "2026-05-14T15:45:00Z",
       "started_at": "2026-05-14T15:45:00Z",
       "completed_at": "2026-05-14T16:15:00Z",
+      "description": "Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (改), navbar 改 icon, manual ↻ refresh button.",
       "cycle_time_s": 1800,
       "lead_time_s": 1800
     },
@@ -119,6 +126,7 @@
       "created_at": "2026-05-14T16:15:00Z",
       "started_at": "2026-05-14T16:15:00Z",
       "completed_at": "2026-05-14T16:20:00Z",
+      "description": "Fixed GitHub Pages: docs.yml trigger changed from main→master (repo uses master). Added base: '/kaizen-spec/' to VitePress config so assets resolve correctly on gh-pages subdirectory.",
       "cycle_time_s": 300,
       "lead_time_s": 300
     },
@@ -134,6 +142,7 @@
       "created_at": "2026-05-14T16:20:00Z",
       "started_at": "2026-05-14T16:20:00Z",
       "completed_at": "2026-05-14T16:30:00Z",
+      "description": "Created board-preview.svg (dark-theme mock with all four columns, blocked Andon card, CT/LT badges, 改 navbar icon) and added it to README as the above-the-fold banner image.",
       "cycle_time_s": 600,
       "lead_time_s": 600
     },

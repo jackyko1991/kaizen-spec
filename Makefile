@@ -1,4 +1,4 @@
-.PHONY: eval test install-bats board help
+.PHONY: eval test install-bats board board-render help
 
 BATS := $(shell command -v bats 2>/dev/null || echo /tmp/bats-install/bin/bats)
 TESTS := tests/test_selfhost.bats
@@ -9,7 +9,9 @@ help: ## Show available targets
 	@echo "--------------------"
 	@echo "  make eval          Run bats acceptance tests"
 	@echo "  make test          Alias for eval"
-	@echo "  make board         Serve .kaizen/board.html (auto-finds free port)"
+	@echo "  make board         Render + serve .kaizen/board.html (auto-finds free port)"
+	@echo "  make board-render  Regenerate board.html from tasks.json (no server)"
+	@echo "  make ci-local      Run docs.yml locally via act (requires docker + act)"
 	@echo "  make install-bats  Install bats-core to /tmp/bats-install"
 	@echo "  make help          Show this help"
 	@echo ""
@@ -33,7 +35,10 @@ eval: ## Run bats acceptance tests
 
 test: eval ## Alias for eval
 
-board: ## Serve .kaizen/board.html — auto-finds a free port (override: PORT=9090 make board)
+board-render: ## Regenerate .kaizen/board.html from tasks.json (no server)
+	python3 scripts/render_board.py
+
+board: board-render ## Render + serve .kaizen/board.html — auto-finds a free port (override: PORT=9090 make board)
 	@p=$${PORT:-8081}; \
 	while ss -tlnH "sport = :$$p" 2>/dev/null | grep -q .; do p=$$((p + 1)); done; \
 	LAN=$$(hostname -I 2>/dev/null | awk '{print $$1}'); \
@@ -53,6 +58,14 @@ board: ## Serve .kaizen/board.html — auto-finds a free port (override: PORT=90
 		echo "No python3 or npx found. Install one to serve the board."; \
 		exit 1; \
 	fi
+
+ci-local: ## Run docs.yml workflow locally with act (requires: docker + act)
+	@if ! command -v act >/dev/null 2>&1; then \
+		echo "act not found. Install: https://github.com/nektos/act#installation"; \
+		echo "  Ubuntu/Debian: curl -s https://raw.githubusercontent.com/nektos/act/master/install.sh | sudo bash"; \
+		exit 1; \
+	fi
+	act push --workflows .github/workflows/docs.yml --job build
 
 install-bats: ## Clone and install bats-core to /tmp/bats-install
 	@if [ -x "/tmp/bats-install/bin/bats" ]; then \

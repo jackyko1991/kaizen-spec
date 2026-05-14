@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>kaizen-spec board — Self-Hosting & Developer Experience</title>
+  <title>kaizen-spec board — kaizen-spec Self-Hosting & Developer Experience</title>
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='15' fill='%231a1a2e' stroke='%234a9eff' stroke-width='1.5'/><text x='16' y='22' font-family='serif' font-size='17' fill='%234a9eff' text-anchor='middle'>改</text></svg>">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
   <style>
@@ -12,6 +12,7 @@
     .column { flex: 1; min-width: 220px; }
     .column-header { padding: .5rem .75rem; border-radius: .375rem .375rem 0 0; font-weight: 600; font-size: .85rem; display: flex; justify-content: space-between; align-items: center; }
     .column-body { background: var(--bs-secondary-bg); border-radius: 0 0 .375rem .375rem; min-height: 300px; max-height: calc(100vh - 120px); overflow-y: auto; padding: .5rem; }
+    .column-body.wip-exceeded > .column-header { /* applied to wrapper instead */ }
     .wip-exceeded .column-header { background-color: var(--bs-danger) !important; color: white !important; }
     .kaizen-card { background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: .375rem; padding: .6rem .75rem; margin-bottom: .5rem; cursor: grab; font-size: .875rem; position: relative; }
     .kaizen-card:active { cursor: grabbing; }
@@ -50,9 +51,9 @@
     </svg>
     kaizen-spec
   </span>
-  <span class="ms-2 text-secondary">Development Board</span>
+  <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T16:35:00Z</span>
+    <span id="last-updated">Updated: 2026-05-14T15:41:28Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -85,7 +86,6 @@
       </div>
     </div>
     <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
-      <!-- cards injected here -->
     </div>
   </div>
 
@@ -100,7 +100,6 @@
       </div>
     </div>
     <div class="column-body" data-status="review" data-wip-limit="2" id="body-review">
-      <!-- cards injected here -->
     </div>
   </div>
 
@@ -115,139 +114,127 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
-
       <div class="kaizen-card" data-task-id="task-011" data-blocked="false"
            data-description="Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible."
            data-created-at="2026-05-14T16:34:00Z" data-started-at="2026-05-14T16:34:00Z" data-completed-at="2026-05-14T16:35:00Z">
         <div class="card-id">task-011</div>
-        <div class="fw-semibold">GitHub Pages docs regression test</div>
-        <div class="text-secondary card-phase">test · docs deploy</div>
+        <div class="fw-semibold">GitHub Pages docs site regression test (Playwright)</div>
+        <div class="text-secondary card-phase">test</div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 1m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 1m</span>
         </div>
       </div>
-
       <div class="kaizen-card" data-task-id="task-010" data-blocked="false"
-           data-description="Full Playwright test suite covering all 4 kanban columns: structure (4), card hover tooltips (4), column ? tooltips (2), WIP enforcement (2), theme toggle (2). Fixed 2 bugs: col ReferenceError + Bootstrap sanitizer stripping tables."
+           data-description="Full Playwright test suite covering all 4 kanban columns: structure, card hover tooltips, column ? tooltips, WIP enforcement, theme toggle. Fixed 2 bugs: col ReferenceError + Bootstrap sanitizer."
            data-created-at="2026-05-14T16:30:00Z" data-started-at="2026-05-14T16:30:00Z" data-completed-at="2026-05-14T16:33:08Z">
         <div class="card-id">task-010</div>
-        <div class="fw-semibold">Playwright kanban regression tests (14)</div>
-        <div class="text-secondary card-phase">test · kanban board</div>
+        <div class="fw-semibold">Playwright regression tests for kanban board (14 tests)</div>
+        <div class="text-secondary card-phase">test</div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 3m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
         </div>
       </div>
-
-      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
-           data-description="Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:49:30Z">
-        <div class="card-id">task-001</div>
-        <div class="fw-semibold">CLAUDE.md + Makefile eval target</div>
-        <div class="text-secondary card-phase">impl · self-hosting loop</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 300s</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 331s</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-002" data-blocked="false"
-           data-description="Wrote install.sh (curl/wget, INSTALL_DIR override, chmod +x). Promoted curl one-liner as Option A in getting-started.md, demoting git clone to Option B."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:48:30Z">
-        <div class="card-id">task-002</div>
-        <div class="fw-semibold">install.sh + docs update</div>
-        <div class="text-secondary card-phase">impl · curl install</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 240s</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 271s</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-003" data-blocked="false"
-           data-description="Replaced "Ralph-style continuity" jargon with a TPS→software mapping table: Muda→unshipped code, JIT→CI/CD, Jidoka→TDD, Poka-Yoke→typing/linting, Kaizen→Spec Kaizen, One-piece flow→Atomic Specs."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:47:50Z">
-        <div class="card-id">task-003</div>
-        <div class="fw-semibold">Philosophy rewrite (TPS mapping)</div>
-        <div class="text-secondary card-phase">impl · README</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 200s</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 231s</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-004" data-blocked="false"
-           data-description="Bootstrapped .kaizen/board.html (dark, Bootstrap 5, SortableJS, WIP limits, CT/LT timers, 5s auto-reload) and tasks.json as the persistent development kanban for this repo."
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:00Z" data-completed-at="2026-05-14T15:10:00Z">
-        <div class="card-id">task-004</div>
-        <div class="fw-semibold">Seed board for this repo's backlog</div>
-        <div class="text-secondary card-phase">impl · board</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 26m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 26m</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-005" data-blocked="false"
-           data-description="Fixed make board: auto port-finding via ss loop (default 8081), --directory flag so python serves .kaizen/ not repo root, dark theme default, network IP + SSH tunnel instructions."
-           data-created-at="2026-05-14T15:10:00Z" data-started-at="2026-05-14T15:10:00Z" data-completed-at="2026-05-14T15:30:00Z">
-        <div class="card-id">task-005</div>
-        <div class="fw-semibold">make board: port + directory + dark theme</div>
-        <div class="text-secondary card-phase">fix · board server</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 20m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 20m</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-006" data-blocked="false"
-           data-description="Updated skill Phase 1 to create kaizen/{feature-slug} branch before any commits; Phase 4 acceptance merges back to base with --no-ff. Resume logic checks current branch."
-           data-created-at="2026-05-14T15:30:00Z" data-started-at="2026-05-14T15:30:00Z" data-completed-at="2026-05-14T15:45:00Z">
-        <div class="card-id">task-006</div>
-        <div class="fw-semibold">Branch-per-feature workflow</div>
-        <div class="text-secondary card-phase">feat · skill</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-007" data-blocked="false"
-           data-description="Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (改), navbar 改 icon, manual ↻ refresh button."
-           data-created-at="2026-05-14T15:45:00Z" data-started-at="2026-05-14T15:45:00Z" data-completed-at="2026-05-14T16:15:00Z">
-        <div class="card-id">task-007</div>
-        <div class="fw-semibold">Kanban UX: scroll, tooltips, favicon, refresh</div>
-        <div class="text-secondary card-phase">feat · board</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 30m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 30m</span>
-        </div>
-      </div>
-
-      <div class="kaizen-card" data-task-id="task-008" data-blocked="false"
-           data-description="Fixed GitHub Pages: docs.yml trigger changed from main→master (repo uses master). Added base: "/kaizen-spec/" to VitePress config so assets resolve correctly on gh-pages subdirectory."
-           data-created-at="2026-05-14T16:15:00Z" data-started-at="2026-05-14T16:15:00Z" data-completed-at="2026-05-14T16:20:00Z">
-        <div class="card-id">task-008</div>
-        <div class="fw-semibold">GitHub Pages fix: master + base URL</div>
-        <div class="text-secondary card-phase">fix · docs deploy</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
-        </div>
-      </div>
-
       <div class="kaizen-card" data-task-id="task-009" data-blocked="false"
            data-description="Created board-preview.svg (dark-theme mock with all four columns, blocked Andon card, CT/LT badges, 改 navbar icon) and added it to README as the above-the-fold banner image."
            data-created-at="2026-05-14T16:20:00Z" data-started-at="2026-05-14T16:20:00Z" data-completed-at="2026-05-14T16:30:00Z">
         <div class="card-id">task-009</div>
         <div class="fw-semibold">README SVG kanban banner + docs favicon</div>
-        <div class="text-secondary card-phase">feat · docs</div>
+        <div class="text-secondary card-phase">feat</div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
         </div>
       </div>
-
+      <div class="kaizen-card" data-task-id="task-008" data-blocked="false"
+           data-description="Fixed GitHub Pages: docs.yml trigger changed from main→master (repo uses master). Added base: &#x27;/kaizen-spec/&#x27; to VitePress config so assets resolve correctly on gh-pages subdirectory."
+           data-created-at="2026-05-14T16:15:00Z" data-started-at="2026-05-14T16:15:00Z" data-completed-at="2026-05-14T16:20:00Z">
+        <div class="card-id">task-008</div>
+        <div class="fw-semibold">GitHub Pages fix: master branch trigger + base URL</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-007" data-blocked="false"
+           data-description="Scrollable column bodies (max-height calc 100vh-120px), column ? help tooltips, card hover two-column table (status/timestamps/CT/LT), inline SVG favicon (改), navbar 改 icon, manual ↻ refresh button."
+           data-created-at="2026-05-14T15:45:00Z" data-started-at="2026-05-14T15:45:00Z" data-completed-at="2026-05-14T16:15:00Z">
+        <div class="card-id">task-007</div>
+        <div class="fw-semibold">Kanban UX: scroll, ? tooltips, card hover, favicon, refresh</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 30m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 30m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-006" data-blocked="false"
+           data-description="Updated skill Phase 1 to create kaizen/{feature-slug} branch before any commits; Phase 4 acceptance merges back to base with --no-ff. Resume logic checks current branch."
+           data-created-at="2026-05-14T15:30:00Z" data-started-at="2026-05-14T15:30:00Z" data-completed-at="2026-05-14T15:45:00Z">
+        <div class="card-id">task-006</div>
+        <div class="fw-semibold">Branch-per-feature workflow in skill (kaizen/* branches)</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-005" data-blocked="false"
+           data-description="Fixed make board: auto port-finding via ss loop (default 8081), --directory flag so python serves .kaizen/ not repo root, dark theme default, network IP + SSH tunnel instructions."
+           data-created-at="2026-05-14T15:10:00Z" data-started-at="2026-05-14T15:10:00Z" data-completed-at="2026-05-14T15:30:00Z">
+        <div class="card-id">task-005</div>
+        <div class="fw-semibold">make board: port fix, --directory, dark theme, network/SSH</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 20m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 20m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-004" data-blocked="false"
+           data-description="Bootstrapped .kaizen/board.html (dark, Bootstrap 5, SortableJS, WIP limits, CT/LT timers, 5s auto-reload) and tasks.json as the persistent development kanban for this repo."
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:00Z" data-completed-at="2026-05-14T15:10:00Z">
+        <div class="card-id">task-004</div>
+        <div class="fw-semibold">Seed .kaizen/board.html for this repo&#x27;s backlog</div>
+        <div class="text-secondary card-phase">impl</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 26m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 26m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
+           data-description="Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion."
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:49:30Z">
+        <div class="card-id">task-001</div>
+        <div class="fw-semibold">CLAUDE.md + Makefile eval target (self-hosting loop)</div>
+        <div class="text-secondary card-phase">impl</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-002" data-blocked="false"
+           data-description="Wrote install.sh (curl/wget, INSTALL_DIR override, chmod +x). Promoted curl one-liner as Option A in getting-started.md, demoting git clone to Option B."
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:48:30Z">
+        <div class="card-id">task-002</div>
+        <div class="fw-semibold">install.sh curl install script + docs update</div>
+        <div class="text-secondary card-phase">impl</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 4m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 4m</span>
+        </div>
+      </div>
+      <div class="kaizen-card" data-task-id="task-003" data-blocked="false"
+           data-description="Replaced &#x27;Ralph-style continuity&#x27; jargon with a TPS→software mapping table: Muda→unshipped code, JIT→CI/CD, Jidoka→TDD, Poka-Yoke→typing/linting, Kaizen→Spec Kaizen, One-piece flow→Atomic Specs."
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:47:50Z">
+        <div class="card-id">task-003</div>
+        <div class="fw-semibold">Philosophy section rewrite (TPS mapping, drop Ralph-style)</div>
+        <div class="text-secondary card-phase">impl</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 3m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -266,6 +253,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 <script>
+  // ── Theme ──────────────────────────────────────────────────────────────────
   function toggleTheme() {
     const html = document.documentElement;
     html.setAttribute('data-bs-theme', html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark');
@@ -276,6 +264,7 @@
     if (saved) document.documentElement.setAttribute('data-bs-theme', saved);
   })();
 
+  // ── WIP enforcement ────────────────────────────────────────────────────────
   const COLUMN_HEADERS = {
     'in-progress': document.getElementById('header-in-progress'),
     'review':      document.getElementById('header-review'),
@@ -313,6 +302,7 @@
     new bootstrap.Toast(document.getElementById('wipToast'), { delay: 4000 }).show();
   }
 
+  // ── SortableJS setup ───────────────────────────────────────────────────────
   document.querySelectorAll('.column-body').forEach(col => {
     Sortable.create(col, {
       group: 'kaizen',
@@ -322,7 +312,9 @@
         const toCol = evt.to;
         const limit = parseInt(toCol.dataset.wipLimit, 10);
         const count = toCol.querySelectorAll('.kaizen-card').length;
+
         if (limit > 0 && count > limit) {
+          // Revert: move card back to source
           evt.from.insertBefore(evt.item, evt.from.children[evt.oldIndex] || null);
           showWipToast(toCol.closest('.column').querySelector('.column-header span').textContent.trim(), limit);
         }
@@ -333,6 +325,7 @@
 
   updateCounts();
 
+  // ── Lead Time / Cycle Time display ─────────────────────────────────────────
   function fmtDuration(ms) {
     if (!ms || ms < 0) return '—';
     const s = Math.round(ms / 1000);
@@ -349,15 +342,21 @@
       const ctEl = card.querySelector('.ct');
       const ltEl = card.querySelector('.lt');
       if (!ctEl || !ltEl) return;
+
       const now = Date.now();
       const createdMs = created ? new Date(created).getTime() : null;
       const startedMs = started ? new Date(started).getTime() : null;
       const completedMs = completed ? new Date(completed).getTime() : null;
+
+      // Cycle Time: started → completed (or now if in-progress)
       if (startedMs) {
-        ctEl.textContent = 'CT: ' + fmtDuration((completedMs || now) - startedMs);
+        const ct = (completedMs || now) - startedMs;
+        ctEl.textContent = 'CT: ' + fmtDuration(ct);
       }
+      // Lead Time: created → completed (or now if not yet done)
       if (createdMs) {
-        ltEl.textContent = 'LT: ' + fmtDuration((completedMs || now) - createdMs);
+        const lt = (completedMs || now) - createdMs;
+        ltEl.textContent = 'LT: ' + fmtDuration(lt);
       }
     });
   }
@@ -435,7 +434,40 @@
     });
   });
 
+  // ── Auto-reload (agents rewrite this file; browser picks up changes) ───────
   setInterval(() => { location.reload(); }, 5000);
 </script>
+
+<!--
+  AGENT INSTRUCTIONS — read before patching this file:
+
+  To move a card to a new column:
+    1. Cut the entire <div class="kaizen-card" ...> element
+    2. Paste it inside the target <div class="column-body" data-status="..."> element
+    3. Write atomically: write to board.html.tmp, then rename to board.html
+
+  To mark a card as blocked:
+    Set attribute data-blocked="true" on the card's <div class="kaizen-card">
+    The CSS will render the Andon badge automatically.
+
+  To add a new card (backlog task):
+    <div class="kaizen-card" data-task-id="{id}" data-blocked="false"
+         data-created-at="{ISO8601}" data-started-at="" data-completed-at="">
+      <div class="card-id">{id}</div>
+      <div class="fw-semibold">{title}</div>
+      <div class="text-secondary card-phase">{phase}</div>
+      <div class="card-times">
+        <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+        <span class="lt" title="Lead Time 交付周期">LT: —</span>
+      </div>
+    </div>
+
+  To update Lead Time / Cycle Time on a card when it moves to Done:
+    Set data-completed-at="{ISO8601}" on the card element.
+    The JS will compute and display CT and LT automatically.
+
+  To update the last-updated timestamp:
+    Replace the content of <span id="last-updated">
+-->
 </body>
 </html>

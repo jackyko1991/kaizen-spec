@@ -25,9 +25,9 @@ Before doing anything else, classify the incoming request:
 - Any task the user explicitly calls "quick", "just", or "simple"
 
 For TRIVIAL requests: do the task directly. Do not write `.kaizen/spec.md`. Do not run phases.
-But **always** add a task card to `.kaizen/tasks.json` and `.kaizen/board.html` before starting,
-and mark it done when complete. Every piece of work must be visible on the board — this is the
-principle of Standard Work (標準作業): nothing happens outside the system.
+But **always** add a task card to `.kaizen/tasks.json` before starting and mark it done when
+complete, then run `python3 scripts/render_board.py` to regenerate the board. Every piece of
+work must be visible — this is Standard Work (標準作業): nothing happens outside the system.
 
 Tell the user: "Quick task — skipping full workflow but adding a board card." then act.
 
@@ -281,7 +281,14 @@ Write `.kaizen/tasks.json` using this schema:
 
 ### Step 2: Initialise the kanban board
 
-Copy `templates/board.html` to `.kaizen/board.html`. Replace the placeholder feature name with the actual feature name. Populate the Backlog column with one card per task from `tasks.json`.
+After writing `tasks.json`, run:
+
+```bash
+python3 scripts/render_board.py
+```
+
+This reads `tasks.json` and `templates/board.html` and writes `.kaizen/board.html`. Never
+edit `board.html` directly — always update `tasks.json` first, then re-run the script.
 
 Tell the user: "Board is live at `.kaizen/board.html` — open it in a browser to watch progress."
 
@@ -413,12 +420,19 @@ Both are derived from `tasks.json` timestamps and logged on task-done events.
 
 ## Board Update Rules
 
-When updating `.kaizen/board.html`:
+**Never edit `.kaizen/board.html` directly.** It is fully generated — hand edits are
+overwritten the next time the render script runs.
 
-- **Card move**: change the card's parent `<div data-status="...">` to the target column `<div>`
-- **Blocked card**: add `data-blocked="true"` to the card element
-- **WIP exceeded**: the JS in the board handles this client-side — agents do NOT need to enforce it in HTML, only in `tasks.json`
-- **Write atomically**: write to `.kaizen/board.html.tmp` then rename to `.kaizen/board.html`
+The single workflow for all board changes:
+1. Edit `.kaizen/tasks.json` (update `wip_column`, `status`, timestamps, `blocked_reason`, etc.)
+2. Run `python3 scripts/render_board.py` — board is regenerated atomically
+
+Specific state changes in `tasks.json`:
+- **Card move**: change `wip_column` to the target column (`"backlog"`, `"in-progress"`, `"review"`, `"done"`)
+- **Blocked card**: set `"blocked_reason": "description of blocker"` (and `"status": "blocked"`)
+- **Unblocked**: set `"blocked_reason": null`
+- **Task done**: set `"status": "done"`, `"wip_column": "done"`, `"completed_at": "{ISO8601}"`, `"cycle_time_s"`, `"lead_time_s"`
+- **WIP exceeded**: enforced client-side in board JS — only update `tasks.json`, not HTML
 
 ---
 
