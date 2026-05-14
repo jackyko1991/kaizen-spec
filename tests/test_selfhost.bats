@@ -113,3 +113,52 @@ REPO_ROOT="/home/jackyko/Projects/kaizen-spec"
 @test "h1: templates/board.html exists in repo" {
   [ -f "$REPO_ROOT/templates/board.html" ]
 }
+
+# ---------------------------------------------------------------------------
+# i) Render script: scripts/render_board.py exists and runs without error
+# ---------------------------------------------------------------------------
+
+@test "i1: scripts/render_board.py exists" {
+  [ -f "$REPO_ROOT/scripts/render_board.py" ]
+}
+
+@test "i2: render_board.py runs and produces .kaizen/board.html" {
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$REPO_ROOT/.kaizen/tasks.json" \
+    --out /tmp/board-test-output.html
+  [ -f /tmp/board-test-output.html ]
+  rm -f /tmp/board-test-output.html
+}
+
+@test "i3: rendered board contains all task IDs from tasks.json" {
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$REPO_ROOT/.kaizen/tasks.json" \
+    --out /tmp/board-test-ids.html
+  # Every task-id in tasks.json must appear in the rendered HTML
+  python3 - <<'PYEOF'
+import json, sys
+tasks = json.loads(open("/home/jackyko/Projects/kaizen-spec/.kaizen/tasks.json").read())["tasks"]
+html  = open("/tmp/board-test-ids.html").read()
+missing = [t["id"] for t in tasks if t["id"] not in html]
+if missing:
+    print("Missing task IDs:", missing, file=sys.stderr)
+    sys.exit(1)
+PYEOF
+  local rc=$?
+  rm -f /tmp/board-test-ids.html
+  [ $rc -eq 0 ]
+}
+
+# ---------------------------------------------------------------------------
+# j) CI docs workflow: no dead links in docs/ (local vitepress build check)
+# ---------------------------------------------------------------------------
+
+@test "j1: docs/.vitepress/config.mts exists (not config.ts — ESM fix)" {
+  [ -f "$REPO_ROOT/docs/.vitepress/config.mts" ]
+  [ ! -f "$REPO_ROOT/docs/.vitepress/config.ts" ]
+}
+
+@test "j2: docs/guide/getting-started.md contains no clickable localhost:5173 link (causes VitePress dead-link error)" {
+  # Only Markdown link syntax [text](url) is checked by VitePress — plain text/backtick URLs are fine
+  ! grep -qE "\[.*\]\(http://localhost" "$REPO_ROOT/docs/guide/getting-started.md"
+}
