@@ -4,8 +4,7 @@ An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agent
 
 **The skill is only done when it can be used to develop itself.**
 
-📖 **[Documentation](https://jackyko1991.github.io/kaizen-spec/)** · 🐙 **[GitHub](https://github.com/jackyko1991/kaizen-spec)** · 📄 **[MIT License](LICENSE)**
-
+📖 **[Documentation](https://jackyko1991.github.io/kaizen-spec/)** 
 ---
 
 ## What it does
@@ -41,11 +40,31 @@ ln -s ~/.claude/skills/kaizen-spec/.claude/commands/kaizen-spec.md ~/.claude/com
 
 ### 3. Use it
 
-Open any project in Claude Code and run:
+Open any project in your coding agent and run:
 
 ```
 /kaizen-spec
 ```
+
+---
+
+## Monitor progress (kanban board)
+
+Each `/kaizen-spec` cycle generates a live kanban board at `.kaizen/board.html`. On a server (no local browser), serve it with:
+
+```bash
+make board
+# → http://localhost:8080/board.html
+# Set PORT=9090 to use a different port
+```
+
+Or directly with Python:
+
+```bash
+cd .kaizen && python3 -m http.server 8080
+```
+
+The board auto-reloads every 5 seconds as agents move cards.
 
 ---
 
@@ -62,17 +81,19 @@ Or visit the GitHub Pages site once deployed.
 
 ## Philosophy
 
-kaizen-spec is grounded in the Toyota Production System (TPS) as translated to software by Mary and Tom Poppendieck in *Lean Software Development*.
+kaizen-spec is grounded in the Toyota Production System (TPS) as translated to software by Mary and Tom Poppendieck in *Lean Software Development*. Each Toyota concept maps directly to a software practice enforced by this skill:
 
-- **Muda (無駄) → Unshipped code is waste.** In TPS, inventory piling up on the factory floor is the canonical waste. In software, it is code written but not deployed — accruing maintenance cost and obsolescence risk.
-- **Just-in-Time (JIT) → CI/CD.** Features are developed only when pulled by demand, and immediately enter the pipeline for validation. Push-based big-batch releases are the software equivalent of overproduction.
-- **Jidoka (自働化) → TDD.** When code breaks an existing feature, the test suite pulls the Andon cord and stops the line — exactly as a Toyota worker stops the assembly line on detecting a defect. Defects never reach production.
-- **Poka-Yoke (防呆) → Static typing, linting, schema validation.** Errors are made impossible at the moment of writing, not caught at runtime.
-- **Kaizen → Spec Kaizen.** When agent-generated tests fail, the failure feeds back into the spec. The spec itself improves — not just the code.
-- **One-piece flow → Atomic Specs.** One agent, one task, one responsibility. Small atomic specs maximise agent accuracy and shorten Cycle Time.
-- **Decide late → Lean Spec.** Avoid big-upfront design. Define only what the next task needs (Just-in-Time Spec); keep the rest as high-level interface definitions until tests and data demand specifics.
-- **State in files, not memory → Fresh-context continuity.** Agents restart; files don't. Everything important is written to `.kaizen/` so any fresh agent can resume without asking the user to re-explain context.
+| Toyota / TPS | JP | Software equivalent | What breaks without it |
+|---|---|---|---|
+| Muda — waste elimination | 無駄 | Unshipped code is inventory waste | Code accrues maintenance cost and obsolescence risk before it reaches users |
+| Just-in-Time (JIT) | ジャスト・イン・タイム | CI/CD — pull-based delivery | Big-batch releases accumulate risk; defects compound before detection |
+| Jidoka — autonomation | 自働化 | TDD — tests pull the Andon cord | Defects flow downstream into production; no sensor to stop the line |
+| Poka-Yoke — mistake-proofing | 防呆 | Static typing, linting, schema validation | Errors are caught at runtime or by users instead of at the point of writing |
+| Kaizen — continuous improvement | 改善 | Spec Kaizen — test failures feed back into the spec | Specs drift from reality; agents repeatedly solve the wrong problem |
+| One-piece flow | 一個流 | Atomic Specs — one agent, one task, one responsibility | Large context windows reduce agent accuracy; long tasks can't be parallelised |
+| Decide late | — | Lean Spec — Just-in-Time design | Big-upfront specs become stale before implementation; over-engineering is baked in |
+| Standard Work | 標準作業 | State in `.kaizen/` files, not agent memory | Fresh-context agents cannot resume; users must re-explain context from scratch |
 
 ## License
 
-MIT
+**[MIT License](LICENSE)**

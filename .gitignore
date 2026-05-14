@@ -64,3 +64,7 @@ build/
 *.orig
 board.html.tmp
 tasks.json.tmp
+
+# .claude/ is intentionally tracked: commands/, hooks/, settings.json are part of the skill repo
+# Only ignore the skill-creator workspace cache if present
+.claude/projects/

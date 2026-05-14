@@ -1,0 +1,22 @@
+[
+  {"query": "i want to add a dark mode toggle to my react app, it needs to persist across sessions using localStorage", "should_trigger": true},
+  {"query": "we have a bug in prod — our checkout flow is throwing a 500 when users try to apply a discount code. happens on /api/cart/apply-coupon. need this fixed with a test so it doesnt regress", "should_trigger": true},
+  {"query": "need to build a new REST endpoint GET /api/reports/monthly that queries postgres and returns JSON. no tests exist yet for this module", "should_trigger": true},
+  {"query": "im starting a new python cli tool with click, need to build out the export command that writes data to csv or json. havent written any tests yet", "should_trigger": true},
+  {"query": "can you help me plan out adding auth to my express app? i want to think through the spec before touching any code", "should_trigger": true},
+  {"query": "the login endpoint returns 200 even when credentials are wrong instead of 401. this is a security issue and i need a proper test for it", "should_trigger": true},
+  {"query": "i need to refactor the data processing pipeline in src/pipeline.py — it currently modifies state in place which makes testing hard. want to do this properly with tests", "should_trigger": true},
+  {"query": "build me a webhook handler for stripe payment events. needs to verify the signature, handle payment_intent.succeeded and payment_intent.failed. tests required", "should_trigger": true},
+  {"query": "we're adding a new feature to the dashboard — users should be able to export their data as PDF. need full workflow, spec, tests, the works", "should_trigger": true},
+  {"query": "my team wants to adopt spec-driven development for a new microservice we're starting. can you help set up the process?", "should_trigger": true},
+  {"query": "can you just rename getUserById to fetchUserById throughout the codebase", "should_trigger": false},
+  {"query": "what does the useMemo hook do in react", "should_trigger": false},
+  {"query": "fix the typo in the error message on line 42 of auth.py — 'recieved' should be 'received'", "should_trigger": false},
+  {"query": "can you explain how the authentication middleware works in this codebase", "should_trigger": false},
+  {"query": "format this json file so its readable", "should_trigger": false},
+  {"query": "delete the old migration files in db/migrations/ that are older than 2024", "should_trigger": false},
+  {"query": "i want to add error handling to the existing fetchUser function — just wrap it in a try catch and log the error", "should_trigger": false},
+  {"query": "search the codebase for all places where we call the deprecated sendEmail function", "should_trigger": false},
+  {"query": "update the copyright year in the footer component from 2024 to 2026", "should_trigger": false},
+  {"query": "can you review this PR and tell me if the logic looks correct", "should_trigger": false}
+]

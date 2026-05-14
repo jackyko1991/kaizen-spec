@@ -33,7 +33,7 @@
   <span class="navbar-brand fw-bold">kaizen-spec</span>
   <span class="ms-2 text-secondary">Self-Hosting &amp; Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T14:48:30Z</span>
+    <span id="last-updated">Updated: 2026-05-14T14:49:49Z</span>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
 </nav>
@@ -69,19 +69,7 @@
       <span class="badge bg-primary wip-badge" id="count-in-progress">0</span>
     </div>
     <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
-
-      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
-           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="">
-        <div class="card-id">task-001</div>
-        <div class="fw-semibold">CLAUDE.md + Makefile eval target</div>
-        <div class="text-secondary card-phase">impl · self-hosting loop</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
-          <span class="lt" title="Lead Time 交付周期">LT: —</span>
-        </div>
-      </div>
-
-
+      <!-- cards injected here -->
     </div>
   </div>
 
@@ -103,6 +91,17 @@
       <span class="badge bg-success wip-badge" id="count-done">0</span>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+
+      <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
+           data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:49:30Z">
+        <div class="card-id">task-001</div>
+        <div class="fw-semibold">CLAUDE.md + Makefile eval target</div>
+        <div class="text-secondary card-phase">impl · self-hosting loop</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 300s</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 331s</span>
+        </div>
+      </div>
 
       <div class="kaizen-card" data-task-id="task-002" data-blocked="false"
            data-created-at="2026-05-14T14:43:59Z" data-started-at="2026-05-14T14:44:30Z" data-completed-at="2026-05-14T14:48:30Z">

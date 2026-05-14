@@ -1,6 +1,7 @@
 ---
 name: kaizen-spec
 description: "Spec-driven, TDD-enforced, kaizen-informed agentic development workflow for Claude Code. Guides through five gated phases: Spec Alignment → Test Strategy → Implementation → Acceptance → Docs. TRIGGER when: user wants to build a new feature, fix a bug with full traceability, run a structured development cycle, or use /kaizen-spec explicitly. SKIP: quick one-liner edits, read-only tasks (explain/search/refactor without tests), or when user explicitly wants to skip spec alignment."
+license: MIT. Full terms in LICENSE.
 ---
 
 # /kaizen-spec — Spec-Driven Kaizen Development Skill
@@ -36,14 +37,16 @@ If unclear, ask the user: "Is this a quick one-off change, or do you want the fu
 
 ---
 
-## Hard Constraints
+## Principles (the why behind the workflow)
 
-1. **No code before spec**: Do not write any implementation code until `.kaizen/spec.md` is committed to git.
-2. **Tests must be red first**: Do not spawn implementation agents until the test-writer agent confirms all tests fail.
-3. **No skipped phases**: Each phase must complete before the next begins.
-4. **All options via AskUserQuestion**: Never present choices as prose — always use the `AskUserQuestion` tool with structured options and a recommended choice.
-5. **Explain before asking**: If a concept may be unfamiliar (WIP limits, Andon cord, syslog, etc.), explain it in plain terms before presenting the AskUserQuestion.
-6. **State in files**: All state goes in `.kaizen/` (git-tracked). Never rely on agent memory for continuity.
+These aren't arbitrary rules — they exist because experience shows what goes wrong without them:
+
+- **Spec before code** — agents that start coding immediately solve the wrong problem half the time. A 5-minute alignment saves hours of rework (Muda elimination).
+- **Tests red before green** — a test that was never red has never proven it can catch the defect (Jidoka: the sensor must be tested). Write tests first, confirm they fail, then implement.
+- **Phases gate each other** — skipping a phase hides problems downstream where they cost more to fix. The gate is the quality check.
+- **AskUserQuestion for all choices** — prose options are easy to overlook; structured choices with a recommendation let users accept quickly or override deliberately.
+- **Explain unfamiliar terms first** — if the user doesn't know what "WIP limit" means, the choice is meaningless. Explain, then ask.
+- **State in `.kaizen/` files, not agent memory** — agents restart; files don't. Fresh-context continuity is only possible if everything important was written down (Standard Work — 標準作業).
 
 ---
 
@@ -189,23 +192,8 @@ Present as `AskUserQuestion` with the recommended option first. Always include "
 
 ### Step 3: Spawn test-writer agent
 
-Spawn a subagent with this prompt (fill in the blanks):
-
-```
-You are a test-writer agent for the kaizen-spec skill.
-
-Feature spec: read .kaizen/spec.md carefully.
-Test framework: {chosen framework}
-Install command: {e.g. npm install -D @playwright/test}
-
-Your job:
-1. Install the test framework if not already present.
-2. Write E2E and/or integration tests that cover every acceptance criterion in the spec.
-3. Tests MUST all fail when run now (no implementation exists yet).
-4. Write tests to: tests/e2e/{feature-slug}.spec.{ext} (or equivalent for the framework).
-5. Run the tests and confirm they all fail. Report: "N tests written, all failing."
-6. Do NOT write any implementation code.
-```
+→ Use the **Test-Writer Agent** prompt template in `references/agent-prompts.md`.
+  Fill in the chosen framework and install command before spawning.
 
 ### Step 4: Write test-strategy.md
 
@@ -347,34 +335,10 @@ If the spec requires visual or user-interaction checks (e.g. UI rendering, keybo
 
 ### Step 3: 5S — Seiso (清掃) Cleanup
 
-Before committing acceptance, run a targeted refactor pass to eliminate Muda (無駄/waste)
-from the implementation code. The goal is **token reduction**: less code for future agents
-to load means faster, cheaper sessions.
+Before committing acceptance, run a targeted refactor pass. The goal is token reduction:
+less code means less context for future agents to load — faster, cheaper sessions (Muda elimination).
 
-Spawn a cleanup agent with this prompt:
-
-```
-You are a 5S cleanup agent (Seiso — 清掃/Shine). Run immediately after acceptance tests pass.
-
-Read the files changed in this feature (git diff HEAD~1..HEAD or the task list in tasks.json).
-
-Apply these changes ONLY — do not refactor unrelated code:
-1. Remove commented-out code and dead code paths (Seiri — 整理/Sort)
-2. Remove verbose comments that just describe WHAT the code does (the code already says that)
-   Keep only comments that explain WHY — hidden constraints, non-obvious invariants
-3. Remove unused imports and variables
-4. Apply consistent naming where the implementation introduced inconsistency (Seiton — 整頓)
-5. Remove temp files and build artifacts from .kaizen/ (*.tmp, *.bak)
-
-Do NOT:
-- Change behaviour
-- Change public interfaces
-- Refactor code outside the feature's changed files
-- Add new comments or documentation (Phase 5 handles that)
-
-Run the tests after cleanup. If any fail, revert the cleanup change that broke them.
-Report: "5S cleanup complete. Removed N lines of Muda. Tests still passing."
-```
+→ Use the **5S Cleanup Agent** prompt template in `references/agent-prompts.md`.
 
 ### Step 4: Log acceptance
 
@@ -396,32 +360,7 @@ Tell the user: "Acceptance complete. All {N} tests pass. 5S cleanup done. Moving
 
 **Goal:** Write a VitePress doc page for the feature. Start this agent at the same time as the first implementation agent in Phase 3.
 
-Spawn a doc agent with this prompt:
-
-```
-You are a documentation agent for the kaizen-spec skill.
-
-Read .kaizen/spec.md carefully.
-
-Write a VitePress documentation page for this feature at:
-docs/guide/{feature-slug}.md
-
-The page must include:
-- A one-paragraph overview of what the feature does
-- A "Usage" section with a concrete example
-- A "Configuration" section if the feature has options
-- A "How it works" section (brief — 3–5 sentences)
-
-Also update docs/.vitepress/config.ts:
-- Add an entry for the new page in the appropriate sidebar section
-
-Use plain language. No jargon without explanation. Write for a developer who has never
-used kaizen-spec before.
-
-Commit when done:
-  git add docs/
-  git commit -m "kaizen: docs written for {feature name}"
-```
+→ Use the **Doc Agent** prompt template in `references/agent-prompts.md`.
 
 ---
 
