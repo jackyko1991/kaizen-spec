@@ -182,5 +182,6 @@
   "wip_limits": {
     "in-progress": 3,
     "review": 2
-  }
+  },
+  "done_visible_max": 10
 }

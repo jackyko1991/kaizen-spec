@@ -67,9 +67,27 @@ def render_card(task):
     )
 
 
-def inject_cards(html, col_status, tasks):
+def render_archive_stub(hidden_count):
+    """Faded footer card shown when Done cards are capped."""
+    return (
+        f'      <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">\n'
+        f'        {hidden_count} older card{"s" if hidden_count != 1 else ""} archived — see tasks.json\n'
+        f'      </div>'
+    )
+
+
+def inject_cards(html, col_status, tasks, done_max=None):
     """Replace <!-- cards injected here --> inside the column body for col_status."""
-    cards_html = '\n'.join(render_card(t) for t in tasks)
+    visible = tasks
+    hidden  = 0
+    if col_status == 'done' and done_max and len(tasks) > done_max:
+        visible = tasks[:done_max]
+        hidden  = len(tasks) - done_max
+
+    parts = [render_card(t) for t in visible]
+    if hidden:
+        parts.append(render_archive_stub(hidden))
+    cards_html = '\n'.join(parts)
     pattern = (
         r'(<div[^>]+\bid="body-' + re.escape(col_status) + r'"[^>]*>)'
         r'[ \t]*\n?[ \t]*<!-- cards injected here -->[ \t]*\n?'
@@ -123,8 +141,9 @@ def main():
     for col in columns:
         col_map[col].sort(key=sort_key, reverse=True)
 
+    done_max = data.get('done_visible_max')
     for col in columns:
-        html = inject_cards(html, col, col_map[col])
+        html = inject_cards(html, col, col_map[col], done_max=done_max if col == 'done' else None)
 
     # Atomic write
     tmp = out_path.with_name(out_path.name + '.tmp')
@@ -132,9 +151,11 @@ def main():
     tmp.rename(out_path)
 
     counts = {c: len(col_map[c]) for c in columns}
+    done_visible = min(counts['done'], done_max) if done_max else counts['done']
+    done_hidden  = counts['done'] - done_visible
     print(f'Board rendered → {out_path}')
     print(f'  backlog={counts["backlog"]}  in-progress={counts["in-progress"]}  '
-          f'review={counts["review"]}  done={counts["done"]}')
+          f'review={counts["review"]}  done={done_visible} (+{done_hidden} archived)')
 
 
 if __name__ == '__main__':

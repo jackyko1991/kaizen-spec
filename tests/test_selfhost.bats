@@ -130,22 +130,64 @@ REPO_ROOT="/home/jackyko/Projects/kaizen-spec"
   rm -f /tmp/board-test-output.html
 }
 
-@test "i3: rendered board contains all task IDs from tasks.json" {
+@test "i3: rendered board contains all visible task IDs (respects done_visible_max cap)" {
   python3 "$REPO_ROOT/scripts/render_board.py" \
     --tasks "$REPO_ROOT/.kaizen/tasks.json" \
     --out /tmp/board-test-ids.html
-  # Every task-id in tasks.json must appear in the rendered HTML
   python3 - <<'PYEOF'
 import json, sys
-tasks = json.loads(open("/home/jackyko/Projects/kaizen-spec/.kaizen/tasks.json").read())["tasks"]
+
+data  = json.loads(open("/home/jackyko/Projects/kaizen-spec/.kaizen/tasks.json").read())
+tasks = data["tasks"]
+cap   = data.get("done_visible_max")
 html  = open("/tmp/board-test-ids.html").read()
-missing = [t["id"] for t in tasks if t["id"] not in html]
+
+# Determine which done tasks are visible (newest-first, capped)
+def sort_key(t):
+    return t.get("completed_at") or t.get("started_at") or t.get("created_at") or ""
+
+done_tasks    = sorted([t for t in tasks if t.get("wip_column") == "done"], key=sort_key, reverse=True)
+visible_done  = set(t["id"] for t in (done_tasks[:cap] if cap else done_tasks))
+non_done      = [t for t in tasks if t.get("wip_column") != "done"]
+
+expected = [t["id"] for t in non_done] + list(visible_done)
+missing  = [tid for tid in expected if tid not in html]
 if missing:
-    print("Missing task IDs:", missing, file=sys.stderr)
+    print("Missing visible task IDs:", missing, file=sys.stderr)
     sys.exit(1)
 PYEOF
   local rc=$?
   rm -f /tmp/board-test-ids.html
+  [ $rc -eq 0 ]
+}
+
+@test "i4: archived Done cards (beyond done_visible_max) are absent from board HTML" {
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$REPO_ROOT/.kaizen/tasks.json" \
+    --out /tmp/board-test-archive.html
+  python3 - <<'PYEOF'
+import json, sys
+
+data  = json.loads(open("/home/jackyko/Projects/kaizen-spec/.kaizen/tasks.json").read())
+cap   = data.get("done_visible_max")
+if not cap:
+    sys.exit(0)  # no cap configured — nothing to check
+
+tasks = data["tasks"]
+def sort_key(t):
+    return t.get("completed_at") or t.get("started_at") or t.get("created_at") or ""
+
+done_tasks = sorted([t for t in tasks if t.get("wip_column") == "done"], key=sort_key, reverse=True)
+archived   = done_tasks[cap:]
+html       = open("/tmp/board-test-archive.html").read()
+
+present = [t["id"] for t in archived if t["id"] in html]
+if present:
+    print("Archived task IDs should not appear in board:", present, file=sys.stderr)
+    sys.exit(1)
+PYEOF
+  local rc=$?
+  rm -f /tmp/board-test-archive.html
   [ $rc -eq 0 ]
 }
 
