@@ -11,6 +11,24 @@
   "hooks": {
     "PostToolUse": [
       {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/jackyko/Projects/kaizen-spec/.claude/hooks/update-board.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash /home/jackyko/Projects/kaizen-spec/.claude/hooks/update-board.sh"
+          }
+        ]
+      },
+      {
         "matcher": "Agent",
         "hooks": [
           {

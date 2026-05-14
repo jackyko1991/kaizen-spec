@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
-set -e
+# PostToolUse hook — re-renders .kaizen/board.html when tasks.json is written.
+# Receives tool call JSON on stdin. Runs render_board.py if tasks.json was touched.
 
 REPO="/home/jackyko/Projects/kaizen-spec"
-BOARD="$REPO/.kaizen/board.html"
+TASKS="$REPO/.kaizen/tasks.json"
+SCRIPT="$REPO/scripts/render_board.py"
 
-[ -f "$BOARD" ] || exit 0
+[ -f "$TASKS" ] || exit 0
+[ -f "$SCRIPT" ] || exit 0
 
-NOW="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-sed -i "s|Updated: [0-9T:Z-]*|Updated: $NOW|g" "$BOARD"
+# Read stdin (tool call JSON) and check if tasks.json was the target
+INPUT="$(cat)"
+if echo "$INPUT" | grep -q "tasks.json"; then
+    python3 "$SCRIPT" >/dev/null 2>&1 || true
+fi
 
 exit 0
