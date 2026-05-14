@@ -136,6 +136,38 @@
       "completed_at": "2026-05-14T16:30:00Z",
       "cycle_time_s": 600,
       "lead_time_s": 600
+    },
+    {
+      "id": "task-010",
+      "title": "Playwright regression tests for kanban board (14 tests)",
+      "phase": "test",
+      "status": "done",
+      "agent": "test-writer-agent",
+      "wip_column": "done",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "Full Playwright test suite covering all 4 kanban columns: structure, card hover tooltips, column ? tooltips, WIP enforcement, theme toggle. Fixed 2 bugs: col ReferenceError + Bootstrap sanitizer.",
+      "created_at": "2026-05-14T16:30:00Z",
+      "started_at": "2026-05-14T16:30:00Z",
+      "completed_at": "2026-05-14T16:33:08Z",
+      "cycle_time_s": 188,
+      "lead_time_s": 188
+    },
+    {
+      "id": "task-011",
+      "title": "GitHub Pages docs site regression test (Playwright)",
+      "phase": "test",
+      "status": "done",
+      "agent": "orchestrator",
+      "wip_column": "done",
+      "depends_on": ["task-010"],
+      "blocked_reason": null,
+      "description": "Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible.",
+      "created_at": "2026-05-14T16:34:00Z",
+      "started_at": "2026-05-14T16:34:00Z",
+      "completed_at": "2026-05-14T16:35:00Z",
+      "cycle_time_s": 60,
+      "lead_time_s": 60
     }
   ],
   "wip_limits": {

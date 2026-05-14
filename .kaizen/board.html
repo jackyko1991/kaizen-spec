@@ -52,7 +52,7 @@
   </span>
   <span class="ms-2 text-secondary">Development Board</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T15:28:45Z</span>
+    <span id="last-updated">Updated: 2026-05-14T16:35:00Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -115,6 +115,30 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+
+      <div class="kaizen-card" data-task-id="task-011" data-blocked="false"
+           data-description="Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible."
+           data-created-at="2026-05-14T16:34:00Z" data-started-at="2026-05-14T16:34:00Z" data-completed-at="2026-05-14T16:35:00Z">
+        <div class="card-id">task-011</div>
+        <div class="fw-semibold">GitHub Pages docs regression test</div>
+        <div class="text-secondary card-phase">test · docs deploy</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 1m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 1m</span>
+        </div>
+      </div>
+
+      <div class="kaizen-card" data-task-id="task-010" data-blocked="false"
+           data-description="Full Playwright test suite covering all 4 kanban columns: structure (4), card hover tooltips (4), column ? tooltips (2), WIP enforcement (2), theme toggle (2). Fixed 2 bugs: col ReferenceError + Bootstrap sanitizer stripping tables."
+           data-created-at="2026-05-14T16:30:00Z" data-started-at="2026-05-14T16:30:00Z" data-completed-at="2026-05-14T16:33:08Z">
+        <div class="card-id">task-010</div>
+        <div class="fw-semibold">Playwright kanban regression tests (14)</div>
+        <div class="text-secondary card-phase">test · kanban board</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 3m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
+        </div>
+      </div>
 
       <div class="kaizen-card" data-task-id="task-001" data-blocked="false"
            data-description="Created CLAUDE.md declaring self-hosting behaviour, Makefile with eval/board/install-bats targets, and a PostToolUse Claude Code hook that updates the board timestamp on every agent completion."
