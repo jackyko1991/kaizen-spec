@@ -7,3 +7,6 @@
 2026-05-14T14:49:30Z INFO [kaizen] phase=implementation task=task-001 agent=task-001-agent status=done cycle_time=300s lead_time=331s
 2026-05-14T14:54:43Z INFO [kaizen] phase=acceptance step=5s lines_removed=10 tests=passing
 2026-05-14T15:10:00Z INFO [kaizen] phase=acceptance status=done duration=1561s tests=13
+2026-05-14T16:33:08Z INFO [kaizen] phase=test feature="Playwright Kanban Regression Tests" count=14 framework=playwright status=all_green
+2026-05-14T16:33:08Z INFO [kaizen] phase=acceptance feature="Playwright Kanban Regression Tests" status=done tests=14 duration=6s
+2026-05-14T16:34:00Z INFO [kaizen] phase=acceptance step=5s lines_removed=0 note="test files are lean, no cleanup needed"
