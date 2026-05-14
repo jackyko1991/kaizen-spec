@@ -1,0 +1,22 @@
+{
+  "eval_id": 2,
+  "eval_name": "express-404-bug-fix",
+  "prompt": "There's a bug in my Express.js API — the /users/:id endpoint returns 200 with an empty body instead of 404 when the user doesn't exist. I need this fixed properly with tests.",
+  "assertions": [
+    {
+      "id": "2.1",
+      "text": "Phase 1 scoped spec to bug fix, not a new feature (narrow scope, no feature creep)",
+      "discriminating": true
+    },
+    {
+      "id": "2.2",
+      "text": "Failing test written to reproduce the bug BEFORE the fix is implemented",
+      "discriminating": true
+    },
+    {
+      "id": "2.3",
+      "text": "Acceptance criterion tied to test passing (not just 'looks right')",
+      "discriminating": true
+    }
+  ]
+}

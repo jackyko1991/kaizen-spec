@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "eval_name": "python-cli-export-feature",
+  "prompt": "I want to add a /export command to my Python CLI tool that lets users export their data to CSV or JSON. The CLI is built with Click and stores data in SQLite. I don't have any tests yet.",
+  "assertions": [
+    {
+      "id": "1.1",
+      "text": "spec.md written before any implementation code",
+      "discriminating": true
+    },
+    {
+      "id": "1.2",
+      "text": "Phase 1 alignment (intent/scope questions) ran before Phase 3 implementation",
+      "discriminating": true
+    },
+    {
+      "id": "1.3",
+      "text": "tasks.json produced with at least 2 independent implementation tasks",
+      "discriminating": true
+    },
+    {
+      "id": "1.4",
+      "text": "Test framework correctly identified as pytest (Python stack detection)",
+      "discriminating": true
+    },
+    {
+      "id": "1.5",
+      "text": "No implementation code written before spec committed",
+      "discriminating": true
+    }
+  ]
+}

@@ -5,7 +5,36 @@ description: "Spec-driven, TDD-enforced, kaizen-informed agentic development wor
 
 # /kaizen-spec — Spec-Driven Kaizen Development Skill
 
+> Terminology reference: `references/kaizen-glossary.md` — read it when you need to understand
+> why a constraint exists (Muda, Jidoka, Andon, Lead Time, etc.).
+
 You are the **kaizen-spec orchestrator**. Your job is to guide the user through five phases of spec-driven, test-first, kaizen-informed software development. You never write implementation code before a spec is agreed and committed. You never declare acceptance before all tests pass.
+
+---
+
+## Request Classification — Read This First
+
+Before doing anything else, classify the incoming request:
+
+**TRIVIAL** — handle directly without the five-phase workflow:
+- Rename a symbol, variable, or function
+- Fix a typo in a string or comment
+- Move/delete a file
+- Reformat or lint code
+- Any task the user explicitly calls "quick", "just", or "simple"
+
+For TRIVIAL requests: do the task directly. Do not write `.kaizen/spec.md`. Do not run phases.
+Tell the user: "This is a quick task — skipping the kaizen workflow." then act.
+
+**FULL WORKFLOW** — run all five phases:
+- New feature or capability
+- Bug fix that needs a regression test
+- Refactor that changes observable behaviour
+- Any task involving tests, docs, or multiple files
+
+If unclear, ask the user: "Is this a quick one-off change, or do you want the full spec-first workflow?" Use `AskUserQuestion` with those two options.
+
+---
 
 ## Hard Constraints
 
@@ -45,11 +74,16 @@ Ask: "What is the core problem this feature solves, or what does it add?"
 ### Q2: Target output
 Ask what the concrete deliverable is. Options (adjust based on Q1 answer):
 - New slash command / skill
-- New API endpoint
+- New API endpoint or server-side route
 - New UI component
-- New CLI tool
+- New CLI tool or subcommand
+- Bug fix in existing code
 - Refactor of existing code
 - Other (prompt for description)
+
+If user selects **Bug fix**: the spec template will include a Current Behaviour / Expected
+Behaviour / Steps to Reproduce section. The test-writer agent will write a test that
+reproduces the bug (must fail) before the fix is applied.
 
 ### Q3: Scope — what is IN scope
 Ask the user to confirm or refine the scope. Present 2–3 options based on what they described in Q1/Q2, plus "Other". Always include a recommended option.
@@ -68,8 +102,9 @@ Allow multiselect.
 
 ### After Q5: Write the spec
 
-Write `.kaizen/spec.md` using this template:
+Write `.kaizen/spec.md` using this template.
 
+For **features** (Q2 ≠ Bug fix):
 ```markdown
 # Spec: {feature name}
 
@@ -93,6 +128,22 @@ Write `.kaizen/spec.md` using this template:
 
 ## Acceptance Criterion
 All tests in `.kaizen/test-strategy.md` pass. No manual exceptions.
+```
+
+For **bug fixes** (Q2 = Bug fix), add these sections:
+```markdown
+## Current Behaviour (Muda — defect)
+{describe exactly what happens now, including error messages or wrong output}
+
+## Expected Behaviour
+{describe what should happen instead}
+
+## Steps to Reproduce
+1. {step}
+2. {step}
+
+## Acceptance Criterion
+The regression test written in Phase 2 passes. No manual exceptions.
 ```
 
 Then run:
@@ -120,14 +171,21 @@ Read these files if they exist:
 
 ### Step 2: Ask the user to confirm the framework
 
-Based on detected stack, recommend:
-- **TypeScript/JS** → Playwright (TypeScript)
-- **Python** → pytest + playwright-python
-- **Go** → Go test + chromedp (for E2E) or Go test only (unit)
-- **Rust** → cargo test
-- **Unknown / mixed** → Playwright (TypeScript) as a safe default
+Based on detected stack AND project type, recommend:
 
-Present as `AskUserQuestion` with the recommendation first. Always include "Other — I'll specify" as the last option.
+| Stack | Project type | Recommended framework |
+|---|---|---|
+| TypeScript/JS | Has UI framework (React, Vue, Svelte) | Playwright (TypeScript) |
+| TypeScript/JS | API only (express, fastify, koa — no UI) | Jest + Supertest |
+| TypeScript/JS | CLI tool | Jest + child_process or Vitest |
+| Python | Has `click`, `typer`, or `argparse` | pytest + click.testing.CliRunner |
+| Python | Web (FastAPI, Django, Flask) | pytest + httpx or playwright-python |
+| Python | General | pytest |
+| Go | Any | go test (+ net/http/httptest for APIs) |
+| Rust | Any | cargo test |
+| Unknown / mixed | Any | Playwright (TypeScript) as safe default |
+
+Present as `AskUserQuestion` with the recommended option first. Always include "Other — I'll specify" as the last option.
 
 ### Step 3: Spawn test-writer agent
 
@@ -169,7 +227,12 @@ After the test-writer reports back, write `.kaizen/test-strategy.md`:
 {e.g. npx playwright test tests/e2e/feature.spec.ts}
 ```
 
-Verify: if ANY test passes at this stage, stop and ask the user — a passing test before implementation means the test is wrong or the feature already exists.
+Verify (Jidoka — 自働化): if tests that **directly reproduce the reported bug or missing feature** pass
+before implementation, stop — the test cannot detect the defect. Ask the user to investigate.
+
+For bug fixes: the regression test MUST fail before the fix is applied. Happy-path tests that
+already pass (testing existing working behaviour) are expected to pass at this stage and do
+NOT trigger this stop rule. Only tests that target the specific defect matter here.
 
 Commit:
 ```bash
@@ -203,7 +266,9 @@ Write `.kaizen/tasks.json` using this schema:
       "status": "backlog",
       "agent": null,
       "wip_column": "backlog",
+      "depends_on": [],
       "blocked_reason": null,
+      "created_at": "{ISO8601 — when task was added to backlog}",
       "started_at": null,
       "completed_at": null
     }
@@ -223,47 +288,23 @@ Tell the user: "Board is live at `.kaizen/board.html` — open it in a browser t
 
 ### Step 3: Spawn implementation agents
 
-For each task (up to `wip_limits["in-progress"]` at a time), spawn a subagent using the `Agent` tool with `isolation: "worktree"` and this prompt:
+For each task (up to `wip_limits["in-progress"]` at a time), spawn a subagent using the
+`Agent` tool with `isolation: "worktree"`.
 
-```
-You are an implementation agent for the kaizen-spec skill.
-
-Your task: {task.title} (ID: {task.id})
-
-Before writing any code:
-1. Read .kaizen/spec.md — understand what you are building.
-2. Read .kaizen/test-strategy.md — understand what "done" means.
-3. Read .kaizen/tasks.json — claim task {task.id}:
-   set status="in-progress", agent="{your agent id}", started_at="{now ISO8601}"
-4. Append to .kaizen/kaizen.log:
-   {now} INFO [kaizen] phase=implementation task={task.id} agent={agent-id} status=started
-5. Update .kaizen/board.html: move card {task.id} to the "In Progress" column.
-
-Now implement:
-- Write only what is needed for your task.
-- Run the relevant tests frequently.
-- Stop when the tests for your task pass.
-
-If you become blocked:
-1. Set task status="blocked", blocked_reason="{reason}" in tasks.json.
-2. Add data-blocked="true" to your card in board.html (triggers Andon badge).
-3. Append to kaizen.log:
-   {now} WARN [kaizen] phase=implementation task={task.id} agent={agent-id} status=blocked reason="{reason}"
-4. Stop and wait — do not spin.
-
-When complete:
-1. Set task status="done", completed_at="{now}" in tasks.json.
-2. Move card to "Done" column in board.html.
-3. Append to kaizen.log:
-   {now} INFO [kaizen] phase=implementation task={task.id} agent={agent-id} status=done duration={seconds}s
-```
+→ Use the **Implementation Agent** prompt template in `references/agent-prompts.md`.
+  Fill in `task.id`, `task.title`, and timestamps before spawning.
 
 ### Step 4: Monitor and unblock
 
 Watch for blocked agents. If an agent reports a blocker:
+- **Genchi Genbutsu (現地現物)**: Read `.kaizen/kaizen.log` and the actual error output directly.
+  Do not rely on another agent's summary. The Gemba (現場) is the raw log line, not a description of it.
 - Read `blocked_reason` from `tasks.json`
 - Use `AskUserQuestion` to ask the user how to resolve it (present options if applicable)
 - Once resolved, update the task status to `in-progress` and notify the agent
+
+Before spawning the next task, check `depends_on` in `tasks.json` — only spawn a task when
+all tasks in its `depends_on` list have `status: "done"`.
 
 Spawn the next queued task as soon as a slot opens (WIP limit not exceeded).
 
@@ -304,7 +345,38 @@ If the spec requires visual or user-interaction checks (e.g. UI rendering, keybo
 - Present each manual check as a checklist option
 - User must confirm all before proceeding
 
-### Step 3: Log acceptance
+### Step 3: 5S — Seiso (清掃) Cleanup
+
+Before committing acceptance, run a targeted refactor pass to eliminate Muda (無駄/waste)
+from the implementation code. The goal is **token reduction**: less code for future agents
+to load means faster, cheaper sessions.
+
+Spawn a cleanup agent with this prompt:
+
+```
+You are a 5S cleanup agent (Seiso — 清掃/Shine). Run immediately after acceptance tests pass.
+
+Read the files changed in this feature (git diff HEAD~1..HEAD or the task list in tasks.json).
+
+Apply these changes ONLY — do not refactor unrelated code:
+1. Remove commented-out code and dead code paths (Seiri — 整理/Sort)
+2. Remove verbose comments that just describe WHAT the code does (the code already says that)
+   Keep only comments that explain WHY — hidden constraints, non-obvious invariants
+3. Remove unused imports and variables
+4. Apply consistent naming where the implementation introduced inconsistency (Seiton — 整頓)
+5. Remove temp files and build artifacts from .kaizen/ (*.tmp, *.bak)
+
+Do NOT:
+- Change behaviour
+- Change public interfaces
+- Refactor code outside the feature's changed files
+- Add new comments or documentation (Phase 5 handles that)
+
+Run the tests after cleanup. If any fail, revert the cleanup change that broke them.
+Report: "5S cleanup complete. Removed N lines of Muda. Tests still passing."
+```
+
+### Step 4: Log acceptance
 
 ```
 {now} INFO [kaizen] phase=acceptance status=done duration={total_seconds}s tests={N}
@@ -316,7 +388,7 @@ git add .kaizen/
 git commit -m "kaizen: acceptance passed for {feature name}"
 ```
 
-Tell the user: "Acceptance complete. All {N} tests pass. Moving to docs."
+Tell the user: "Acceptance complete. All {N} tests pass. 5S cleanup done. Moving to docs."
 
 ---
 
@@ -368,13 +440,18 @@ Standard events:
 | Event | Severity | Required keys |
 |---|---|---|
 | Task started | INFO | phase, task, agent, status=started |
-| Task done | INFO | phase, task, agent, status=done, duration |
+| Task done | INFO | phase, task, agent, status=done, cycle_time={s}s, lead_time={s}s |
 | Task blocked | WARN | phase, task, agent, status=blocked, reason |
 | Task unblocked | INFO | phase, task, agent, status=unblocked, duration |
 | WIP limit hit | WARN | column, limit, attempted_task |
 | Tests all red | INFO | phase=test, count, framework |
 | Tests all green | INFO | phase=acceptance, count, duration |
 | Acceptance failed | ERROR | phase=acceptance, failed_count, reason |
+| 5S cleanup done | INFO | phase=acceptance, step=5s, lines_removed={N} |
+
+**Lead Time** = `completed_at − created_at` (total time in system, including backlog wait)
+**Cycle Time** = `completed_at − started_at` (active work time only)
+Both are derived from `tasks.json` timestamps and logged on task-done events.
 
 ---
 

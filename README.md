@@ -1,6 +1,6 @@
 # kaizen-spec
 
-A Claude Code skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agentic software development.
+An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agentic software development.
 
 **The skill is only done when it can be used to develop itself.**
 

@@ -9,7 +9,9 @@
       "status": "backlog",
       "agent": null,
       "wip_column": "backlog",
+      "depends_on": [],
       "blocked_reason": null,
+      "created_at": "{{ISO8601 — set when task is added to backlog}}",
       "started_at": null,
       "completed_at": null
     }

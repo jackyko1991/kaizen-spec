@@ -16,12 +16,16 @@
     .kaizen-card { background: var(--bs-body-bg); border: 1px solid var(--bs-border-color); border-radius: .375rem; padding: .6rem .75rem; margin-bottom: .5rem; cursor: grab; font-size: .875rem; position: relative; }
     .kaizen-card:active { cursor: grabbing; }
     .kaizen-card[data-blocked="true"] { border-color: var(--bs-danger); }
-    .kaizen-card[data-blocked="true"]::before { content: "⚠ BLOCKED"; font-size: .7rem; color: var(--bs-danger); font-weight: 700; display: block; margin-bottom: .25rem; }
+    .kaizen-card[data-blocked="true"]::before { content: "安燈 ⚠ BLOCKED"; font-size: .7rem; color: var(--bs-danger); font-weight: 700; display: block; margin-bottom: .25rem; }
     .card-id { font-size: .7rem; color: var(--bs-secondary-color); font-family: monospace; }
     .card-phase { font-size: .7rem; }
+    .card-times { font-size: .68rem; color: var(--bs-secondary-color); margin-top: .25rem; display: flex; gap: .5rem; flex-wrap: wrap; }
+    .card-times .ct { color: var(--bs-info-text-emphasis); }
+    .card-times .lt { color: var(--bs-warning-text-emphasis); }
     .wip-badge { font-size: .7rem; }
     .theme-toggle { cursor: pointer; }
     #last-updated { font-size: .75rem; color: var(--bs-secondary-color); }
+    .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
   </style>
 </head>
 <body>
@@ -37,10 +41,10 @@
 
 <div class="board" id="board">
 
-  <!-- BACKLOG -->
+  <!-- BACKLOG 待辦 -->
   <div class="column" id="col-backlog">
     <div class="column-header bg-secondary-subtle text-secondary-emphasis">
-      <span>Backlog</span>
+      <span>Backlog <span class="col-label-jp">待辦</span></span>
       <span class="badge bg-secondary wip-badge" id="count-backlog">0</span>
     </div>
     <div class="column-body" data-status="backlog" data-wip-limit="0" id="body-backlog">
@@ -48,10 +52,10 @@
     </div>
   </div>
 
-  <!-- IN PROGRESS -->
+  <!-- IN PROGRESS 在製品 -->
   <div class="column" id="col-in-progress">
     <div class="column-header bg-primary-subtle text-primary-emphasis" id="header-in-progress">
-      <span>In Progress</span>
+      <span>In Progress <span class="col-label-jp">在製品</span></span>
       <span class="badge bg-primary wip-badge" id="count-in-progress">0</span>
     </div>
     <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
@@ -59,10 +63,10 @@
     </div>
   </div>
 
-  <!-- REVIEW -->
+  <!-- REVIEW 審査 -->
   <div class="column" id="col-review">
     <div class="column-header bg-warning-subtle text-warning-emphasis" id="header-review">
-      <span>Review</span>
+      <span>Review <span class="col-label-jp">審査</span></span>
       <span class="badge bg-warning text-dark wip-badge" id="count-review">0</span>
     </div>
     <div class="column-body" data-status="review" data-wip-limit="2" id="body-review">
@@ -70,10 +74,10 @@
     </div>
   </div>
 
-  <!-- DONE -->
+  <!-- DONE 完了 -->
   <div class="column" id="col-done">
     <div class="column-header bg-success-subtle text-success-emphasis">
-      <span>Done</span>
+      <span>Done <span class="col-label-jp">完了</span></span>
       <span class="badge bg-success wip-badge" id="count-done">0</span>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
@@ -168,8 +172,46 @@
 
   updateCounts();
 
+  // ── Lead Time / Cycle Time display ─────────────────────────────────────────
+  function fmtDuration(ms) {
+    if (!ms || ms < 0) return '—';
+    const s = Math.round(ms / 1000);
+    if (s < 60) return s + 's';
+    if (s < 3600) return Math.round(s / 60) + 'm';
+    return (s / 3600).toFixed(1) + 'h';
+  }
+
+  function updateTimings() {
+    document.querySelectorAll('.kaizen-card').forEach(card => {
+      const created = card.dataset.createdAt;
+      const started = card.dataset.startedAt;
+      const completed = card.dataset.completedAt;
+      const ctEl = card.querySelector('.ct');
+      const ltEl = card.querySelector('.lt');
+      if (!ctEl || !ltEl) return;
+
+      const now = Date.now();
+      const createdMs = created ? new Date(created).getTime() : null;
+      const startedMs = started ? new Date(started).getTime() : null;
+      const completedMs = completed ? new Date(completed).getTime() : null;
+
+      // Cycle Time: started → completed (or now if in-progress)
+      if (startedMs) {
+        const ct = (completedMs || now) - startedMs;
+        ctEl.textContent = 'CT: ' + fmtDuration(ct);
+      }
+      // Lead Time: created → completed (or now if not yet done)
+      if (createdMs) {
+        const lt = (completedMs || now) - createdMs;
+        ltEl.textContent = 'LT: ' + fmtDuration(lt);
+      }
+    });
+  }
+
+  updateTimings();
+
   // ── Auto-reload (agents rewrite this file; browser picks up changes) ───────
-  setInterval(() => location.reload(), 5000);
+  setInterval(() => { location.reload(); }, 5000);
 </script>
 
 <!--
@@ -185,11 +227,20 @@
     The CSS will render the Andon badge automatically.
 
   To add a new card (backlog task):
-    <div class="kaizen-card" data-task-id="{id}" data-blocked="false">
+    <div class="kaizen-card" data-task-id="{id}" data-blocked="false"
+         data-created-at="{ISO8601}" data-started-at="" data-completed-at="">
       <div class="card-id">{id}</div>
       <div class="fw-semibold">{title}</div>
       <div class="text-secondary card-phase">{phase}</div>
+      <div class="card-times">
+        <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+        <span class="lt" title="Lead Time 交付周期">LT: —</span>
+      </div>
     </div>
+
+  To update Lead Time / Cycle Time on a card when it moves to Done:
+    Set data-completed-at="{ISO8601}" on the card element.
+    The JS will compute and display CT and LT automatically.
 
   To update the last-updated timestamp:
     Replace the content of <span id="last-updated">

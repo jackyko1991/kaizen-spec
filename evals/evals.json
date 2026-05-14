@@ -1,0 +1,23 @@
+{
+  "skill_name": "kaizen-spec",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to add a /export command to my Python CLI tool that lets users export their data to CSV or JSON. The CLI is built with Click and stores data in SQLite. I don't have any tests yet.",
+      "expected_output": "Skill runs Phase 1 alignment questions (intent, output type, scope, out-of-scope, risks), writes .kaizen/spec.md, detects Python stack and recommends pytest+playwright or pytest, writes failing tests, decomposes into tasks in tasks.json, initialises board.html, then implements. Does NOT write any code before spec is committed.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "There's a bug in my Express.js API — the /users/:id endpoint returns 200 with an empty body instead of 404 when the user doesn't exist. I need this fixed properly with tests.",
+      "expected_output": "Skill runs Phase 1 to align on the bug scope (not a new feature — a fix), detects Node/JS stack, writes a failing test that reproduces the 404 issue, then fixes the endpoint. Acceptance only passes when the test goes green.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "can you just quickly rename the function getUserData to fetchUserProfile in my codebase",
+      "expected_output": "Skill recognises this is a read-only refactor with no tests needed — it should SKIP the full kaizen workflow and just do the rename directly, or ask the user if they want the full workflow. Should NOT force Phase 1 spec alignment on a trivial rename.",
+      "files": []
+    }
+  ]
+}

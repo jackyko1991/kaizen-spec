@@ -27,6 +27,7 @@ export default defineConfig({
         {
           text: 'Reference',
           items: [
+            { text: 'Kaizen & Kanban Terminology', link: '/reference/kaizen-glossary' },
             { text: 'State Schema', link: '/reference/state-schema' },
             { text: 'Kaizen Log Format', link: '/reference/kaizen-log' },
           ],

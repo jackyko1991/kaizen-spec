@@ -1,0 +1,22 @@
+{
+  "eval_id": 3,
+  "eval_name": "trivial-rename-skip-test",
+  "prompt": "can you just quickly rename the function getUserData to fetchUserProfile in my codebase",
+  "assertions": [
+    {
+      "id": "3.1",
+      "text": "Skill correctly SKIPs the full Phase 1-5 workflow for a trivial rename",
+      "discriminating": true
+    },
+    {
+      "id": "3.2",
+      "text": "Skill either does the rename directly OR offers the user a choice (does not force spec alignment)",
+      "discriminating": true
+    },
+    {
+      "id": "3.3",
+      "text": "Skill does NOT write .kaizen/spec.md for a trivial rename",
+      "discriminating": true
+    }
+  ]
+}
