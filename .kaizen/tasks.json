@@ -366,6 +366,23 @@
       "cycle_time_s": 2100,
       "lead_time_s": 2100,
       "test_status": "none"
+    },
+    {
+      "id": "task-022",
+      "title": "i18n: translate missing guide + reference pages (zh-TW + ja)",
+      "phase": "fix",
+      "status": "in-progress",
+      "wip_column": "in-progress",
+      "agent": "i18n-fix-agent",
+      "depends_on": ["task-021"],
+      "blocked_reason": null,
+      "description": "zh-TW and ja locales missing: philosophy, glossary, kanban, phases (guide) + kaizen-glossary, kaizen-log, state-schema (reference). VitePress locale sidebar config needed so nav links resolve.",
+      "created_at": "2026-05-14T19:50:00Z",
+      "started_at": "2026-05-14T19:50:00Z",
+      "completed_at": null,
+      "cycle_time_s": null,
+      "lead_time_s": null,
+      "test_status": "none"
     }
   ],
   "wip_limits": {
