@@ -97,14 +97,19 @@ If all five phases complete and the board shows all cards in Done, the install i
 
 ## Updating
 
-If you installed with Option B (symlink):
+Re-run the install command — it overwrites the existing skill file in place:
 
 ```bash
-cd ~/.claude/skills/kaizen-spec
-git pull
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
 ```
 
-The symlink means Claude Code immediately picks up the updated skill — no re-linking needed.
+Or, if you have the repo cloned locally:
+
+```bash
+make update
+```
+
+Claude Code picks up the new version immediately — no restart needed for the skill file itself.
 
 ---
 

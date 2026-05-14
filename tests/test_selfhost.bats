@@ -273,6 +273,18 @@ PYEOF
   echo "$out" | grep -q "exit:0"
 }
 
+@test "l6: hook re-renders when tool_name is Agent (subagent tasks.json update path)" {
+  # Agent tool JSON does NOT contain tasks.json in tool_input —
+  # hook must re-render unconditionally for Agent events
+  local before after
+  before="$(stat -c %Y "$REPO_ROOT/.kaizen/board.html" 2>/dev/null || echo 0)"
+  sleep 1
+  echo '{"tool_name":"Agent","tool_input":{"prompt":"do work","description":"impl"}}' \
+    | bash "$REPO_ROOT/.claude/hooks/update-board.sh"
+  after="$(stat -c %Y "$REPO_ROOT/.kaizen/board.html" 2>/dev/null || echo 0)"
+  [ "$after" -ge "$before" ]
+}
+
 @test "l3: hook skips render when tasks.json is NOT in tool input" {
   # Measure board.html mtime before
   local before after
@@ -334,4 +346,36 @@ JSON
   grep -q '\.test-passing' "$REPO_ROOT/templates/board.html"
   grep -q '\.test-failing'  "$REPO_ROOT/templates/board.html"
   grep -q '\.test-pending'  "$REPO_ROOT/templates/board.html"
+}
+
+# ---------------------------------------------------------------------------
+# n) install.sh writes to project CLAUDE.md (task-019)
+# ---------------------------------------------------------------------------
+
+@test "n1: install.sh appends kaizen-spec block to project CLAUDE.md when present" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  touch "$tmp_dir/CLAUDE.md"
+  (cd "$tmp_dir" && INSTALL_DIR="$tmp_dir" bash "$REPO_ROOT/install.sh" >/dev/null 2>&1 || true)
+  grep -q "kaizen-spec" "$tmp_dir/CLAUDE.md"
+  rm -rf "$tmp_dir"
+}
+
+@test "n2: install.sh does NOT duplicate the kaizen-spec block if already present" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  echo "## kaizen-spec" > "$tmp_dir/CLAUDE.md"
+  INSTALL_DIR="$tmp_dir" bash "$REPO_ROOT/install.sh" >/dev/null 2>&1 || true
+  local count
+  count=$(grep -c "kaizen-spec" "$tmp_dir/CLAUDE.md")
+  [ "$count" -eq 1 ]
+  rm -rf "$tmp_dir"
+}
+
+@test "n3: install.sh skips CLAUDE.md write when no CLAUDE.md exists in cwd" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  (cd "$tmp_dir" && INSTALL_DIR="$tmp_dir" bash "$REPO_ROOT/install.sh" >/dev/null 2>&1 || true)
+  [ ! -f "$tmp_dir/CLAUDE.md" ]
+  rm -rf "$tmp_dir"
 }

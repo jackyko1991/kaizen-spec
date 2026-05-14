@@ -1,4 +1,4 @@
-.PHONY: eval test install-bats board board-render help
+.PHONY: eval test install-bats board board-render update help
 
 BATS := $(shell command -v bats 2>/dev/null || echo /tmp/bats-install/bin/bats)
 TESTS := tests/test_selfhost.bats
@@ -11,6 +11,7 @@ help: ## Show available targets
 	@echo "  make test          Alias for eval"
 	@echo "  make board         Render + serve .kaizen/board.html (auto-finds free port)"
 	@echo "  make board-render  Regenerate board.html from tasks.json (no server)"
+	@echo "  make update        Re-run install.sh to upgrade skill to latest version"
 	@echo "  make ci-local      Run docs.yml locally via act (requires docker + act)"
 	@echo "  make install-bats  Install bats-core to /tmp/bats-install"
 	@echo "  make help          Show this help"
@@ -58,6 +59,11 @@ board: board-render ## Render + serve .kaizen/board.html — auto-finds a free p
 		echo "No python3 or npx found. Install one to serve the board."; \
 		exit 1; \
 	fi
+
+update: ## Upgrade kaizen-spec skill to latest version from GitHub
+	@echo "Fetching latest kaizen-spec skill ..."
+	@curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
+	@echo "Update complete."
 
 ci-local: ## Run docs.yml workflow locally with act (requires: docker + act)
 	@if ! command -v act >/dev/null 2>&1; then \

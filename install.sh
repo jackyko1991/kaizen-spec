@@ -31,3 +31,20 @@ fi
 
 echo "✓ kaizen-spec installed to $DEST"
 echo "  Restart Claude Code, then type /kaizen-spec to use it."
+
+# Append kaizen-spec reference to the project CLAUDE.md if one exists here
+CLAUDE_MD="$(pwd)/CLAUDE.md"
+MARKER="kaizen-spec"
+if [ -f "$CLAUDE_MD" ] && ! grep -q "$MARKER" "$CLAUDE_MD"; then
+  cat >> "$CLAUDE_MD" <<'BLOCK'
+
+## kaizen-spec
+
+This project uses the kaizen-spec skill for spec-driven, test-first development.
+
+- Invoke with `/kaizen-spec` in Claude Code.
+- Skill installed at: `~/.claude/commands/kaizen-spec.md`
+- Docs: https://jackyko1991.github.io/kaizen-spec/
+BLOCK
+  echo "✓ Reference added to $CLAUDE_MD"
+fi
