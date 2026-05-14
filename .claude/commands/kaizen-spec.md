@@ -25,9 +25,13 @@ Before doing anything else, classify the incoming request:
 - Any task the user explicitly calls "quick", "just", or "simple"
 
 For TRIVIAL requests: do the task directly. Do not write `.kaizen/spec.md`. Do not run phases.
-But **always** add a task card to `.kaizen/tasks.json` before starting and mark it done when
+But **always** add a task card to `.kaizen/tasks.json` **before starting** and mark it done when
 complete, then run `python3 scripts/render_board.py` to regenerate the board. Every piece of
 work must be visible — this is Standard Work (標準作業): nothing happens outside the system.
+
+This includes work delegated to subagents: create the card in tasks.json (status=in-progress)
+**before** spawning the Agent, then update it to done after the agent completes. Never let a
+subagent finish without a corresponding board card — the board must always reflect reality.
 
 Tell the user: "Quick task — skipping full workflow but adding a board card." then act.
 

@@ -57,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T16:17:15Z</span>
+    <span id="last-updated">Updated: 2026-05-14T16:19:57Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -118,6 +118,17 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-021" data-blocked="false"
+           data-description="README.zh-TW.md + README.ja.md. docs/zh-TW/ and docs/ja/ with getting-started and index pages. VitePress locales config — language switcher in navbar for 繁體中文 and 日本語."
+           data-created-at="2026-05-14T19:10:00Z" data-started-at="2026-05-14T19:10:00Z" data-completed-at="2026-05-14T19:45:00Z">
+        <div class="card-id">task-021</div>
+        <div class="fw-semibold">i18n: Traditional Chinese + Japanese docs (zh-TW, ja)</div>
+        <div class="text-secondary card-phase">feat</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 35m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-020" data-blocked="false"
            data-description="Hook now re-renders unconditionally on Agent tool events (subagent JSON never contains tasks.json in tool_input, so old grep silently skipped backlog/in-progress moves). Bats l6 guards."
            data-created-at="2026-05-14T18:55:00Z" data-started-at="2026-05-14T18:55:00Z" data-completed-at="2026-05-14T19:10:00Z">
@@ -217,19 +228,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-011" data-blocked="false"
-           data-description="Playwright test suite for live GitHub Pages site at jackyko1991.github.io/kaizen-spec. Verifies homepage loads, VitePress renders, nav sidebar present, Getting Started page accessible."
-           data-created-at="2026-05-14T16:34:00Z" data-started-at="2026-05-14T16:34:00Z" data-completed-at="2026-05-14T16:35:00Z">
-        <div class="card-id">task-011</div>
-        <div class="fw-semibold">GitHub Pages docs site regression test (Playwright)</div>
-        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 1m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 1m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        10 older cards archived — see tasks.json
+        11 older cards archived — see tasks.json
       </div>
     </div>
   </div>
