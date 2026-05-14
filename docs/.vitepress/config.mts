@@ -7,6 +7,12 @@ export default defineConfig({
   appearance: 'auto',
   head: [['link', { rel: 'icon', href: '/kaizen-spec/favicon.svg' }]],
 
+  locales: {
+    root: { label: 'English', lang: 'en-US' },
+    'zh-TW': { label: '繁體中文', lang: 'zh-TW' },
+    'ja': { label: '日本語', lang: 'ja-JP' },
+  },
+
   themeConfig: {
     logo: '/favicon.svg',
     nav: [
