@@ -257,6 +257,7 @@
       const blocked = card.dataset.blocked === 'true';
       const ctEl = card.querySelector('.ct')?.textContent?.trim() || '—';
       const ltEl = card.querySelector('.lt')?.textContent?.trim() || '—';
+      const desc = card.dataset.description || '';
       const statusLine = completed !== '—'
         ? '<span class="text-success">✓ Done</span>'
         : started !== '—'
@@ -265,8 +266,9 @@
       const lines = [
         '<b style="font-size:1em">' + title + '</b>',
         '<span class="text-secondary">' + phase + '</span> &nbsp;' + statusLine,
+        desc ? '<p style="margin:.35rem 0 .1rem;font-size:.85em;opacity:.9;max-width:280px;white-space:normal">' + desc + '</p>' : null,
         '<hr style="margin:.3rem 0;opacity:.25">',
-        '<table style="border-spacing:2px 1px;font-size:.85em">',
+        '<table style="border-spacing:2px 1px;font-size:.82em">',
         '<tr><td class="text-secondary pe-2">Created</td><td>' + created + '</td></tr>',
         '<tr><td class="text-secondary pe-2">Started</td><td>' + started + '</td></tr>',
         '<tr><td class="text-secondary pe-2">Completed</td><td>' + completed + '</td></tr>',
@@ -286,6 +288,21 @@
     });
   }
   initCardTooltips();
+
+  // Sort cards: most recent on top (by completed_at → started_at → created_at desc)
+  function sortCards() {
+    document.querySelectorAll('.column-body').forEach(col => {
+      const status = col.dataset.status;
+      const cards = Array.from(col.querySelectorAll('.kaizen-card'));
+      cards.sort((a, b) => {
+        const tsA = a.dataset.completedAt || a.dataset.startedAt || a.dataset.createdAt || '';
+        const tsB = b.dataset.completedAt || b.dataset.startedAt || b.dataset.createdAt || '';
+        return tsB.localeCompare(tsA);
+      });
+      cards.forEach(c => col.appendChild(c));
+    });
+  }
+  sortCards();
 
   // Initialise all Bootstrap tooltips
   document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
