@@ -352,11 +352,14 @@
       const ctEl = card.querySelector('.ct')?.textContent?.trim() || '—';
       const ltEl = card.querySelector('.lt')?.textContent?.trim() || '—';
       const desc = card.dataset.description || '';
-      const statusLine = completed !== '—'
+      const colStatus = col ? col.dataset.status : 'backlog';
+      const statusLine = colStatus === 'done'
         ? '<span class="text-success">✓ Done</span>'
-        : started !== '—'
+        : colStatus === 'in-progress'
           ? '<span class="text-primary">⚙ In Progress</span>'
-          : '<span class="text-secondary">○ Backlog</span>';
+          : colStatus === 'review'
+            ? '<span class="text-warning">⟳ Review</span>'
+            : '<span class="text-secondary">○ Backlog</span>';
       const lines = [
         '<b style="font-size:1em">' + title + '</b>',
         '<span class="text-secondary">' + phase + '</span> &nbsp;' + statusLine,
