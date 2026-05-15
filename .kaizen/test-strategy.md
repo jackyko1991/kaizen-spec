@@ -1,21 +1,26 @@
-# Test Strategy: Stabilize kanban live update
+# Test Strategy: Index homepage redesign - Lean-first
 
-**Framework:** bats-core (existing suite - `tests/test_selfhost.bats`)
+**Framework:** bats-core (`tests/test_selfhost.bats`, group s, tests s1-s12)
 **Install:** `make install-bats`
-**Test files:** `tests/test_selfhost.bats` (group r, tests r1-r6)
-**Tests written:** 6
-**Status:** All failing (red) - confirmed before implementation
+**Tests written:** 12
+**Status:** 7 failing (red), 5 already passing (locale links pre-existing)
 
 ## Test List
 
 | # | Test | Covers |
 |---|------|--------|
-| r1 | render_board.py writes sentinel with --sentinel flag | Sentinel written when path given explicitly |
-| r2 | Sentinel content is ISO8601 timestamp | Format is machine-parseable datetime |
-| r3 | render_board.py writes sentinel to default path | Default: same dir as tasks.json, named .render-ts |
-| r4 | board.html uses fetch-based smart-poll, not location.reload() | Blind reload removed, fetch() present |
-| r5 | board.html smart-poll interval is 1000ms | 1s cadence confirmed in template |
-| r6 | hook always re-renders, no elif grep tasks.json guard | Hook decoupled from stdin content grep |
+| s1 | English index hero text is 'Lean-first agentic development' | Hero YAML updated |
+| s2 | English index has 6 feature cards (ks-card elements) | Custom HTML feature grid |
+| s3 | English index install: curl present, no git clone inline | Install simplified |
+| s4 | English index has HTML kanban mock with 4 columns | Kanban mock present |
+| s5 | Kanban mock has data-kb-tooltip attribute | Hover tooltips wired |
+| s6 | zh-TW hero text is translated (has 精實) | Locale content correct |
+| s7 | zh-TW has 6 feature cards | zh-TW custom HTML |
+| s8 | zh-TW install link uses /zh-TW/ prefix | Locale links correct |
+| s9 | ja hero text translated (has リーン) | ja locale content |
+| s10 | ja install link uses /ja/ prefix | ja links correct |
+| s11 | No bare /guide/ links in zh-TW or ja index files | Locale-agnostic audit |
+| s12 | English kanban guide has data-kb-tooltip | Guide page tooltips |
 
 ## Run command
 

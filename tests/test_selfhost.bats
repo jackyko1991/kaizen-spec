@@ -758,3 +758,81 @@ JSON
   # We verify by ensuring the script does NOT have the old "elif grep tasks.json" guard
   ! grep -q 'elif.*grep.*tasks\.json' "$hook"
 }
+
+# ---------------------------------------------------------------------------
+# s) Homepage redesign - Lean-first
+# ---------------------------------------------------------------------------
+
+@test "s1: English index hero text is 'Lean-first agentic development'" {
+  grep -q "Lean-first agentic development" "$REPO_ROOT/docs/index.md"
+}
+
+@test "s2: English index has 6 feature cards (ks-card elements)" {
+  python3 - <<PYEOF
+src = open("$REPO_ROOT/docs/index.md").read()
+count = src.count('ks-card')
+assert count >= 6, f"Expected at least 6 ks-card elements, got {count}"
+PYEOF
+}
+
+@test "s3: English index install section has curl command and no git clone" {
+  local idx="$REPO_ROOT/docs/index.md"
+  grep -q "curl -fsSL" "$idx"
+  # Dev-mode git clone must NOT appear inline (hidden behind full guide link)
+  ! grep -qE "^(git clone|```bash[^`]*git clone)" "$idx"
+}
+
+@test "s4: English index has HTML kanban mock with 4 columns" {
+  python3 - <<PYEOF
+src = open("$REPO_ROOT/docs/index.md").read()
+for col in ['kb-col', 'Backlog', 'In Progress', 'Review', 'Done']:
+    assert col in src, f"Kanban mock missing: {col}"
+PYEOF
+}
+
+@test "s5: Kanban mock columns have data-kb-tooltip attribute for hover explanation" {
+  grep -q "data-kb-tooltip" "$REPO_ROOT/docs/index.md"
+}
+
+@test "s6: zh-TW index hero text is translated (not English)" {
+  local idx="$REPO_ROOT/docs/zh-TW/index.md"
+  # Must not use English hero text
+  ! grep -q "Lean-first agentic development" "$idx"
+  # Must have Chinese content
+  grep -q "精實" "$idx"
+}
+
+@test "s7: zh-TW index has 6 feature cards" {
+  python3 - <<PYEOF
+src = open("$REPO_ROOT/docs/zh-TW/index.md").read()
+count = src.count('ks-card')
+assert count >= 6, f"zh-TW: expected at least 6 ks-card elements, got {count}"
+PYEOF
+}
+
+@test "s8: zh-TW index install link uses /zh-TW/ locale prefix" {
+  grep -q "/zh-TW/guide/getting-started" "$REPO_ROOT/docs/zh-TW/index.md"
+}
+
+@test "s9: ja index hero text is translated to Japanese" {
+  local idx="$REPO_ROOT/docs/ja/index.md"
+  ! grep -q "Lean-first agentic development" "$idx"
+  grep -q "リーン" "$idx"
+}
+
+@test "s10: ja index install link uses /ja/ locale prefix" {
+  grep -q "/ja/guide/getting-started" "$REPO_ROOT/docs/ja/index.md"
+}
+
+@test "s11: English index has no internal links missing locale context (no bare /guide/ in zh-TW or ja files)" {
+  # Verify zh-TW and ja files don't have bare /guide/ or /reference/ links
+  # (they must use /zh-TW/guide/ or /ja/guide/ respectively)
+  local bad_zhtw bad_ja
+  bad_zhtw=$(grep -E '\(/guide/|\(/reference/' "$REPO_ROOT/docs/zh-TW/index.md" | wc -l)
+  bad_ja=$(grep -E '\(/guide/|\(/reference/' "$REPO_ROOT/docs/ja/index.md" | wc -l)
+  [ "$bad_zhtw" -eq 0 ] && [ "$bad_ja" -eq 0 ]
+}
+
+@test "s12: English kanban guide page has data-kb-tooltip on column sections" {
+  grep -q "data-kb-tooltip" "$REPO_ROOT/docs/guide/kanban.md"
+}
