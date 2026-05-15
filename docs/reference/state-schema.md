@@ -1,6 +1,6 @@
 # State Schema
 
-All kaizen-spec state is stored in `.kaizen/` at the root of your project. Every file is git-tracked. Agents reconstruct full context from these files alone — no shared memory required.
+All kaizen-spec state is stored in `.kaizen/` at the root of your project. Every file is git-tracked. Agents reconstruct full context from these files alone - no shared memory required.
 
 ---
 
@@ -8,11 +8,11 @@ All kaizen-spec state is stored in `.kaizen/` at the root of your project. Every
 
 ```
 .kaizen/
-  spec.md           — agreed feature spec (written in Phase 1)
-  test-strategy.md  — test framework + failing test list (written in Phase 2)
-  tasks.json        — task list, status, WIP limits (written in Phase 3)
-  board.html        — live kanban board (updated throughout Phase 3)
-  kaizen.log        — syslog-format event log (appended throughout)
+  spec.md           - agreed feature spec (written in Phase 1)
+  test-strategy.md  - test framework + failing test list (written in Phase 2)
+  tasks.json        - task list, status, WIP limits (written in Phase 3)
+  board.html        - live kanban board (updated throughout Phase 3)
+  kaizen.log        - syslog-format event log (appended throughout)
 ```
 
 ---
@@ -21,17 +21,17 @@ All kaizen-spec state is stored in `.kaizen/` at the root of your project. Every
 
 ```json
 {
-  "feature": "string — feature name from spec",
+  "feature": "string - feature name from spec",
   "spec_committed": "ISO8601 timestamp | null",
   "tasks": [
     {
-      "id": "string — e.g. task-001",
-      "title": "string — short human-readable task title",
+      "id": "string - e.g. task-001",
+      "title": "string - short human-readable task title",
       "phase": "spec | test | impl | acceptance | docs",
       "status": "backlog | in-progress | blocked | done",
-      "agent": "string | null — agent identifier when claimed",
+      "agent": "string | null - agent identifier when claimed",
       "wip_column": "backlog | in-progress | review | done",
-      "blocked_reason": "string | null — plain-text reason if status=blocked",
+      "blocked_reason": "string | null - plain-text reason if status=blocked",
       "started_at": "ISO8601 | null",
       "completed_at": "ISO8601 | null"
     }
@@ -48,7 +48,7 @@ All kaizen-spec state is stored in `.kaizen/` at the root of your project. Every
 | Field | Notes |
 |---|---|
 | `id` | Stable across the run. Never reuse IDs. |
-| `status` | `blocked` is a sub-state of `in-progress` — the agent has claimed the task but cannot proceed. |
+| `status` | `blocked` is a sub-state of `in-progress` - the agent has claimed the task but cannot proceed. |
 | `wip_column` | Mirrors `status` but tracks the board column. Usually the same as `status`. |
 | `blocked_reason` | Required when `status=blocked`. Plain text, no length limit. |
 | `wip_limits` | Change these to adjust parallelism. Restart Phase 3 after changing. |

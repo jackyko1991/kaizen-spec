@@ -12,7 +12,7 @@ An Agentic Coding skill (`/kaizen-spec`) for spec-driven, kaizen-informed, agent
 
 ## What it does
 
-`/kaizen-spec` enforces a gated workflow — no code before spec is committed, no acceptance before all tests pass:
+`/kaizen-spec` enforces a gated workflow - no code before spec is committed, no acceptance before all tests pass:
 
 ```mermaid
 flowchart LR
@@ -90,13 +90,13 @@ kaizen-spec is grounded in the Toyota Production System (TPS) as translated to s
 
 | Toyota / TPS | JP | Software equivalent | What breaks without it |
 |---|---|---|---|
-| Muda — waste elimination | 無駄 | Unshipped code is inventory waste | Code accrues maintenance cost and obsolescence risk before it reaches users |
-| Just-in-Time (JIT) | ジャスト・イン・タイム | CI/CD — pull-based delivery | Big-batch releases accumulate risk; defects compound before detection |
-| Jidoka — autonomation | 自働化 | TDD — tests pull the Andon cord | Defects flow downstream into production; no sensor to stop the line |
-| Poka-Yoke — mistake-proofing | 防呆 | Static typing, linting, schema validation | Errors are caught at runtime or by users instead of at the point of writing |
-| Kaizen — continuous improvement | 改善 | Spec Kaizen — test failures feed back into the spec | Specs drift from reality; agents repeatedly solve the wrong problem |
-| One-piece flow | 一個流 | Atomic Specs — one agent, one task, one responsibility | Large context windows reduce agent accuracy; long tasks can't be parallelised |
-| Decide late | — | Lean Spec — Just-in-Time design | Big-upfront specs become stale before implementation; over-engineering is baked in |
+| Muda - waste elimination | 無駄 | Unshipped code is inventory waste | Code accrues maintenance cost and obsolescence risk before it reaches users |
+| Just-in-Time (JIT) | ジャスト・イン・タイム | CI/CD - pull-based delivery | Big-batch releases accumulate risk; defects compound before detection |
+| Jidoka - autonomation | 自働化 | TDD - tests pull the Andon cord | Defects flow downstream into production; no sensor to stop the line |
+| Poka-Yoke - mistake-proofing | 防呆 | Static typing, linting, schema validation | Errors are caught at runtime or by users instead of at the point of writing |
+| Kaizen - continuous improvement | 改善 | Spec Kaizen - test failures feed back into the spec | Specs drift from reality; agents repeatedly solve the wrong problem |
+| One-piece flow | 一個流 | Atomic Specs - one agent, one task, one responsibility | Large context windows reduce agent accuracy; long tasks can't be parallelised |
+| Decide late | - | Lean Spec - Just-in-Time design | Big-upfront specs become stale before implementation; over-engineering is baked in |
 | Standard Work | 標準作業 | State in `.kaizen/` files, not agent memory | Fresh-context agents cannot resume; users must re-explain context from scratch |
 
 ## License

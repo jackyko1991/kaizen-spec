@@ -7,10 +7,10 @@
 Fix the /users/:id endpoint which returns 200 with empty body instead of 404 when user not found
 
 ## Target Output
-Bug fix in existing code — the `/users/:id` Express route must return HTTP 404 with a structured error body when the requested user ID does not exist in the data store.
+Bug fix in existing code - the `/users/:id` Express route must return HTTP 404 with a structured error body when the requested user ID does not exist in the data store.
 
 ## In Scope
-- Fix the 404 response only — add proper not-found handling and a test to prevent regression
+- Fix the 404 response only - add proper not-found handling and a test to prevent regression
 - The fix is limited to the single route handler responsible for `GET /users/:id`
 - A regression test that reproduces the original bug behaviour and confirms the fix
 

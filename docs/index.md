@@ -23,7 +23,7 @@ features:
   - title: Toyota Kanban board
     details: A live HTML kanban board tracks agent progress with WIP limits, Andon cord blocker flags, and auto-reload.
   - title: Continuous improvement
-    details: Every run appends to a syslog-format kaizen.log — blockers, cycle times, and state transitions. Read it to spot patterns.
+    details: Every run appends to a syslog-format kaizen.log - blockers, cycle times, and state transitions. Read it to spot patterns.
   - title: Fresh-context resilient
     details: All state lives in git-tracked files. Agents can restart from zero and resume exactly where they left off.
 ---

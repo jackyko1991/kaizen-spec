@@ -1,4 +1,4 @@
-# Execution Trace: kaizen-spec skill — Trivial Rename Request
+# Execution Trace: kaizen-spec skill - Trivial Rename Request
 
 **User request:** "can you just quickly rename the function getUserData to fetchUserProfile in my codebase"
 **Date:** 2026-05-14
@@ -14,7 +14,7 @@ The skill's frontmatter `description` field contains:
 
 A rename (`getUserData` → `fetchUserProfile`) is a one-liner refactor edit with no new behaviour, no new tests, and no spec needed. It matches the SKIP condition textually.
 
-**However:** the SKIP condition lives only in the frontmatter metadata. It is consumed by the Claude Code skill-triggering / routing layer — the component that decides *whether* to invoke the skill at all. It is NOT executable logic inside the skill body.
+**However:** the SKIP condition lives only in the frontmatter metadata. It is consumed by the Claude Code skill-triggering / routing layer - the component that decides *whether* to invoke the skill at all. It is NOT executable logic inside the skill body.
 
 In this simulation, the skill was explicitly invoked ("You are simulating a Claude Code session where the kaizen-spec skill is active"). This bypasses the trigger-time routing decision and forces the skill body to run regardless.
 
@@ -43,11 +43,11 @@ The codebase being renamed is unspecified (the user gave no repo path), so `.kai
 
 ---
 
-## Step 4: Phase 1 — Spec Alignment begins
+## Step 4: Phase 1 - Spec Alignment begins
 
 The skill would ask Q1: "What is the core problem this feature solves, or what does it add?"
 
-For a rename this is absurd — the "problem" is a function name. But the skill has no awareness of that. It would proceed through all five questions:
+For a rename this is absurd - the "problem" is a function name. But the skill has no awareness of that. It would proceed through all five questions:
 
 - Q1: Intent → user types "rename getUserData to fetchUserProfile"
 - Q2: Target output → options include "Refactor of existing code" ✓
@@ -59,11 +59,11 @@ Then write `.kaizen/spec.md`, `git commit` it, move to Phase 2.
 
 ---
 
-## Step 5: Phase 2 — Test Strategy
+## Step 5: Phase 2 - Test Strategy
 
 The skill would detect the project stack, ask the user to confirm a test framework, spawn a test-writer subagent, and demand failing tests before any rename happens.
 
-For a rename of a function name, the test-writer would write tests that call `fetchUserProfile` — which don't exist yet — and confirm they fail. This is technically possible but entirely wasteful for a search-and-replace operation.
+For a rename of a function name, the test-writer would write tests that call `fetchUserProfile` - which don't exist yet - and confirm they fail. This is technically possible but entirely wasteful for a search-and-replace operation.
 
 ---
 

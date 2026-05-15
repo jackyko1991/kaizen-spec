@@ -154,32 +154,32 @@ In Phase 1 Q5, select **"Regulatory / compliance requirements"** and name the ap
 | ISO 9001 | General quality management | Design planning (§8.3.2), Design review (§8.3.4), Design verification (§8.3.5) |
 | FDA 21 CFR Part 11 | Electronic records (pharma/medical) | All audit trail events with actor identity and timestamp |
 | DO-178C | Airborne software | Software Development Plan activities, each verification activity |
-| IEC 61508 | Functional safety | Safety lifecycle phases — each must be traceable to a SIL requirement |
+| IEC 61508 | Functional safety | Safety lifecycle phases - each must be traceable to a SIL requirement |
 
 ### Compliance log examples
 
-**ISO 13485 — medical device design verification:**
+**ISO 13485 - medical device design verification:**
 ```
 2026-05-14T10:48:33Z INFO [kaizen] phase=implementation task=task-003 agent=subagent-1 status=done cycle_time=1488s lead_time=1531s change_type=design-output requirement_id=ISO13485-7.3.3 actor="agent:subagent-1 review:human" artifact="src/device_driver.py@def5678" justification="spec.md#in-scope"
 2026-05-14T11:02:44Z INFO [kaizen] phase=acceptance count=14 status=done change_type=verification requirement_id=ISO13485-7.3.5 actor="agent:orchestrator review:human" artifact="tests/device.spec.ts@ghi9012" justification="spec.md#acceptance-criterion"
 ```
 
-**IEC 62443-4-1 — industrial control system security:**
+**IEC 62443-4-1 - industrial control system security:**
 ```
 2026-05-14T09:42:18Z INFO [kaizen] phase=spec feature="auth-hardening" status=committed change_type=design-input requirement_id=IEC62443-4-1-SR-1 actor="agent:orchestrator review:human" artifact="spec.md@abc1234" justification="threat-model#SR-1"
 ```
 
-**FDA 21 CFR Part 11 — electronic records audit trail:**
+**FDA 21 CFR Part 11 - electronic records audit trail:**
 ```
 2026-05-14T10:23:45Z INFO [kaizen] phase=implementation task=task-001 agent=subagent-1 status=started change_type=code-change requirement_id=21CFR11-11.10e actor="agent:subagent-1" artifact="src/audit_trail.py@abc1234" justification="spec.md#intent"
 ```
 
 ### Compliance fields are additive
 
-Standard log consumers ignore unknown keys — the base format is unchanged. Tools that parse `kaizen.log` without compliance awareness continue to work; compliance-aware tools gain the additional fields for traceability reports.
+Standard log consumers ignore unknown keys - the base format is unchanged. Tools that parse `kaizen.log` without compliance awareness continue to work; compliance-aware tools gain the additional fields for traceability reports.
 
 ---
 
 ## Append-Only Rule
 
-Agents **never** modify or delete existing lines. They only append. This means the log is a complete, immutable record of the run — safe to commit, safe to `git blame`, safe to pipe into log aggregators, and suitable as a regulatory audit trail.
+Agents **never** modify or delete existing lines. They only append. This means the log is a complete, immutable record of the run - safe to commit, safe to `git blame`, safe to pipe into log aggregators, and suitable as a regulatory audit trail.

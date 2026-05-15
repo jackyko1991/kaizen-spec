@@ -1,7 +1,7 @@
 # Proposal: kaizen-spec Skill
 
 **Feature ID:** kaizen-spec  
-**Status:** Approved — proceed to spec  
+**Status:** Approved - proceed to spec  
 **Date:** 2026-05-14  
 **Author:** Jacky Ko
 
@@ -9,7 +9,7 @@
 
 ## Problem
 
-Software development with AI agents today is unstructured. Agents write code immediately without alignment on intent, skip tests, produce no documentation, and have no way to coordinate across parallel workstreams. When a session ends, all context is lost — the next agent starts blind.
+Software development with AI agents today is unstructured. Agents write code immediately without alignment on intent, skip tests, produce no documentation, and have no way to coordinate across parallel workstreams. When a session ends, all context is lost - the next agent starts blind.
 
 The result: code that solves the wrong problem, no tests, no docs, and no continuity.
 
@@ -19,11 +19,11 @@ The result: code that solves the wrong problem, no tests, no docs, and no contin
 
 A Claude Code slash command (`/kaizen-spec`) that enforces a structured, kaizen-informed development workflow across five phases:
 
-1. **Spec Alignment** — align on intent before any code is written
-2. **Test Strategy** — choose a framework and write failing tests first (red)
-3. **Implementation** — subagent-parallelised code writing drives tests green
-4. **Acceptance** — tests must pass; user notified for manual verification
-5. **Docs in Parallel** — documentation written alongside code
+1. **Spec Alignment** - align on intent before any code is written
+2. **Test Strategy** - choose a framework and write failing tests first (red)
+3. **Implementation** - subagent-parallelised code writing drives tests green
+4. **Acceptance** - tests must pass; user notified for manual verification
+5. **Docs in Parallel** - documentation written alongside code
 
 State is persisted in git-tracked files (`.kaizen/` directory), so fresh-context agents can resume at any point without losing progress. A live HTML kanban board reflects real-time agent status with Toyota-style WIP limits and blocker flags.
 
@@ -33,7 +33,7 @@ State is persisted in git-tracked files (`.kaizen/` directory), so fresh-context
 
 - Any developer can run `/kaizen-spec` and produce aligned, tested, documented code
 - Agents never write code before a spec is agreed
-- All tests start failing (red) and are driven green by implementation — never skipped
+- All tests start failing (red) and are driven green by implementation - never skipped
 - State survives agent context resets via git-tracked files
 - The kanban board gives a live, visual picture of agent progress
 - Kaizen log records blockers and cycle times for continuous process improvement

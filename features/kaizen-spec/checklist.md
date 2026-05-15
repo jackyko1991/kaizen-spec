@@ -15,20 +15,20 @@ The self-hosting acceptance criterion: **all phases below must pass when `/kaize
 
 ---
 
-## Phase 0 — Repo Scaffold
+## Phase 0 - Repo Scaffold
 
 - [ ] **0.1** Create `.claude/commands/` directory
 - [ ] **0.2** Create `templates/` directory
 - [ ] **0.3** Create `docs/.vitepress/` directory structure
 - [ ] **0.4** Create `.github/workflows/` directory
-- [ ] **0.5** Write `README.md` — project overview, quick-start, one-line install
+- [ ] **0.5** Write `README.md` - project overview, quick-start, one-line install
 - [ ] **0.6** Initial git commit: `init: repo scaffold`
 
 ---
 
-## Phase 1 — Skill Entrypoint
+## Phase 1 - Skill Entrypoint
 
-- [ ] **1.1** Write `.claude/commands/kaizen-spec.md` — system prompt section
+- [ ] **1.1** Write `.claude/commands/kaizen-spec.md` - system prompt section
   - Persona: orchestrator, spec-first, kaizen-informed
   - Hard constraints: no code before spec committed, tests must be red before impl
   - Phase gating rules: each phase listed, each gates the next
@@ -60,7 +60,7 @@ The self-hosting acceptance criterion: **all phases below must pass when `/kaize
 
 ---
 
-## Phase 2 — Board Template
+## Phase 2 - Board Template
 
 - [ ] **2.1** Write `templates/board.html`
   - Bootstrap 5 CDN link (CSS + JS bundle)
@@ -80,24 +80,24 @@ The self-hosting acceptance criterion: **all phases below must pass when `/kaize
 
 ---
 
-## Phase 3 — State File Templates
+## Phase 3 - State File Templates
 
-- [ ] **3.1** Write `templates/tasks.json` — empty schema with one example task and WIP limits set
-- [ ] **3.2** Write `templates/test-strategy.md` — template with sections: chosen framework, install command, test file locations, failing test list
+- [ ] **3.1** Write `templates/tasks.json` - empty schema with one example task and WIP limits set
+- [ ] **3.2** Write `templates/test-strategy.md` - template with sections: chosen framework, install command, test file locations, failing test list
 - [ ] **3.3** Document atomic write pattern for `tasks.json` in a comment in the template (write to `.tmp`, rename)
 - [ ] **3.4** Commit: `feat: state file templates`
 
 ---
 
-## Phase 4 — VitePress Documentation Site
+## Phase 4 - VitePress Documentation Site
 
 - [ ] **4.1** Install VitePress: `npm install -D vitepress` (save `package.json` to repo)
-- [ ] **4.2** Write `docs/.vitepress/config.ts` — full config as per design.md
+- [ ] **4.2** Write `docs/.vitepress/config.ts` - full config as per design.md
   - `appearance: 'auto'` (dark/light toggle)
   - Nav: Guide, Reference
   - Sidebar: guide + reference sections
   - GitHub social link
-- [ ] **4.3** Write `docs/index.md` — VitePress home page with hero section
+- [ ] **4.3** Write `docs/index.md` - VitePress home page with hero section
   - Hero: title "kaizen-spec", tagline, action button "Get Started"
   - Features section: 3 key features (Spec-first, TDD-enforced, Self-hosting)
 - [ ] **4.4** Write `docs/guide/getting-started.md`
@@ -111,28 +111,28 @@ The self-hosting acceptance criterion: **all phases below must pass when `/kaize
   - `kaizen.log` format with all standard event types
 - [ ] **4.8** Write `docs/reference/kaizen-log.md`
   - Syslog format spec, severity levels, standard keys, example entries
-- [ ] **4.9** Run `vitepress build docs` — must succeed with zero errors
-- [ ] **4.10** Run `vitepress dev docs` — verify dark/light toggle works in browser
+- [ ] **4.9** Run `vitepress build docs` - must succeed with zero errors
+- [ ] **4.10** Run `vitepress dev docs` - verify dark/light toggle works in browser
 - [ ] **4.11** Commit: `feat: VitePress docs site`
 
 ---
 
-## Phase 5 — CI/CD
+## Phase 5 - CI/CD
 
-- [ ] **5.1** Write `.github/workflows/docs.yml` — VitePress build + GitHub Pages deploy (as per design.md)
+- [ ] **5.1** Write `.github/workflows/docs.yml` - VitePress build + GitHub Pages deploy (as per design.md)
 - [ ] **5.2** Add `.nojekyll` file to `docs/public/` (required for GitHub Pages + VitePress)
 - [ ] **5.3** Commit: `feat: docs CI/CD pipeline`
 
 ---
 
-## Phase 6 — Self-Hosting Acceptance Test
+## Phase 6 - Self-Hosting Acceptance Test
 
 This phase proves the skill works by using it on itself.
 
 - [ ] **6.1** Open `kaizen-spec` repo in Claude Code
 - [ ] **6.2** Run `/kaizen-spec "add a kaizen-log tail command that shows the last N entries from .kaizen/kaizen.log"`
 - [ ] **6.3** Verify Phase 1: `.kaizen/spec.md` written and committed
-- [ ] **6.4** Verify Phase 2: `.kaizen/test-strategy.md` written; run tests — all must fail
+- [ ] **6.4** Verify Phase 2: `.kaizen/test-strategy.md` written; run tests - all must fail
 - [ ] **6.5** Verify Phase 3:
   - `.kaizen/tasks.json` populated with decomposed tasks
   - `board.html` updates as agents claim tasks
@@ -140,8 +140,8 @@ This phase proves the skill works by using it on itself.
   - All failing tests turn green
 - [ ] **6.6** Verify Phase 4: full test suite passes; acceptance logged to `kaizen.log`
 - [ ] **6.7** Verify Phase 5: `docs/guide/kaizen-log-tail.md` written
-- [ ] **6.8** Open `.kaizen/board.html` in browser — all cards must be in Done column
-- [ ] **6.9** Read `.kaizen/kaizen.log` — must contain INFO entries for every phase transition
+- [ ] **6.8** Open `.kaizen/board.html` in browser - all cards must be in Done column
+- [ ] **6.9** Read `.kaizen/kaizen.log` - must contain INFO entries for every phase transition
 - [ ] **6.10** **If all of the above pass: skill is done.** Commit: `feat: self-hosting acceptance test passed`
 
 ---

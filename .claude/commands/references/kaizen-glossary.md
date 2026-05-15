@@ -1,5 +1,5 @@
 # Kaizen-Spec Terminology Reference
-# 改善仕様 — 用語集
+# 改善仕様 - 用語集
 
 This file is loaded by agents when they need to understand the philosophy behind
 kaizen-spec's design decisions. Terms are given in English, Japanese romanisation,
@@ -7,14 +7,14 @@ and kanji where applicable.
 
 ---
 
-## Part 1 — Kanban (看板): The Science of Flow
+## Part 1 - Kanban (看板): The Science of Flow
 
 Kanban (看板) means "signboard" or "visual card." It is a scheduling system for
 managing the flow of work. kaizen-spec uses it to manage agent workloads.
 
 ---
 
-### WIP Limit — Work In Progress Limit (在製品限制)
+### WIP Limit - Work In Progress Limit (在製品限制)
 
 **The soul of Kanban.** Limits the number of tasks that can be simultaneously
 active. Prevents the system from overloading itself.
@@ -22,7 +22,7 @@ active. Prevents the system from overloading itself.
 In kaizen-spec: the `wip_limits` field in `tasks.json` caps how many implementation
 agents run concurrently. Exceeding the limit turns the board column red.
 
-> "Stop starting, start finishing." — core Kanban principle
+> "Stop starting, start finishing." - core Kanban principle
 
 | Context | WIP Limit applies to |
 |---|---|
@@ -32,7 +32,7 @@ agents run concurrently. Exceeding the limit turns the board column red.
 
 ---
 
-### Lead Time — 交付周期時間
+### Lead Time - 交付周期時間
 
 **Total time from task creation to delivery.**
 
@@ -49,7 +49,7 @@ agents not being unblocked quickly enough.
 
 ---
 
-### Cycle Time — 週期時間
+### Cycle Time - 週期時間
 
 **Time from work started to work done.**
 
@@ -65,7 +65,7 @@ wait time (Muda of Waiting, see Part 2).
 
 ---
 
-### Pull System — 拉式生産 (Hikitsuke)
+### Pull System - 拉式生産 (Hikitsuke)
 
 Work is pulled by agents when they have capacity, not pushed to agents
 regardless of capacity. An agent picks up the next backlog task only when its
@@ -77,7 +77,7 @@ No central dispatcher assigns work.
 
 ---
 
-### Backlog — 待辦清單
+### Backlog - 待辦清單
 
 The pool of work not yet started. In `tasks.json`, all tasks with
 `status: "backlog"`. Items in the backlog accumulate Lead Time silently —
@@ -85,16 +85,16 @@ they are already "on the clock" even though no agent has touched them.
 
 ---
 
-### Bottleneck — ボトルネック
+### Bottleneck - ボトルネック
 
 The slowest stage in the flow. Determines total system throughput
 (Goldratt's Theory of Constraints). In kaizen-spec, if the Review column
-is always full while Backlog grows, Review is the bottleneck — reduce its
+is always full while Backlog grows, Review is the bottleneck - reduce its
 WIP limit or add capacity there first.
 
 ---
 
-### Takt Time — タクト時間
+### Takt Time - タクト時間
 
 The rate at which work must be delivered to meet demand.
 
@@ -109,7 +109,7 @@ Time data can be used to calculate it retrospectively.
 
 ---
 
-### Heijunka — 平準化 (Level Loading)
+### Heijunka - 平準化 (Level Loading)
 
 Smoothing the unevenness (Mura) in work volume. Rather than processing work in
 bursts, distribute it evenly over time.
@@ -120,14 +120,14 @@ smoothly at 3 tasks at a time rather than launching all 20 simultaneously.
 
 ---
 
-## Part 2 — Kaizen (改善): Eliminating Waste
+## Part 2 - Kaizen (改善): Eliminating Waste
 
-Kaizen (改善) means "change for the better" — continuous, incremental improvement.
+Kaizen (改善) means "change for the better" - continuous, incremental improvement.
 It is not a one-time event; it is a permanent operating mode.
 
 ---
 
-### Muda — 無駄 (Waste)
+### Muda - 無駄 (Waste)
 
 Any activity that consumes resources without adding value. Toyota's Seven Wastes,
 mapped to agentic development:
@@ -135,31 +135,31 @@ mapped to agentic development:
 | Toyota Muda | Agentic equivalent | kaizen-spec mitigation |
 |---|---|---|
 | 過剰生産 Over-production | Writing code not in the spec | Phase 1 spec gate |
-| 待機 Waiting | Agent idle waiting for human input | Andon cord — surface blockers fast |
-| 欠陥 Defects | Code that fails tests or mismatches spec | TDD — tests catch defects immediately |
-| 動作 Motion | Agent re-reading context it already processed | State in `.kaizen/` files — read once |
-| 運搬 Transport | Passing outputs between too many agents | Worktree isolation — agent reads source directly |
-| 在庫 Inventory | Unfinished tasks sitting in backlog | WIP limits — limit queue depth |
-| 過剰処理 Over-processing | Five-phase ceremony for a trivial rename | SKIP guard — classify request first |
+| 待機 Waiting | Agent idle waiting for human input | Andon cord - surface blockers fast |
+| 欠陥 Defects | Code that fails tests or mismatches spec | TDD - tests catch defects immediately |
+| 動作 Motion | Agent re-reading context it already processed | State in `.kaizen/` files - read once |
+| 運搬 Transport | Passing outputs between too many agents | Worktree isolation - agent reads source directly |
+| 在庫 Inventory | Unfinished tasks sitting in backlog | WIP limits - limit queue depth |
+| 過剰処理 Over-processing | Five-phase ceremony for a trivial rename | SKIP guard - classify request first |
 
 ---
 
-### Mura — 斑 (Unevenness)
+### Mura - 斑 (Unevenness)
 
 Irregular or uneven flow. A system that processes 100 tasks one day and 0 the
 next is experiencing Mura. Heijunka (WIP limits + pull system) is the remedy.
 
 ---
 
-### Muri — 無理 (Overburden)
+### Muri - 無理 (Overburden)
 
 Pushing agents or infrastructure beyond capacity. Launching 20 parallel
-subagents when the machine has resources for 3 is Muri — it causes thrashing,
+subagents when the machine has resources for 3 is Muri - it causes thrashing,
 timeouts, and degraded output quality. WIP limits prevent Muri directly.
 
 ---
 
-### Andon — 安燈 (Signal Light)
+### Andon - 安燈 (Signal Light)
 
 A visual signal system. In Toyota factories, any worker pulls the Andon cord to
 stop the entire production line when they detect a problem.
@@ -170,11 +170,11 @@ In kaizen-spec: when an agent cannot proceed, it:
 3. Appends `WARN` to `kaizen.log`
 4. **Stops.** Does not continue producing potentially defective work.
 
-The Andon cord is also pulled automatically by the test suite (Jidoka — see below).
+The Andon cord is also pulled automatically by the test suite (Jidoka - see below).
 
 ---
 
-### Jidoka — 自働化 (Autonomation with Human Intelligence)
+### Jidoka - 自働化 (Autonomation with Human Intelligence)
 
 Automation with built-in defect detection. The key distinction from plain
 automation: the machine/agent detects anomalies and stops, rather than
@@ -200,26 +200,26 @@ A Jidoka sensor that was never triggered cannot be trusted.
 
 ---
 
-### Poka-Yoke — ポカヨケ (Mistake-Proofing)
+### Poka-Yoke - ポカヨケ (Mistake-Proofing)
 
 Designing the system so that errors are impossible, not just unlikely.
 
 In kaizen-spec:
-- `tasks.json` has a required schema — agents cannot write arbitrary fields
-- Board HTML uses `data-wip-limit` attributes — WIP enforcement is structural
-- Phase gates prevent implementation before spec commit — the workflow itself is Poka-Yoke
+- `tasks.json` has a required schema - agents cannot write arbitrary fields
+- Board HTML uses `data-wip-limit` attributes - WIP enforcement is structural
+- Phase gates prevent implementation before spec commit - the workflow itself is Poka-Yoke
 
 In software generally: static typing, schema validation, and linting are Poka-Yoke.
 
 ---
 
-### Genchi Genbutsu — 現地現物 (Go and See)
+### Genchi Genbutsu - 現地現物 (Go and See)
 
 "Go to the actual place, see the actual thing." Do not rely on second-hand reports
 or summaries when diagnosing a problem.
 
 **In kaizen-spec (agent instruction):** When a task is blocked or a test fails,
-the agent must read the raw error output directly — the actual stack trace, the
+the agent must read the raw error output directly - the actual stack trace, the
 actual test output, the actual log line. Do not ask another agent to summarise it.
 The Gemba (現場) is the actual error, not a description of it.
 
@@ -228,43 +228,43 @@ The Gemba (現場) is the actual error, not a description of it.
 
 ---
 
-### Gemba — 現場 (The Real Place)
+### Gemba - 現場 (The Real Place)
 
 The place where value is actually created. For manufacturing: the factory floor.
 For software: the production/clinical environment where code runs.
 
 In kaizen-spec: the Gemba is the running test suite and the actual `.kaizen/`
-state files — not the agent's memory of what it thinks happened.
+state files - not the agent's memory of what it thinks happened.
 
 ---
 
-### Standard Work — 標準作業
+### Standard Work - 標準作業
 
 The documented, agreed baseline for how work is done. Kaizen cannot improve a
-process that has not been standardised — you cannot improve what you cannot
+process that has not been standardised - you cannot improve what you cannot
 measure or repeat.
 
 In kaizen-spec: the `.kaizen/` directory structure IS the Standard Work:
-- `spec.md` — standard for capturing intent
-- `test-strategy.md` — standard for defining "done"
-- `tasks.json` — standard for tracking agent state
-- `kaizen.log` — standard for recording what happened
-- `board.html` — standard for visualising flow
+- `spec.md` - standard for capturing intent
+- `test-strategy.md` - standard for defining "done"
+- `tasks.json` - standard for tracking agent state
+- `kaizen.log` - standard for recording what happened
+- `board.html` - standard for visualising flow
 
 The checklist in `features/kaizen-spec/checklist.md` is the Standard Work for
 building the skill itself.
 
 ---
 
-### PDCA — Plan-Do-Check-Act (計画・実行・評価・改善)
+### PDCA - Plan-Do-Check-Act (計画・実行・評価・改善)
 
 The Deming improvement cycle. In kaizen-spec, PDCA maps directly to TDD:
 
 | PDCA | TDD equivalent |
 |---|---|
-| Plan | Write the failing test — define what success looks like |
+| Plan | Write the failing test - define what success looks like |
 | Do | Implement the code |
-| Check | Run the test suite — did it work? |
+| Check | Run the test suite - did it work? |
 | Act | Refactor if green; fix and repeat if red |
 
 One TDD red→green→refactor cycle = one PDCA loop.
@@ -272,20 +272,20 @@ The kaizen.log records every cycle, making improvement history auditable.
 
 ---
 
-## Part 3 — Quick Reference (術語対照表)
+## Part 3 - Quick Reference (術語対照表)
 
 | Kaizen/Kanban term | Kanji | Agentic / kaizen-spec mapping |
 |---|---|---|
 | Andon | 安燈 | Blocked card badge + kaizen.log WARN + agent stops |
 | Poka-Yoke | ポカヨケ | tasks.json schema, phase gates, WIP enforcement |
-| Jidoka | 自働化 | TDD cycle — test suite auto-detects defects |
+| Jidoka | 自働化 | TDD cycle - test suite auto-detects defects |
 | Takt Time | タクト時間 | Delivery rate target (derived from kaizen.log Lead Times) |
 | Genchi Genbutsu | 現地現物 | Read raw logs/stack traces directly, never summaries |
 | Gemba | 現場 | Running test suite + .kaizen/ state files |
 | Muda | 無駄 | Any work outside the spec (over-processing, defects, waiting) |
-| Mura | 斑 | Uneven agent load — prevented by WIP limits |
-| Muri | 無理 | Agent overload — prevented by WIP limits |
-| Heijunka | 平準化 | Level loading — achieved by pull system + WIP limits |
+| Mura | 斑 | Uneven agent load - prevented by WIP limits |
+| Muri | 無理 | Agent overload - prevented by WIP limits |
+| Heijunka | 平準化 | Level loading - achieved by pull system + WIP limits |
 | Standard Work | 標準作業 | The .kaizen/ directory structure and file schemas |
 | Lead Time | 交付周期 | created_at → completed_at (total time in system) |
 | Cycle Time | 週期時間 | started_at → completed_at (active work time) |

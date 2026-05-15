@@ -30,7 +30,7 @@ python3 -m http.server 8080 --directory .kaizen
 | Review | Awaiting review or merge | **2** |
 | Done | Complete and tests passing | None |
 
-Cards move left-to-right as agents progress. You can also drag cards manually — the WIP limit is enforced client-side.
+Cards move left-to-right as agents progress. You can also drag cards manually - the WIP limit is enforced client-side.
 
 ---
 
@@ -38,19 +38,19 @@ Cards move left-to-right as agents progress. You can also drag cards manually �
 
 WIP stands for "Work In Progress." Limiting WIP is a core Toyota Kanban principle: doing fewer things simultaneously means each thing gets done faster and with fewer mistakes.
 
-**What you see:** When a column reaches its limit, the column header turns **red**. No new cards can be dragged in. Agents check `tasks.json` before claiming a new task — if the limit is reached, they wait.
+**What you see:** When a column reaches its limit, the column header turns **red**. No new cards can be dragged in. Agents check `tasks.json` before claiming a new task - if the limit is reached, they wait.
 
 **Why 3 for In Progress?** Three parallel agents is the default balance between parallelism and coordination overhead. You can change `wip_limits` in `.kaizen/tasks.json` to adjust.
 
 ---
 
-## Andon Cord — Blocked Agents
+## Andon Cord - Blocked Agents
 
 In Toyota factories, any worker can pull an "Andon cord" to stop the production line when they spot a problem. kaizen-spec has an equivalent.
 
 **What you see:** A blocked card displays a **⚠ BLOCKED** badge in red and a `border-danger` outline.
 
-**What happened:** The agent hit a problem it cannot solve alone — a missing dependency, an unclear spec, an external API that is unreachable. It has:
+**What happened:** The agent hit a problem it cannot solve alone - a missing dependency, an unclear spec, an external API that is unreachable. It has:
 1. Written its `blocked_reason` to `.kaizen/tasks.json`
 2. Set the Andon flag on its board card
 3. Logged a `WARN` entry to `.kaizen/kaizen.log`
@@ -62,7 +62,7 @@ In Toyota factories, any worker can pull an "Andon cord" to stop the production 
 
 ## Kaizen Log
 
-The kaizen log at `.kaizen/kaizen.log` is an append-only record of everything that happened during the skill run. It uses syslog format — one structured line per event.
+The kaizen log at `.kaizen/kaizen.log` is an append-only record of everything that happened during the skill run. It uses syslog format - one structured line per event.
 
 ```
 2026-05-14T10:23:45Z INFO [kaizen] phase=implementation task=task-001 agent=subagent-1 status=started

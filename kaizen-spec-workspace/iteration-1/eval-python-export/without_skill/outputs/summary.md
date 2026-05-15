@@ -1,4 +1,4 @@
-# Eval: /export Command — Without Skill (Baseline)
+# Eval: /export Command - Without Skill (Baseline)
 
 ## 1. Did you ask any clarifying questions before proceeding?
 
@@ -23,7 +23,7 @@ No. The user explicitly noted they have no tests yet, and the assistant did not 
 
 ## 4. What did you actually produce?
 
-The assistant produced a single Python code block (not a file — just inline code in the chat response) containing:
+The assistant produced a single Python code block (not a file - just inline code in the chat response) containing:
 
 - A `export` Click command group with two subcommands: `csv` and `json`
 - A `--output` option on each subcommand to specify a file path (defaulting to `export.csv` / `export.json`)
@@ -43,4 +43,4 @@ There is no clear definition of done. The assistant did not specify:
 - Any manual test steps or example outputs to verify against
 - Edge cases that should be handled (empty tables, large datasets, special characters in data)
 
-The user is left to judge "doneness" by subjective impression — does it roughly work when they run it? There is no traceability from requirements to implementation to verification. Regressions introduced later would go undetected.
+The user is left to judge "doneness" by subjective impression - does it roughly work when they run it? There is no traceability from requirements to implementation to verification. Regressions introduced later would go undetected.

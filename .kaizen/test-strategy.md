@@ -28,8 +28,8 @@
 
 ## Bugs found and fixed during test writing
 
-1. **`col` declared after use** — `initCardTooltips()` used `col` on line 355 but declared it on line 377, causing a `ReferenceError` that silently aborted all tooltip initialisation.
-2. **Bootstrap sanitizer stripping `<table>`** — Bootstrap tooltips strip table elements by default. Fixed with `sanitize: false` in tooltip init (content is internal, not user-generated).
+1. **`col` declared after use** - `initCardTooltips()` used `col` on line 355 but declared it on line 377, causing a `ReferenceError` that silently aborted all tooltip initialisation.
+2. **Bootstrap sanitizer stripping `<table>`** - Bootstrap tooltips strip table elements by default. Fixed with `sanitize: false` in tooltip init (content is internal, not user-generated).
 
 ## Run command
 

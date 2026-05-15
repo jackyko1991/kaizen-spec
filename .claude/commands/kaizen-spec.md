@@ -4,20 +4,20 @@ description: "Spec-driven, TDD-enforced, kaizen-informed agentic development wor
 license: MIT. Full terms in LICENSE.
 ---
 
-# /kaizen-spec — Spec-Driven Kaizen Development Skill
+# /kaizen-spec - Spec-Driven Kaizen Development Skill
 
-> Terminology reference: `references/kaizen-glossary.md` — read it when you need to understand
+> Terminology reference: `references/kaizen-glossary.md` - read it when you need to understand
 > why a constraint exists (Muda, Jidoka, Andon, Lead Time, etc.).
 
 You are the **kaizen-spec orchestrator**. Your job is to guide the user through five phases of spec-driven, test-first, kaizen-informed software development. You never write implementation code before a spec is agreed and committed. You never declare acceptance before all tests pass.
 
 ---
 
-## Request Classification — Read This First
+## Request Classification - Read This First
 
 Before doing anything else, classify the incoming request:
 
-**TRIVIAL** — handle directly without the five-phase workflow:
+**TRIVIAL** - handle directly without the five-phase workflow:
 - Rename a symbol, variable, or function
 - Fix a typo in a string or comment
 - Move/delete a file
@@ -27,15 +27,15 @@ Before doing anything else, classify the incoming request:
 For TRIVIAL requests: do the task directly. Do not write `.kaizen/spec.md`. Do not run phases.
 But **always** add a task card to `.kaizen/tasks.json` **before starting** and mark it done when
 complete, then run `python3 scripts/render_board.py` to regenerate the board. Every piece of
-work must be visible — this is Standard Work (標準作業): nothing happens outside the system.
+work must be visible - this is Standard Work (標準作業): nothing happens outside the system.
 
 This includes work delegated to subagents: create the card in tasks.json (status=in-progress)
 **before** spawning the Agent, then update it to done after the agent completes. Never let a
-subagent finish without a corresponding board card — the board must always reflect reality.
+subagent finish without a corresponding board card - the board must always reflect reality.
 
-Tell the user: "Quick task — skipping full workflow but adding a board card." then act.
+Tell the user: "Quick task - skipping full workflow but adding a board card." then act.
 
-**FULL WORKFLOW** — run all five phases:
+**FULL WORKFLOW** - run all five phases:
 - New feature or capability
 - Bug fix that needs a regression test
 - Refactor that changes observable behaviour
@@ -47,14 +47,14 @@ If unclear, ask the user: "Is this a quick one-off change, or do you want the fu
 
 ## Principles (the why behind the workflow)
 
-These aren't arbitrary rules — they exist because experience shows what goes wrong without them:
+These aren't arbitrary rules - they exist because experience shows what goes wrong without them:
 
-- **Spec before code** — agents that start coding immediately solve the wrong problem half the time. A 5-minute alignment saves hours of rework (Muda elimination).
-- **Tests red before green** — a test that was never red has never proven it can catch the defect (Jidoka: the sensor must be tested). Write tests first, confirm they fail, then implement.
-- **Phases gate each other** — skipping a phase hides problems downstream where they cost more to fix. The gate is the quality check.
-- **AskUserQuestion for all choices** — prose options are easy to overlook; structured choices with a recommendation let users accept quickly or override deliberately.
-- **Explain unfamiliar terms first** — if the user doesn't know what "WIP limit" means, the choice is meaningless. Explain, then ask.
-- **State in `.kaizen/` files, not agent memory** — agents restart; files don't. Fresh-context continuity is only possible if everything important was written down (Standard Work — 標準作業).
+- **Spec before code** - agents that start coding immediately solve the wrong problem half the time. A 5-minute alignment saves hours of rework (Muda elimination).
+- **Tests red before green** - a test that was never red has never proven it can catch the defect (Jidoka: the sensor must be tested). Write tests first, confirm they fail, then implement.
+- **Phases gate each other** - skipping a phase hides problems downstream where they cost more to fix. The gate is the quality check.
+- **AskUserQuestion for all choices** - prose options are easy to overlook; structured choices with a recommendation let users accept quickly or override deliberately.
+- **Explain unfamiliar terms first** - if the user doesn't know what "WIP limit" means, the choice is meaningless. Explain, then ask.
+- **State in `.kaizen/` files, not agent memory** - agents restart; files don't. Fresh-context continuity is only possible if everything important was written down (Standard Work - 標準作業).
 
 ---
 
@@ -75,15 +75,15 @@ Tell the user which phase you are resuming from before proceeding.
 
 ---
 
-## Phase 1 — Spec Alignment
+## Phase 1 - Spec Alignment
 
-**Goal:** Produce `.kaizen/spec.md` — a committed, agreed spec before any code is written.
+**Goal:** Produce `.kaizen/spec.md` - a committed, agreed spec before any code is written.
 
 Ask these questions **one at a time** using `AskUserQuestion`. Do not batch them.
 
 ### Q1: Intent
 Ask: "What is the core problem this feature solves, or what does it add?"
-- Free text — no options needed. Accept user's answer directly.
+- Free text - no options needed. Accept user's answer directly.
 
 ### Q2: Target output
 Ask what the concrete deliverable is. Options (adjust based on Q1 answer):
@@ -99,7 +99,7 @@ If user selects **Bug fix**: the spec template will include a Current Behaviour 
 Behaviour / Steps to Reproduce section. The test-writer agent will write a test that
 reproduces the bug (must fail) before the fix is applied.
 
-### Q3: Scope — what is IN scope
+### Q3: Scope - what is IN scope
 Ask the user to confirm or refine the scope. Present 2–3 options based on what they described in Q1/Q2, plus "Other". Always include a recommended option.
 
 ### Q4: Out-of-scope warnings
@@ -121,7 +121,7 @@ Allow multiselect.
 
 Accept free text. Record the answer in the spec under **Risks / Unknowns** and set
 `"compliance_mode": true` in `.kaizen/tasks.json`. This activates extended log fields
-(see Kaizen Log Format Reference — Compliance Mode below).
+(see Kaizen Log Format Reference - Compliance Mode below).
 
 ### After Q5: Write the spec
 
@@ -155,7 +155,7 @@ All tests in `.kaizen/test-strategy.md` pass. No manual exceptions.
 
 For **bug fixes** (Q2 = Bug fix), add these sections:
 ```markdown
-## Current Behaviour (Muda — defect)
+## Current Behaviour (Muda - defect)
 {describe exactly what happens now, including error messages or wrong output}
 
 ## Expected Behaviour
@@ -171,7 +171,7 @@ The regression test written in Phase 2 passes. No manual exceptions.
 
 Then run:
 ```bash
-# Create a feature branch — all kaizen work stays off main until acceptance
+# Create a feature branch - all kaizen work stays off main until acceptance
 git checkout -b kaizen/{feature-slug}
 git add .kaizen/spec.md
 git commit -m "kaizen: spec aligned for {feature name}"
@@ -198,7 +198,7 @@ The feature slug is the feature name lowercased with spaces replaced by hyphens 
   "completed_at": null
 }
 ```
-2. Run `python3 scripts/render_board.py` — the card appears in Backlog immediately.
+2. Run `python3 scripts/render_board.py` - the card appears in Backlog immediately.
 3. Commit: `git add .kaizen/tasks.json .kaizen/board.html && git commit -m "kaizen: board card added for {feature name}"`
 
 The board must always reflect reality. A spec that exists without a board card is invisible work (Muda).
@@ -207,7 +207,7 @@ Tell the user: "Branch `kaizen/{feature-slug}` created. Spec committed. Board ca
 
 ---
 
-## Phase 2 — Test Strategy
+## Phase 2 - Test Strategy
 
 **Goal:** Choose a test framework and write failing tests. Commit both before any implementation.
 
@@ -227,7 +227,7 @@ Based on detected stack AND project type, recommend:
 | Stack | Project type | Recommended framework |
 |---|---|---|
 | TypeScript/JS | Has UI framework (React, Vue, Svelte) | Playwright (TypeScript) |
-| TypeScript/JS | API only (express, fastify, koa — no UI) | Jest + Supertest |
+| TypeScript/JS | API only (express, fastify, koa - no UI) | Jest + Supertest |
 | TypeScript/JS | CLI tool | Jest + child_process or Vitest |
 | Python | Has `click`, `typer`, or `argparse` | pytest + click.testing.CliRunner |
 | Python | Web (FastAPI, Django, Flask) | pytest + httpx or playwright-python |
@@ -236,7 +236,7 @@ Based on detected stack AND project type, recommend:
 | Rust | Any | cargo test |
 | Unknown / mixed | Any | Playwright (TypeScript) as safe default |
 
-Present as `AskUserQuestion` with the recommended option first. Always include "Other — I'll specify" as the last option.
+Present as `AskUserQuestion` with the recommended option first. Always include "Other - I'll specify" as the last option.
 
 ### Step 3: Spawn test-writer agent
 
@@ -263,8 +263,8 @@ After the test-writer reports back, write `.kaizen/test-strategy.md`:
 {e.g. npx playwright test tests/e2e/feature.spec.ts}
 ```
 
-Verify (Jidoka — 自働化): if tests that **directly reproduce the reported bug or missing feature** pass
-before implementation, stop — the test cannot detect the defect. Ask the user to investigate.
+Verify (Jidoka - 自働化): if tests that **directly reproduce the reported bug or missing feature** pass
+before implementation, stop - the test cannot detect the defect. Ask the user to investigate.
 
 For bug fixes: the regression test MUST fail before the fix is applied. Happy-path tests that
 already pass (testing existing working behaviour) are expected to pass at this stage and do
@@ -280,7 +280,7 @@ Proceed to Phase 3.
 
 ---
 
-## Phase 3 — Implementation
+## Phase 3 - Implementation
 
 **Goal:** Subagent-parallelised implementation that drives all failing tests green.
 
@@ -304,7 +304,7 @@ The Phase 1 backlog card already exists in `tasks.json`. Replace it (or add alon
       "wip_column": "backlog",
       "depends_on": [],
       "blocked_reason": null,
-      "created_at": "{ISO8601 — when task was added to backlog}",
+      "created_at": "{ISO8601 - when task was added to backlog}",
       "started_at": null,
       "completed_at": null
     }
@@ -325,9 +325,9 @@ python3 scripts/render_board.py
 ```
 
 This reads `tasks.json` and `templates/board.html` and writes `.kaizen/board.html`. Never
-edit `board.html` directly — always update `tasks.json` first, then re-run the script.
+edit `board.html` directly - always update `tasks.json` first, then re-run the script.
 
-Tell the user: "Board is live at `.kaizen/board.html` — open it in a browser to watch progress."
+Tell the user: "Board is live at `.kaizen/board.html` - open it in a browser to watch progress."
 
 ### Step 3: Spawn implementation agents
 
@@ -346,7 +346,7 @@ Watch for blocked agents. If an agent reports a blocker:
 - Use `AskUserQuestion` to ask the user how to resolve it (present options if applicable)
 - Once resolved, update the task status to `in-progress` and notify the agent
 
-Before spawning the next task, check `depends_on` in `tasks.json` — only spawn a task when
+Before spawning the next task, check `depends_on` in `tasks.json` - only spawn a task when
 all tasks in its `depends_on` list have `status: "done"`.
 
 Spawn the next queued task as soon as a slot opens (WIP limit not exceeded).
@@ -365,7 +365,7 @@ Proceed to Phase 4 when all tests pass.
 
 ---
 
-## Phase 4 — Acceptance
+## Phase 4 - Acceptance
 
 **Goal:** Confirm all tests pass and the feature meets the spec. Log the result.
 
@@ -378,7 +378,7 @@ Proceed to Phase 4 when all tests pass.
 If any tests fail:
 - Log: `{now} ERROR [kaizen] phase=acceptance status=failed failed_count={N}`
 - Tell the user which tests failed and why
-- Do NOT declare acceptance — return to Phase 3 to fix
+- Do NOT declare acceptance - return to Phase 3 to fix
 
 ### Step 2: Manual verification (if needed)
 
@@ -388,10 +388,10 @@ If the spec requires visual or user-interaction checks (e.g. UI rendering, keybo
 - Present each manual check as a checklist option
 - User must confirm all before proceeding
 
-### Step 3: 5S — Seiso (清掃) Cleanup
+### Step 3: 5S - Seiso (清掃) Cleanup
 
 Before committing acceptance, run a targeted refactor pass. The goal is token reduction:
-less code means less context for future agents to load — faster, cheaper sessions (Muda elimination).
+less code means less context for future agents to load - faster, cheaper sessions (Muda elimination).
 
 → Use the **5S Cleanup Agent** prompt template in `references/agent-prompts.md`.
 
@@ -407,7 +407,7 @@ Commit the acceptance state, then merge the feature branch back to the base bran
 git add .kaizen/
 git commit -m "kaizen: acceptance passed for {feature name}"
 
-# Merge back — squash if the branch has many small commits, merge-commit otherwise
+# Merge back - squash if the branch has many small commits, merge-commit otherwise
 BASE=$(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's|.*/||' || echo "main")
 git checkout $BASE
 git merge --no-ff kaizen/{feature-slug} -m "kaizen: merge {feature name} → $BASE"
@@ -417,7 +417,7 @@ Tell the user: "Acceptance complete. All {N} tests pass. 5S cleanup done. Branch
 
 ---
 
-## Phase 5 — Documentation (runs in parallel with Phase 3)
+## Phase 5 - Documentation (runs in parallel with Phase 3)
 
 **Goal:** Write a VitePress doc page for the feature. Start this agent at the same time as the first implementation agent in Phase 3.
 
@@ -465,32 +465,32 @@ When a project is subject to a regulatory standard, every log line must addition
 | `artifact` | File path and git commit hash of affected output | `spec.md@abc1234`, `src/auth.ts@def5678` |
 | `justification` | Pointer to the requirement that motivated the change | `spec.md#intent`, `tasks.json#task-003` |
 
-**Compliance log example (ISO 13485 — medical device software):**
+**Compliance log example (ISO 13485 - medical device software):**
 ```
 2026-05-14T10:23:45Z INFO [kaizen] phase=implementation task=task-003 agent=subagent-1 status=started change_type=code-change requirement_id=ISO13485-7.3.5 actor="agent:subagent-1" artifact="src/device_driver.py@abc1234" justification="spec.md#in-scope"
 2026-05-14T10:48:33Z INFO [kaizen] phase=implementation task=task-003 agent=subagent-1 status=done cycle_time=1488s lead_time=1531s change_type=code-change requirement_id=ISO13485-7.3.5 actor="agent:subagent-1 review:human" artifact="src/device_driver.py@def5678" justification="spec.md#acceptance-criterion"
 2026-05-14T11:02:44Z INFO [kaizen] phase=acceptance count=14 status=done change_type=validation requirement_id=ISO13485-7.3.6 actor="agent:orchestrator review:human" artifact="tests/device.spec.ts@ghi9012" justification="spec.md#acceptance-criterion"
 ```
 
-Compliance fields are **additive** — standard log consumers ignore unknown keys. The base format is unchanged; only the key set grows.
+Compliance fields are **additive** - standard log consumers ignore unknown keys. The base format is unchanged; only the key set grows.
 
 ---
 
 ## Board Update Rules
 
-**Never edit `.kaizen/board.html` directly.** It is fully generated — hand edits are
+**Never edit `.kaizen/board.html` directly.** It is fully generated - hand edits are
 overwritten the next time the render script runs.
 
 The single workflow for all board changes:
 1. Edit `.kaizen/tasks.json` (update `wip_column`, `status`, timestamps, `blocked_reason`, etc.)
-2. Run `python3 scripts/render_board.py` — board is regenerated atomically
+2. Run `python3 scripts/render_board.py` - board is regenerated atomically
 
 Specific state changes in `tasks.json`:
 - **Card move**: change `wip_column` to the target column (`"backlog"`, `"in-progress"`, `"review"`, `"done"`)
 - **Blocked card**: set `"blocked_reason": "description of blocker"` (and `"status": "blocked"`)
 - **Unblocked**: set `"blocked_reason": null`
 - **Task done**: set `"status": "done"`, `"wip_column": "done"`, `"completed_at": "{ISO8601}"`, `"cycle_time_s"`, `"lead_time_s"`
-- **WIP exceeded**: enforced client-side in board JS — only update `tasks.json`, not HTML
+- **WIP exceeded**: enforced client-side in board JS - only update `tasks.json`, not HTML
 
 ---
 

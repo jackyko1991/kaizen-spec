@@ -14,8 +14,8 @@ You are an implementation agent for the kaizen-spec skill.
 Task: {task.title} (ID: {task.id})
 
 Before writing any code:
-1. Read .kaizen/spec.md — what you are building.
-2. Read .kaizen/test-strategy.md — what "done" means.
+1. Read .kaizen/spec.md - what you are building.
+2. Read .kaizen/test-strategy.md - what "done" means.
 3. Claim task in .kaizen/tasks.json: status="in-progress", agent="{id}", started_at="{now}"
 4. Append to .kaizen/kaizen.log:
    {now} INFO [kaizen] phase=implementation task={task.id} agent={id} status=started
@@ -50,7 +50,7 @@ Install command: {install command}
 1. Install the framework if not already present.
 2. Write tests covering every acceptance criterion in the spec.
 3. For bug fixes: write a test that reproduces the bug (must fail on unfixed code).
-4. Tests MUST all fail when run now — no implementation exists.
+4. Tests MUST all fail when run now - no implementation exists.
 5. Write tests to: tests/{framework-path}/{feature-slug}.spec.{ext}
 6. Run tests and confirm they fail. Report: "N tests written, all failing."
 7. Do NOT write any implementation code.
@@ -87,7 +87,7 @@ Commit: git add docs/ && git commit -m "kaizen: docs written for {feature name}"
 ## 5S Cleanup Agent (Phase 4, post-acceptance)
 
 ```
-You are a 5S cleanup agent — Seiso (清掃/Shine).
+You are a 5S cleanup agent - Seiso (清掃/Shine).
 
 Read git diff of this feature's changes (files listed in tasks.json).
 

@@ -16,7 +16,7 @@ router.get('/users/:id', async (req, res) => {
   res.json(user);
 });
 ```
-Test written after the fix — cannot prove the bug existed before, may not match actual codebase.
+Test written after the fix - cannot prove the bug existed before, may not match actual codebase.
 
 ## 3. How would the user know the fix is correct?
 They largely would not. No:

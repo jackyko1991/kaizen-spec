@@ -17,7 +17,7 @@ This guide walks you through installing kaizen-spec and running your first `/kai
 
 ## Install
 
-### Option A — curl one-liner (recommended)
+### Option A - curl one-liner (recommended)
 
 The fastest way to install. Run this in your terminal:
 
@@ -58,14 +58,14 @@ ls -la ~/.claude/commands/kaizen-spec.md
 
 ## Your first run
 
-1. Open a project in Claude Code — any project, any language.
+1. Open a project in Claude Code - any project, any language.
 2. Type `/kaizen-spec` and describe what you want to build (or leave it blank and answer the questions).
-3. Answer the Phase 1 alignment questions. Take your time — this is the most important phase.
+3. Answer the Phase 1 alignment questions. Take your time - this is the most important phase.
 4. Confirm the test framework in Phase 2.
 5. Watch Phase 3: open `.kaizen/board.html` in a browser to see agent progress live.
 6. Phase 4 and 5 complete automatically.
 
-The entire cycle — from spec to working, tested, documented code — typically takes 15–45 minutes depending on feature complexity.
+The entire cycle - from spec to working, tested, documented code - typically takes 15–45 minutes depending on feature complexity.
 
 ---
 
@@ -97,7 +97,7 @@ If all five phases complete and the board shows all cards in Done, the install i
 
 ## Updating
 
-Re-run the install command — it overwrites the existing skill file in place:
+Re-run the install command - it overwrites the existing skill file in place:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
@@ -109,7 +109,7 @@ Or, if you have the repo cloned locally:
 make update
 ```
 
-Claude Code picks up the new version immediately — no restart needed for the skill file itself.
+Claude Code picks up the new version immediately - no restart needed for the skill file itself.
 
 ---
 

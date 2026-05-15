@@ -1,7 +1,7 @@
 # Design: kaizen-spec Skill
 
 **Feature ID:** kaizen-spec  
-**Status:** Approved — proceed to checklist  
+**Status:** Approved - proceed to checklist  
 **Date:** 2026-05-14  
 **Depends on:** [spec.md](spec.md)
 
@@ -48,10 +48,10 @@ kaizen-spec/
 
 The skill is a single markdown file loaded by Claude Code as a slash command. It contains:
 
-1. **System prompt** — persona, constraints, phase gating rules
-2. **Phase instructions** — one section per phase, each with the exact `AskUserQuestion` calls to make
-3. **File templates** — inline templates for `board.html`, `tasks.json`, `kaizen.log` format
-4. **Subagent prompts** — template prompts for each subagent type (impl agent, doc agent)
+1. **System prompt** - persona, constraints, phase gating rules
+2. **Phase instructions** - one section per phase, each with the exact `AskUserQuestion` calls to make
+3. **File templates** - inline templates for `board.html`, `tasks.json`, `kaizen.log` format
+4. **Subagent prompts** - template prompts for each subagent type (impl agent, doc agent)
 
 The skill is self-contained: no imports, no external scripts. An agent reads the file and follows the instructions.
 
@@ -149,7 +149,7 @@ Agents rewrite `board.html` on each state change. The board includes:
 
 ```html
 <script>
-  // Poll for file modification — works with VS Code Live Server or Python http.server
+  // Poll for file modification - works with VS Code Live Server or Python http.server
   setInterval(() => location.reload(), 5000);
 </script>
 ```
@@ -160,7 +160,7 @@ Agents rewrite `board.html` on each state change. The board includes:
 
 ### `.kaizen/tasks.json`
 
-Agents read this to claim work and write back status updates. The file is the single source of truth for task state. No two agents may write simultaneously — each agent reads, mutates one task, and writes back atomically (write to `.kaizen/tasks.json.tmp`, then rename).
+Agents read this to claim work and write back status updates. The file is the single source of truth for task state. No two agents may write simultaneously - each agent reads, mutates one task, and writes back atomically (write to `.kaizen/tasks.json.tmp`, then rename).
 
 ### `.kaizen/kaizen.log`
 
@@ -197,9 +197,9 @@ You are an implementation agent for the kaizen-spec skill.
 Your task: {task.title}
 
 Read these files first:
-- .kaizen/spec.md       — what you are building
-- .kaizen/test-strategy.md — what "done" means (tests that must pass)
-- .kaizen/tasks.json    — claim task {task.id} by setting status=in-progress
+- .kaizen/spec.md       - what you are building
+- .kaizen/test-strategy.md - what "done" means (tests that must pass)
+- .kaizen/tasks.json    - claim task {task.id} by setting status=in-progress
 
 Implement until the tests for your task pass.
 On any blocker: set status=blocked in tasks.json, add ⚠ badge to your card in board.html,
@@ -290,8 +290,8 @@ The skill is complete when this sequence works end-to-end:
    - Phase 3 updates `board.html` in real time; all tests go green
    - Phase 4 passes acceptance without manual intervention
    - Phase 5 produces `docs/guide/kaizen-log-viewer.md`
-5. Open `.kaizen/board.html` in a browser — board must reflect final state with all cards in Done
-6. Read `.kaizen/kaizen.log` — must contain INFO lines for every state transition
+5. Open `.kaizen/board.html` in a browser - board must reflect final state with all cards in Done
+6. Read `.kaizen/kaizen.log` - must contain INFO lines for every state transition
 
 ---
 

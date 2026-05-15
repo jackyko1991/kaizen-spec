@@ -57,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-14T16:20:49Z</span>
+    <span id="last-updated">Updated: 2026-05-15T00:42:40Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -90,17 +90,6 @@
       </div>
     </div>
     <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
-      <div class="kaizen-card" data-task-id="task-022" data-blocked="false"
-           data-description="zh-TW and ja locales missing: philosophy, glossary, kanban, phases (guide) + kaizen-glossary, kaizen-log, state-schema (reference). VitePress locale sidebar config needed so nav links resolve."
-           data-created-at="2026-05-14T19:50:00Z" data-started-at="2026-05-14T19:50:00Z" data-completed-at="">
-        <div class="card-id">task-022</div>
-        <div class="fw-semibold">i18n: translate missing guide + reference pages (zh-TW + ja)</div>
-        <div class="text-secondary card-phase">fix</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
-          <span class="lt" title="Lead Time 交付周期">LT: —</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -129,6 +118,17 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-022" data-blocked="false"
+           data-description="Translated philosophy, glossary, kanban, phases (guide) + kaizen-glossary, kaizen-log, state-schema (reference) for zh-TW and ja. VitePress locale-specific sidebars added to config.mts so all nav links resolve."
+           data-created-at="2026-05-14T19:50:00Z" data-started-at="2026-05-14T19:50:00Z" data-completed-at="2026-05-15T00:30:00Z">
+        <div class="card-id">task-022</div>
+        <div class="fw-semibold">i18n: translate missing guide + reference pages (zh-TW + ja)</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 4.5h</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 4.5h</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-021" data-blocked="false"
            data-description="README.zh-TW.md + README.ja.md. docs/zh-TW/ and docs/ja/ with getting-started and index pages. VitePress locales config — language switcher in navbar for 繁體中文 and 日本語."
            data-created-at="2026-05-14T19:10:00Z" data-started-at="2026-05-14T19:10:00Z" data-completed-at="2026-05-14T19:45:00Z">
@@ -228,19 +228,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-012" data-blocked="false"
-           data-description="Python render script reads tasks.json + templates/board.html and generates board.html deterministically. Agents edit JSON only. make board auto-renders before serving. make ci-local added for local Actions testing."
-           data-created-at="2026-05-14T16:35:00Z" data-started-at="2026-05-14T16:35:00Z" data-completed-at="2026-05-14T17:10:00Z">
-        <div class="card-id">task-012</div>
-        <div class="fw-semibold">render_board.py — tasks.json single source of truth</div>
-        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 35m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        11 older cards archived — see tasks.json
+        12 older cards archived — see tasks.json
       </div>
     </div>
   </div>
