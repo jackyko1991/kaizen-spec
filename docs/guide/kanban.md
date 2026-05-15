@@ -23,14 +23,71 @@ python3 -m http.server 8080 --directory .kaizen
 
 ## Columns
 
-| Column | Meaning | WIP limit |
-|---|---|---|
-| Backlog | Tasks not yet started | None |
-| In Progress | Agents actively working | **3** |
-| Review | Awaiting review or merge | **2** |
-| Done | Complete and tests passing | None |
+<div class="kb-guide-cols">
+<div class="kb-guide-col" data-kb-tooltip="Backlog: All agreed specs waiting to be started. WIP limit is not enforced here. Tasks sit here until an In Progress slot opens.">
+  <strong>Backlog</strong>
+  <p>Tasks not yet started. No WIP limit.</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="In Progress (一個流): Active implementation. WIP limit: 3. Exceeding the limit triggers Andon - the line stops until a slot opens. One-piece flow prevents multitasking waste (Muda).">
+  <strong>In Progress</strong>
+  <p>Agents actively working. WIP limit: <strong>3</strong>.</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="Review (レビュー): Implementation done, tests green. Awaiting acceptance check and 5S cleanup (Seiso - 清掃). WIP limit: 2.">
+  <strong>Review</strong>
+  <p>Awaiting acceptance or merge. WIP limit: <strong>2</strong>.</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="Done (完了 / 改善): All tests green, acceptance logged, docs written. Merged to main. Kaizen cycle complete.">
+  <strong>Done</strong>
+  <p>Complete and tests passing. No WIP limit.</p>
+</div>
+</div>
 
 Cards move left-to-right as agents progress. You can also drag cards manually - the WIP limit is enforced client-side.
+
+<style>
+.kb-guide-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+@media (max-width: 640px) {
+  .kb-guide-cols { grid-template-columns: repeat(2, 1fr); }
+}
+.kb-guide-col {
+  position: relative;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  cursor: help;
+}
+.kb-guide-col p {
+  font-size: 0.82rem;
+  color: var(--vp-c-text-2);
+  margin: 0.25rem 0 0;
+}
+.kb-guide-col::after {
+  content: attr(data-kb-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  width: 240px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(13,17,23,0.93);
+  color: #e6edf3;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+  border: 1px solid #30363d;
+}
+.kb-guide-col:hover::after { opacity: 1; }
+</style>
 
 ---
 

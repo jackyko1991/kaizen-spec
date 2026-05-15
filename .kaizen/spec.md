@@ -1,34 +1,49 @@
-# Spec: Stabilize kanban live update
+# Spec: Index homepage redesign - Lean-first
 
 **Date:** 2026-05-15
 **Status:** Agreed
 
 ## Intent
-The kanban board reloads every 5 seconds via `location.reload()`, causing a full-page flash
-even when nothing has changed. The PostToolUse hook also relies solely on grepping stdin for
-the string "tasks.json", which misses edge cases (e.g. tool inputs that touch tasks.json
-indirectly). Both issues reduce the reliability and polish of the live board experience.
+The current homepage uses VitePress default feature cards with generic descriptions.
+It does not lead with Lean/TPS identity, buries the install command below a long features
+grid, and has no visual demonstration of the kanban board. The redesign makes the Lean
+philosophy first-class, simplifies the install path, and adds an interactive kanban mock.
 
 ## Target Output
-Refactor of existing code across three files:
-- `templates/board.html` - replace blind reload with 1s smart-poll (fetch + timestamp diff)
-- `scripts/render_board.py` - write `.kaizen/.render-ts` sentinel file on every render
-- `.claude/hooks/update-board.sh` - trigger on sentinel file presence/change, not stdin grep
+Refactor of docs pages across all 3 locales:
+- `docs/index.md` - English homepage
+- `docs/zh-TW/index.md` - Traditional Chinese homepage
+- `docs/ja/index.md` - Japanese homepage
+- `docs/guide/kanban.md` - English kanban guide (add column hover tooltips)
+- `docs/zh-TW/guide/kanban.md` - zh-TW kanban guide
+- `docs/ja/guide/kanban.md` - Japanese kanban guide
 
 ## In Scope
-- 1s smart-poll: fetch board.html every 1s, extract rendered timestamp, reload only if changed
-- Sentinel file `.kaizen/.render-ts` written by render_board.py on every successful render
-- Hook updated to always re-render (sentinel approach decouples from stdin format)
-- Bats regression tests (group r): sentinel write verified, smart-poll logic documented
+- Hero text changed to "Lean-first agentic development" with TPS tagline
+- YAML features array replaced with 6 custom HTML feature cards:
+  1. Spec before code (Decide Late)
+  2. Tests red before green (Jidoka)
+  3. WIP limits + one-piece flow
+  4. Lean Development / TPS mapping
+  5. Kanban workflow (live board, Andon, drag to columns)
+  6. Standard Work + fresh-context resilient
+- Install section: curl one-liner only; dev-mode hidden behind "Full install guide" link
+- Install section positioned right of feature cards (sidebar on desktop)
+- HTML kanban mock at bottom of homepage: 4 columns, mock cards, CSS hover tooltip on
+  each column header explaining the kaizen concept + Japanese term
+- CSS hover tooltips added to kanban column descriptions in guide/kanban.md pages
+- All internal links use explicit locale prefix (/zh-TW/..., /ja/...) in locale pages
+- All 3 locales updated with translated content
 
 ## Out of Scope
-- No WebSocket or SSE server - stays file-based, no persistent process
-- No React or JS build step - board remains a single self-contained HTML file
-- No changes to tasks.json schema - sentinel is a separate file
-- No changes to board visual design - only reload behaviour changes
+- No new npm packages beyond what is already installed
+- No backend or server changes
+- No changes to board.html rendering logic
+- No authentication or security changes
+- No changes to the bats test suite structure
 
 ## Risks / Unknowns
-No known risks. All changes are local file I/O and browser fetch with no external dependencies.
+No known risks. All changes are VitePress markdown/HTML - no build tooling changes required.
 
 ## Acceptance Criterion
 All tests in `.kaizen/test-strategy.md` pass. No manual exceptions.
