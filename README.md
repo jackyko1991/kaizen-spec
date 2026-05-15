@@ -50,17 +50,25 @@ State is persisted in `.kaizen/` (git-tracked) so fresh-context agents can resum
 
 ## Install
 
+**Standard install** (copies the skill file):
+
 ```bash
 curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
 ```
 
-Then open any project in Claude Code and run:
+Then open any project in Claude Code and run `/kaizen-spec`.
 
-```
-/kaizen-spec
+**Dev mode install** (symlink - for contributors or anyone who wants to edit the skill and see changes live across all projects):
+
+```bash
+git clone https://github.com/jackyko1991/kaizen-spec
+cd kaizen-spec
+make install-dev
 ```
 
-To upgrade, re-run the same command.
+With dev mode, `~/.claude/commands/kaizen-spec.md` is a symlink to the cloned repo. Edit the skill in the repo, invoke it in any project - the change is immediately live. No reinstall needed. See [Dev Mode](https://jackyko1991.github.io/kaizen-spec/guide/getting-started#option-b-dev-mode-symlink) in the docs for the full workflow.
+
+To upgrade, re-run the curl command or `make update`.
 
 ---
 

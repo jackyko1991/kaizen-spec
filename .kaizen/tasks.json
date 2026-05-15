@@ -383,6 +383,23 @@
       "cycle_time_s": 16200,
       "lead_time_s": 16200,
       "test_status": "none"
+    },
+    {
+      "id": "task-023",
+      "title": "Dev-mode install: symlink for live skill editing",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "install.sh --dev flag + make install-dev: symlinks ~/.claude/commands/kaizen-spec.md to the repo so edits in any project are immediately live. Docs in README + getting-started Option B. Bats o1-o4.",
+      "created_at": "2026-05-15T00:35:00Z",
+      "started_at": "2026-05-15T00:35:00Z",
+      "completed_at": "2026-05-15T01:00:00Z",
+      "cycle_time_s": 1500,
+      "lead_time_s": 1500,
+      "test_status": "passing"
     }
   ],
   "wip_limits": {

@@ -25,7 +25,7 @@ The fastest way to install. Run this in your terminal:
 curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
 ```
 
-This downloads and runs `install.sh`, which installs `kaizen-spec.md` into `~/.claude/commands/` automatically.
+This downloads and runs `install.sh`, which copies `kaizen-spec.md` into `~/.claude/commands/` automatically. Claude Code picks it up immediately as `/kaizen-spec`.
 
 If you prefer not to pipe scripts from the internet, you can download the skill file directly:
 
@@ -34,7 +34,41 @@ curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/.cla
   > ~/.claude/commands/kaizen-spec.md
 ```
 
-To upgrade later, re-run the same command. Claude Code automatically discovers any `.md` file in `~/.claude/commands/` as a slash command.
+To upgrade later, re-run the same command (see [Updating](#updating)).
+
+---
+
+### Option B - dev mode (symlink)
+
+For contributors or power users who want to edit the skill and see changes live - across every project - without reinstalling:
+
+```bash
+git clone https://github.com/jackyko1991/kaizen-spec
+cd kaizen-spec
+make install-dev
+# or: bash install.sh --dev
+```
+
+This creates a symlink:
+
+```
+~/.claude/commands/kaizen-spec.md -> /path/to/kaizen-spec/.claude/commands/kaizen-spec.md
+```
+
+**How it works:** When you invoke `/kaizen-spec` in any project, Claude Code reads the symlink target - the live file in your cloned repo. Edit the skill, switch back to your project, invoke `/kaizen-spec` - the change is already there. No reinstall step.
+
+**Typical dev workflow:**
+1. You're working on `my-app` and notice a skill bug
+2. Open the kaizen-spec repo in a second Claude Code window
+3. Edit `.claude/commands/kaizen-spec.md` directly
+4. Switch back to `my-app` - the next `/kaizen-spec` call uses the fix
+5. When happy, commit and push from the kaizen-spec repo
+
+To switch back to a stable install:
+
+```bash
+bash install.sh   # no --dev flag - copies the file, breaking the symlink
+```
 
 ---
 

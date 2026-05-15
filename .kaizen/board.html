@@ -57,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-15T00:42:40Z</span>
+    <span id="last-updated">Updated: 2026-05-15T00:46:01Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -118,6 +118,17 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-023" data-blocked="false"
+           data-description="install.sh --dev flag + make install-dev: symlinks ~/.claude/commands/kaizen-spec.md to the repo so edits in any project are immediately live. Docs in README + getting-started Option B. Bats o1-o4."
+           data-created-at="2026-05-15T00:35:00Z" data-started-at="2026-05-15T00:35:00Z" data-completed-at="2026-05-15T01:00:00Z">
+        <div class="card-id">task-023</div>
+        <div class="fw-semibold">Dev-mode install: symlink for live skill editing</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 25m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 25m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-022" data-blocked="false"
            data-description="Translated philosophy, glossary, kanban, phases (guide) + kaizen-glossary, kaizen-log, state-schema (reference) for zh-TW and ja. VitePress locale-specific sidebars added to config.mts so all nav links resolve."
            data-created-at="2026-05-14T19:50:00Z" data-started-at="2026-05-14T19:50:00Z" data-completed-at="2026-05-15T00:30:00Z">
@@ -217,19 +228,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-013" data-blocked="false"
-           data-description="Render script caps Done column at done_visible_max cards (default 10). Older cards stay in tasks.json for metrics; board shows a faded archive stub. Two new bats tests i3/i4."
-           data-created-at="2026-05-14T17:10:00Z" data-started-at="2026-05-14T17:10:00Z" data-completed-at="2026-05-14T17:25:00Z">
-        <div class="card-id">task-013</div>
-        <div class="fw-semibold">Done column rolling archive (done_visible_max=10)</div>
-        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        12 older cards archived — see tasks.json
+        13 older cards archived — see tasks.json
       </div>
     </div>
   </div>

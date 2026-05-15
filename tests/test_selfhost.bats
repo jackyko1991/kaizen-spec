@@ -246,12 +246,26 @@ PYEOF
   echo "$rules_block" | grep -qi "never edit"
 }
 
-@test "k5: README.md contains no git clone instruction" {
-  ! grep -q "git clone" "$REPO_ROOT/README.md"
+@test "k5: README.md presents curl as the primary install (before any git clone mention)" {
+  local curl_line git_line
+  curl_line=$(grep -n "curl" "$REPO_ROOT/README.md" | head -1 | cut -d: -f1)
+  git_line=$(grep -n "git clone" "$REPO_ROOT/README.md" | head -1 | cut -d: -f1)
+  [ -n "$curl_line" ]
+  # if git clone appears it must be after curl (dev-mode section comes after install)
+  if [ -n "$git_line" ]; then
+    [ "$curl_line" -lt "$git_line" ]
+  fi
 }
 
-@test "k6: docs/guide/getting-started.md contains no git clone instruction" {
-  ! grep -q "git clone" "$REPO_ROOT/docs/guide/getting-started.md"
+@test "k6: docs/guide/getting-started.md presents curl before git clone (curl is Option A)" {
+  local file="$REPO_ROOT/docs/guide/getting-started.md"
+  local curl_line git_line
+  curl_line=$(grep -n "curl" "$file" | head -1 | cut -d: -f1)
+  git_line=$(grep -n "git clone" "$file" | head -1 | cut -d: -f1)
+  [ -n "$curl_line" ]
+  if [ -n "$git_line" ]; then
+    [ "$curl_line" -lt "$git_line" ]
+  fi
 }
 # ---------------------------------------------------------------------------
 # l) Hook: live board update regression (task-017)
@@ -378,4 +392,43 @@ JSON
   (cd "$tmp_dir" && INSTALL_DIR="$tmp_dir" bash "$REPO_ROOT/install.sh" >/dev/null 2>&1 || true)
   [ ! -f "$tmp_dir/CLAUDE.md" ]
   rm -rf "$tmp_dir"
+}
+
+# ---------------------------------------------------------------------------
+# o) Dev-mode install: symlink (task-023)
+# ---------------------------------------------------------------------------
+
+@test "o1: install.sh --dev creates a symlink (not a copy)" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  (cd "$REPO_ROOT" && INSTALL_DIR="$tmp_dir" bash install.sh --dev >/dev/null 2>&1)
+  local dest="$tmp_dir/.claude/commands/kaizen-spec.md"
+  [ -L "$dest" ]
+  rm -rf "$tmp_dir"
+}
+
+@test "o2: install.sh --dev symlink target is the local repo skill file" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  (cd "$REPO_ROOT" && INSTALL_DIR="$tmp_dir" bash install.sh --dev >/dev/null 2>&1)
+  local dest="$tmp_dir/.claude/commands/kaizen-spec.md"
+  local target
+  target="$(readlink "$dest")"
+  echo "$target" | grep -q "kaizen-spec.md"
+  rm -rf "$tmp_dir"
+}
+
+@test "o3: install.sh --dev fails with clear error when skill file not found" {
+  local tmp_dir
+  tmp_dir="$(mktemp -d)"
+  # Copy install.sh to a dir that has no .claude/commands/kaizen-spec.md
+  cp "$REPO_ROOT/install.sh" "$tmp_dir/install.sh"
+  local out
+  out="$(cd "$tmp_dir" && INSTALL_DIR="$tmp_dir" bash install.sh --dev 2>&1 || true)"
+  echo "$out" | grep -qi "clone\|repo"
+  rm -rf "$tmp_dir"
+}
+
+@test "o4: make install-dev target exists in Makefile" {
+  grep -qE "^install-dev[[:space:]]*:" "$REPO_ROOT/Makefile"
 }
