@@ -23,14 +23,71 @@ python3 -m http.server 8080 --directory .kaizen
 
 ## 欄位說明
 
-| 欄位 | 意義 | WIP 限制 |
-|---|---|---|
-| Backlog | 尚未開始的任務 | 無 |
-| In Progress | Agents 正在主動處理 | **3** |
-| Review | 等待審查或合併 | **2** |
-| Done | 已完成且測試通過 | 無 |
+<div class="kb-guide-cols">
+<div class="kb-guide-col" data-kb-tooltip="待辦（Backlog）：所有已同意的規格等待開始。此處不強制執行 WIP 限制。任務在此等待直到進行中欄位有空位。">
+  <strong>待辦</strong>
+  <p>尚未開始的任務。無 WIP 限制。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="進行中（一個流）：主動實作。WIP 限制：3。超過限制觸發安燈 - 線路停止直到有空位。一個流防止多工浪費（無駄）。">
+  <strong>進行中</strong>
+  <p>Agents 正在主動處理。WIP 限制：<strong>3</strong>。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="審查（レビュー）：實作完成，測試通過。等待驗收檢查和 5S 清掃（Seiso - 清掃）。WIP 限制：2。">
+  <strong>審查</strong>
+  <p>等待審查或合併。WIP 限制：<strong>2</strong>。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="完成（完了 / 改善）：所有測試通過，驗收已記錄，文件已撰寫。合併至主分支。改善循環完成。">
+  <strong>完成</strong>
+  <p>已完成且測試通過。無 WIP 限制。</p>
+</div>
+</div>
 
 卡片隨 agents 進度由左向右移動。你也可以手動拖曳卡片——WIP 限制在用戶端強制執行。
+
+<style>
+.kb-guide-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+@media (max-width: 640px) {
+  .kb-guide-cols { grid-template-columns: repeat(2, 1fr); }
+}
+.kb-guide-col {
+  position: relative;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  cursor: help;
+}
+.kb-guide-col p {
+  font-size: 0.82rem;
+  color: var(--vp-c-text-2);
+  margin: 0.25rem 0 0;
+}
+.kb-guide-col::after {
+  content: attr(data-kb-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  width: 240px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(13,17,23,0.93);
+  color: #e6edf3;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+  border: 1px solid #30363d;
+}
+.kb-guide-col:hover::after { opacity: 1; }
+</style>
 
 ---
 

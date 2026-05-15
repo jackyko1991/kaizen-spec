@@ -1,5 +1,5 @@
 {
-  "feature": "kaizen-spec",
+  "feature": "Lean Development Kanban",
   "spec_committed": "2026-05-14T14:43:59Z",
   "tasks": [
     {
@@ -478,19 +478,19 @@
     {
       "id": "task-028",
       "title": "Homepage redesign - Lean-first",
-      "phase": "spec",
-      "status": "backlog",
-      "wip_column": "backlog",
-      "agent": null,
+      "phase": "impl",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
       "depends_on": [],
       "blocked_reason": null,
-      "description": "Lean hero + 6 feature cards + install sidebar + HTML kanban mock + locale-agnostic links",
+      "description": "Lean hero + 6 ks-card feature cards + install sidebar (curl only) + HTML kanban mock with data-kb-tooltip column tooltips. Applied to all 3 locales (en/zh-TW/ja). Also added data-kb-tooltip to guide/kanban.md in all 3 locales. Board subtitle fixed to Lean Development Kanban.",
       "created_at": "2026-05-15T07:47:46Z",
-      "started_at": null,
-      "completed_at": null,
-      "cycle_time_s": null,
-      "lead_time_s": null,
-      "test_status": "none"
+      "started_at": "2026-05-15T07:49:22Z",
+      "completed_at": "2026-05-15T09:30:00Z",
+      "cycle_time_s": 6038,
+      "lead_time_s": 6134,
+      "test_status": "passing"
     }
   ],
   "wip_limits": {

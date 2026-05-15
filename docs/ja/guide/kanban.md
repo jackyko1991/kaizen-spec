@@ -23,14 +23,71 @@ python3 -m http.server 8080 --directory .kaizen
 
 ## カラム
 
-| カラム | 意味 | WIP制限 |
-|---|---|---|
-| Backlog | まだ開始されていないタスク | なし |
-| In Progress | エージェントが積極的に作業中 | **3** |
-| Review | レビューまたはマージ待ち | **2** |
-| Done | 完了し、テストが通っている | なし |
+<div class="kb-guide-cols">
+<div class="kb-guide-col" data-kb-tooltip="バックログ（Backlog）：開始を待つすべての合意済み仕様。ここでは WIP 制限は適用されません。In Progress 欄にスロットが開くまでタスクはここで待機します。">
+  <strong>バックログ</strong>
+  <p>まだ開始されていないタスク。制限なし。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="進行中（一個流れ）：アクティブな実装。WIP 制限：3。制限を超えるとアンドンが発動 - スロットが開くまでラインが止まります。一個流れはマルチタスクの浪費（ムダ）を防ぎます。">
+  <strong>進行中</strong>
+  <p>エージェントが積極的に作業中。WIP制限：<strong>3</strong>。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="レビュー（Review）：実装完了、テスト通過。受け入れチェックと 5S 清掃（Seiso - 清掃）を待っています。WIP 制限：2。">
+  <strong>レビュー</strong>
+  <p>レビューまたはマージ待ち。WIP制限：<strong>2</strong>。</p>
+</div>
+<div class="kb-guide-col" data-kb-tooltip="完了（完了 / 改善）：すべてのテスト通過、受け入れ記録済み、ドキュメント作成済み。メインにマージ。改善サイクル完了。">
+  <strong>完了</strong>
+  <p>完了し、テストが通っている。制限なし。</p>
+</div>
+</div>
 
 カードはエージェントの進捗に合わせて左から右へ移動します。カードを手動でドラッグすることもできます。WIP制限はクライアント側で強制されます。
+
+<style>
+.kb-guide-cols {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  margin: 1rem 0;
+}
+@media (max-width: 640px) {
+  .kb-guide-cols { grid-template-columns: repeat(2, 1fr); }
+}
+.kb-guide-col {
+  position: relative;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  background: var(--vp-c-bg-soft);
+  cursor: help;
+}
+.kb-guide-col p {
+  font-size: 0.82rem;
+  color: var(--vp-c-text-2);
+  margin: 0.25rem 0 0;
+}
+.kb-guide-col::after {
+  content: attr(data-kb-tooltip);
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 100;
+  width: 240px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  background: rgba(13,17,23,0.93);
+  color: #e6edf3;
+  font-size: 11px;
+  line-height: 1.5;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s;
+  border: 1px solid #30363d;
+}
+.kb-guide-col:hover::after { opacity: 1; }
+</style>
 
 ---
 
