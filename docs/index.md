@@ -18,8 +18,8 @@ features:
     details: Every feature starts with structured alignment questions. Agents never write code before the spec is committed to git.
   - title: TDD enforced
     details: Failing tests are written before implementation begins. The skill verifies they are red. Acceptance is blocked until they are all green.
-  - title: Self-hosting
-    details: kaizen-spec is developed using kaizen-spec itself. If the skill cannot develop itself, it is not done.
+  - title: Lean Development Kanban
+    details: Grounded in Toyota Production System principles - Muda elimination, Jidoka, one-piece flow. Every practice maps directly to a proven TPS concept.
   - title: Toyota Kanban board
     details: A live HTML kanban board tracks agent progress with WIP limits, Andon cord blocker flags, and auto-reload.
   - title: Continuous improvement
