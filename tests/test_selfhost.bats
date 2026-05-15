@@ -539,3 +539,91 @@ PYEOF
   rm -f "$tmp_tasks" /tmp/board-test-review.html
   [ $rc -eq 0 ]
 }
+
+# ---------------------------------------------------------------------------
+# q) Regression: task-edit trigger - wip_column transitions reflected on board
+# ---------------------------------------------------------------------------
+
+@test "q1: task edit backlog->in-progress moves card to in-progress column on re-render" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  # Start with a backlog task, then simulate an edit by writing it as in-progress
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "q-test",
+  "tasks": [
+    {"id":"t-q1","title":"Q1 task","phase":"impl","wip_column":"in-progress",
+     "status":"in-progress","test_status":"pending",
+     "created_at":"2026-01-01T00:00:00Z","started_at":"2026-01-01T01:00:00Z","completed_at":null}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-q1.html
+  python3 - <<'PYEOF'
+html = open("/tmp/board-q1.html").read()
+backlog_start  = html.find('id="body-backlog"')
+inprog_start   = html.find('id="body-in-progress"')
+review_start   = html.find('id="body-review"')
+card_pos       = html.find('data-task-id="t-q1"')
+assert card_pos != -1, "card t-q1 not in HTML"
+assert inprog_start < card_pos < review_start, \
+    f"t-q1 should be in in-progress column ({inprog_start}<{card_pos}<{review_start})"
+assert not (backlog_start < card_pos < inprog_start), \
+    "t-q1 must NOT appear in backlog column"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-q1.html
+  [ $rc -eq 0 ]
+}
+
+@test "q2: task edit in-progress->done moves card to done column on re-render" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "q-test",
+  "tasks": [
+    {"id":"t-q2","title":"Q2 task","phase":"impl","wip_column":"done",
+     "status":"done","test_status":"passing",
+     "created_at":"2026-01-01T00:00:00Z","started_at":"2026-01-01T01:00:00Z",
+     "completed_at":"2026-01-01T02:00:00Z"}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-q2.html
+  python3 - <<'PYEOF'
+html = open("/tmp/board-q2.html").read()
+done_start = html.find('id="body-done"')
+card_pos   = html.find('data-task-id="t-q2"')
+assert card_pos != -1, "card t-q2 not in HTML"
+assert done_start < card_pos, \
+    f"t-q2 should be in done column (done_start={done_start}, card_pos={card_pos})"
+# Must not appear in any earlier column
+for col_id in ['body-backlog', 'body-in-progress', 'body-review']:
+    col_pos = html.find(f'id="{col_id}"')
+    assert not (col_pos < card_pos < done_start), \
+        f"t-q2 found in {col_id} before done column"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-q2.html
+  [ $rc -eq 0 ]
+}
+
+@test "q3: skill text instructs agents to update wip_column when transitioning task status" {
+  local skill="$REPO_ROOT/.claude/commands/kaizen-spec.md"
+  # The skill must explicitly mention wip_column so agents know to update it on transitions
+  grep -q "wip_column" "$skill"
+}
+
+@test "q4: hook fires on Edit tool touching tasks.json (edit-tool path)" {
+  local hook="$REPO_ROOT/.claude/hooks/update-board.sh"
+  # Hook must handle the Edit tool - settings.json must include Edit in matchers
+  local settings="$REPO_ROOT/.claude/settings.json"
+  grep -q '"Edit"' "$settings"
+}
