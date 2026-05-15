@@ -446,7 +446,7 @@
       "title": "docs: Lean Development section in philosophy (all 3 langs)",
       "phase": "feat",
       "status": "done",
-      "wip_column": "in-progress",
+      "wip_column": "done",
       "agent": "orchestrator",
       "depends_on": [],
       "blocked_reason": null,

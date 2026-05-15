@@ -627,3 +627,38 @@ PYEOF
   local settings="$REPO_ROOT/.claude/settings.json"
   grep -q '"Edit"' "$settings"
 }
+
+@test "q5: render_board self-heals stale wip_column when status=done" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  # Task has status=done but wip_column still says in-progress (stale, the bug we fixed)
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "q-test",
+  "tasks": [
+    {"id":"t-q5","title":"Q5 stale wip_column","phase":"impl",
+     "status":"done","wip_column":"in-progress","test_status":"passing",
+     "created_at":"2026-01-01T00:00:00Z","started_at":"2026-01-01T01:00:00Z",
+     "completed_at":"2026-01-01T02:00:00Z"}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-q5.html
+  python3 - <<'PYEOF'
+html = open("/tmp/board-q5.html").read()
+done_start   = html.find('id="body-done"')
+inprog_start = html.find('id="body-in-progress"')
+card_pos     = html.find('data-task-id="t-q5"')
+assert card_pos != -1, "card t-q5 not found in HTML"
+assert done_start < card_pos, \
+    f"t-q5 (status=done) should be in done column even with stale wip_column=in-progress"
+assert not (inprog_start < card_pos < done_start), \
+    "t-q5 must NOT appear in in-progress column"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-q5.html
+  [ $rc -eq 0 ]
+}

@@ -147,6 +147,9 @@ def main():
     col_map = {c: [] for c in columns}
     for task in data.get('tasks', []):
         col = task.get('wip_column') or task.get('status') or 'backlog'
+        # Self-heal: status=done always wins over a stale wip_column
+        if task.get('status') == 'done':
+            col = 'done'
         if col not in col_map:
             col = 'backlog'
         col_map[col].append(task)
