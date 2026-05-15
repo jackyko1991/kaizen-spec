@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { withMermaid } from 'vitepress-plugin-mermaid'
 
 // Sidebar structure shared across all locales (paths are locale-relative).
 // VitePress prepends the locale root automatically, so /guide/ resolves to
@@ -7,7 +8,7 @@ const guideSidebar = (items: { text: string; link: string }[]) => [
   { text: items[0].text, items }
 ]
 
-export default defineConfig({
+export default withMermaid(defineConfig({
   title: 'kaizen-spec',
   description: 'Spec-driven, kaizen-informed agentic development for Claude Code',
   base: '/kaizen-spec/',
@@ -107,4 +108,4 @@ export default defineConfig({
       provider: 'local',
     },
   },
-})
+}))

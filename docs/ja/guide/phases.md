@@ -2,6 +2,26 @@
 
 kaizen-spec は5つのフェーズを順番に強制します。フェーズはスキップできません。各フェーズが次のフェーズのゲートになります。
 
+```mermaid
+flowchart LR
+  S1["📋 フェーズ1\n仕様整合"]
+  S2["🔴 フェーズ2\nテスト赤"]
+  S3["⚙️ フェーズ3\n実装"]
+  S4["✅ フェーズ4\n受け入れ"]
+  S5["📖 フェーズ5\nドキュメント"]
+
+  S1 -->|"spec.md\nコミット済"| S2
+  S2 -->|"全テスト\n失敗"| S3
+  S3 -->|"全テスト\n通過"| S4
+  S4 -->|"受け入れ\n記録済"| S5
+
+  style S1 fill:#1f2d45,stroke:#388bfd,color:#cdd9e5
+  style S2 fill:#3d1f1f,stroke:#f85149,color:#cdd9e5
+  style S3 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S4 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S5 fill:#2d2520,stroke:#e3b341,color:#cdd9e5
+```
+
 ---
 
 ## フェーズ1 — 仕様整合

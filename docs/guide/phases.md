@@ -2,6 +2,26 @@
 
 kaizen-spec enforces five phases in order. No phase can be skipped. Each phase gates the next.
 
+```mermaid
+flowchart LR
+  S1["📋 Phase 1\nSpec Alignment"]
+  S2["🔴 Phase 2\nTests Red"]
+  S3["⚙️ Phase 3\nImplementation"]
+  S4["✅ Phase 4\nAcceptance"]
+  S5["📖 Phase 5\nDocs"]
+
+  S1 -->|"spec.md\ncommitted"| S2
+  S2 -->|"all tests\nfailing"| S3
+  S3 -->|"all tests\npassing"| S4
+  S4 -->|"acceptance\nlogged"| S5
+
+  style S1 fill:#1f2d45,stroke:#388bfd,color:#cdd9e5
+  style S2 fill:#3d1f1f,stroke:#f85149,color:#cdd9e5
+  style S3 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S4 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S5 fill:#2d2520,stroke:#e3b341,color:#cdd9e5
+```
+
 ---
 
 ## Phase 1 - Spec Alignment

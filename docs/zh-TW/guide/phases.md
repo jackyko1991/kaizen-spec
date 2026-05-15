@@ -2,6 +2,26 @@
 
 kaizen-spec 依序強制執行五個階段。任何階段都不可跳過。每個階段都是下一個階段的門閘。
 
+```mermaid
+flowchart LR
+  S1["📋 階段一\n規格對齊"]
+  S2["🔴 階段二\n測試紅燈"]
+  S3["⚙️ 階段三\n實作"]
+  S4["✅ 階段四\n驗收"]
+  S5["📖 階段五\n文件"]
+
+  S1 -->|"spec.md\n已提交"| S2
+  S2 -->|"所有測試\n均失敗"| S3
+  S3 -->|"所有測試\n均通過"| S4
+  S4 -->|"驗收\n已記錄"| S5
+
+  style S1 fill:#1f2d45,stroke:#388bfd,color:#cdd9e5
+  style S2 fill:#3d1f1f,stroke:#f85149,color:#cdd9e5
+  style S3 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S4 fill:#1f2d1f,stroke:#56d364,color:#cdd9e5
+  style S5 fill:#2d2520,stroke:#e3b341,color:#cdd9e5
+```
+
 ---
 
 ## 第 1 階段 — 規格對齊
