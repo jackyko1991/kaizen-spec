@@ -457,6 +457,23 @@
       "cycle_time_s": null,
       "lead_time_s": null,
       "test_status": "pending"
+    },
+    {
+      "id": "task-027",
+      "title": "Stabilize kanban live update",
+      "phase": "spec",
+      "status": "backlog",
+      "wip_column": "backlog",
+      "agent": null,
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "1s smart-poll (no flash on idle) + sentinel file to decouple hook from stdin grep",
+      "created_at": "2026-05-15T07:23:05Z",
+      "started_at": null,
+      "completed_at": null,
+      "cycle_time_s": null,
+      "lead_time_s": null,
+      "test_status": "none"
     }
   ],
   "wip_limits": {
