@@ -114,4 +114,4 @@ Agents 會重新啟動。工作階段會結束。記憶是短暫的。`.kaizen/`
 
 - *Lean Software Development* — Mary & Tom Poppendieck（2003）
 - *The Toyota Way* — Jeffrey Liker（2004）
-- [改善・看板詞彙表](/reference/kaizen-glossary) — 本技能使用的完整術語定義
+- [改善・看板詞彙表](/zh-TW/reference/kaizen-glossary) — 本技能使用的完整術語定義
