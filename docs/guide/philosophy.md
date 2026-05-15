@@ -51,6 +51,65 @@ Agents restart. Sessions end. Memory is ephemeral. The `.kaizen/` directory is S
 
 ---
 
+## Lean Development - The Seven Principles
+
+Lean Development originates from the Toyota Production System's philosophy of **Lean Production**. Its core idea is **eliminating waste** - maximising efficiency and value so that every minute and every line of code in the development process creates value for the customer.
+
+Lean was translated into software by Mary and Tom Poppendieck in *Lean Software Development* (2003), where they identified seven principles:
+
+### 1. Eliminate Waste
+
+Remove unnecessary features, reduce waiting time, avoid over-processing (redundant tests, excessive documentation). If it doesn't directly serve the customer, it's Muda.
+
+### 2. Build Quality In
+
+Automated testing and continuous integration ensure problems are fixed at the moment they occur - not patched later. Quality is not inspected in at the end; it is built in at every step (Jidoka).
+
+### 3. Create Knowledge
+
+Encourage teams to learn, document experiment results, and share experience. The `.kaizen/` log and spec files are a form of institutionalised knowledge creation.
+
+### 4. Defer Commitment
+
+Don't make irreversible decisions before you have enough information. Preserve flexibility - the spec gate enforces this: no implementation until the scope is clear.
+
+### 5. Deliver Fast
+
+Shorten feedback cycles. Get the product to users quickly to validate ideas. Long cycle times mean long waits before you learn whether you built the right thing.
+
+### 6. Respect People
+
+Give front-line developers decision-making authority. Trust expertise. In kaizen-spec: agents are given clear context and authority within their task scope; the orchestrator doesn't micro-manage implementation details.
+
+### 7. Optimise the Whole
+
+Focus on the flow of the entire value chain, not just a single department or step. A fast implementation team that produces defects which slow down review is not an optimised system - it has just moved the bottleneck.
+
+---
+
+## Lean vs. Agile
+
+Both Lean and Agile are frequently discussed together and both emphasise flexibility and rapid iteration - but their focus is different:
+
+| Characteristic | Agile | Lean |
+|---|---|---|
+| Core goal | Respond to changing requirements through iteration | Improve efficiency by eliminating waste and optimising flow |
+| Approach | Small steps, continuous delivery, customer communication | Focus on value stream flow; find bottlenecks in the process |
+| Management style | Scrum: fixed-length sprints, defined roles | Kanban: visualise process flow, limit WIP |
+| View of people | Cross-functional, self-organising teams | Systematic process improvement and continuous Kaizen |
+| Failure stance | Fail fast - learn through frequent failure | Reduce errors and waiting to lower cost |
+
+**They are not mutually exclusive.** High-performing modern teams typically adopt a Lean-Agile hybrid:
+
+- Use the **Agile mindset** to face uncertain market requirements and frequent customer interaction.
+- Use **Lean tools** (value stream maps, kanban) to examine whether the development process has too much WIP or unnecessary administrative overhead.
+
+In short: Agile tells you *how to do the right things effectively*. Lean tells you *how to do things right efficiently*.
+
+For projects requiring high stability and resource optimisation - such as infrastructure work or regulated systems (medical imaging, IEC 62443, DO-178C) - Lean principles deliver the greatest advantage in reducing wasted effort.
+
+---
+
 ## Further Reading
 
 - *Lean Software Development* - Mary & Tom Poppendieck (2003)

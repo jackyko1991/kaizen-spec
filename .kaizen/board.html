@@ -29,7 +29,10 @@
     .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
     .col-help { font-size: .7rem; color: var(--bs-secondary-color); cursor: help; border: 1px solid var(--bs-border-color); border-radius: 50%; width: 1.1rem; height: 1.1rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .col-help:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
-    .test-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 5px; vertical-align: middle; flex-shrink: 0; }
+    .test-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 5px; vertical-align: middle; flex-shrink: 0; cursor: help; transition: transform 0.15s; }
+    .test-dot:hover { transform: scale(1.6); }
+    .test-dot::after { content: attr(data-tooltip); position: absolute; bottom: 160%; left: 50%; transform: translateX(-50%); background: rgba(13,17,23,0.92); color: #e6edf3; padding: 3px 8px; border-radius: 4px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s; z-index: 200; border: 1px solid #30363d; }
+    .test-dot:hover::after { opacity: 1; }
     .test-passing { background: #56d364; box-shadow: 0 0 3px #56d36488; }
     .test-failing  { background: #f85149; box-shadow: 0 0 3px #f8514988; }
     .test-pending  { background: #e3b341; box-shadow: 0 0 3px #e3b34188; }
@@ -57,7 +60,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-15T07:06:27Z</span>
+    <span id="last-updated">Updated: 2026-05-15T07:12:43Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -90,6 +93,17 @@
       </div>
     </div>
     <div class="column-body" data-status="in-progress" data-wip-limit="3" id="body-in-progress">
+      <div class="kaizen-card" data-task-id="task-026" data-blocked="false"
+           data-description="Add Lean 7-principles + Lean vs Agile comparison to philosophy.md in en, zh-TW, ja. Content provided by user in zh-TW."
+           data-created-at="2026-05-15T01:30:00Z" data-started-at="2026-05-15T01:30:00Z" data-completed-at="2026-05-15T07:12:43Z">
+        <div class="card-id">task-026</div>
+        <div class="fw-semibold">docs: Lean Development section in philosophy (all 3 langs)</div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-pending" data-tooltip="Tests pending" title="Tests pending"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
+          <span class="lt" title="Lead Time 交付周期">LT: —</span>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -145,7 +159,7 @@
            data-created-at="2026-05-15T00:35:00Z" data-started-at="2026-05-15T00:35:00Z" data-completed-at="2026-05-15T01:00:00Z">
         <div class="card-id">task-023</div>
         <div class="fw-semibold">Dev-mode install: symlink for live skill editing</div>
-        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 25m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 25m</span>
@@ -178,7 +192,7 @@
            data-created-at="2026-05-14T18:55:00Z" data-started-at="2026-05-14T18:55:00Z" data-completed-at="2026-05-14T19:10:00Z">
         <div class="card-id">task-020</div>
         <div class="fw-semibold">Hook Agent-event fix: backlog/in-progress cards now live-update</div>
-        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
@@ -189,7 +203,7 @@
            data-created-at="2026-05-14T18:40:00Z" data-started-at="2026-05-14T18:40:00Z" data-completed-at="2026-05-14T18:55:00Z">
         <div class="card-id">task-019</div>
         <div class="fw-semibold">install.sh writes to project CLAUDE.md + make update</div>
-        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
@@ -200,7 +214,7 @@
            data-created-at="2026-05-14T18:25:00Z" data-started-at="2026-05-14T18:25:00Z" data-completed-at="2026-05-14T18:40:00Z">
         <div class="card-id">task-018</div>
         <div class="fw-semibold">Test status dots on kanban cards (green/red/yellow)</div>
-        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="text-secondary card-phase">feat<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 15m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
@@ -211,7 +225,7 @@
            data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T18:15:00Z" data-completed-at="2026-05-14T18:25:00Z">
         <div class="card-id">task-017</div>
         <div class="fw-semibold">Regression tests for hook live-update fix</div>
-        <div class="text-secondary card-phase">test<span class="test-dot test-passing" title="Tests passing"></span></div>
+        <div class="text-secondary card-phase">test<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
         <div class="card-times">
           <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
           <span class="lt" title="Lead Time 交付周期">LT: 35m</span>

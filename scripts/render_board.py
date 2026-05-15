@@ -49,7 +49,7 @@ def render_test_dot(test_status):
     if not cls:
         return ''
     label = _TEST_DOT_LABEL[test_status]
-    return f'<span class="test-dot {cls}" title="{label}"></span>'
+    return f'<span class="test-dot {cls}" data-tooltip="{label}" title="{label}"></span>'
 
 
 def render_card(task):

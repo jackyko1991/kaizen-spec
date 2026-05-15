@@ -29,7 +29,10 @@
     .col-label-jp { font-size: .65rem; opacity: .6; font-weight: 400; }
     .col-help { font-size: .7rem; color: var(--bs-secondary-color); cursor: help; border: 1px solid var(--bs-border-color); border-radius: 50%; width: 1.1rem; height: 1.1rem; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .col-help:hover { color: var(--bs-body-color); border-color: var(--bs-body-color); }
-    .test-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 5px; vertical-align: middle; flex-shrink: 0; }
+    .test-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; display: inline-block; margin-left: 5px; vertical-align: middle; flex-shrink: 0; cursor: help; transition: transform 0.15s; }
+    .test-dot:hover { transform: scale(1.6); }
+    .test-dot::after { content: attr(data-tooltip); position: absolute; bottom: 160%; left: 50%; transform: translateX(-50%); background: rgba(13,17,23,0.92); color: #e6edf3; padding: 3px 8px; border-radius: 4px; font-size: 11px; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 0.15s; z-index: 200; border: 1px solid #30363d; }
+    .test-dot:hover::after { opacity: 1; }
     .test-passing { background: #56d364; box-shadow: 0 0 3px #56d36488; }
     .test-failing  { background: #f85149; box-shadow: 0 0 3px #f8514988; }
     .test-pending  { background: #e3b341; box-shadow: 0 0 3px #e3b34188; }

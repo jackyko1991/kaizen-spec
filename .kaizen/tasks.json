@@ -306,9 +306,11 @@
       "status": "done",
       "wip_column": "done",
       "agent": "orchestrator",
-      "depends_on": ["task-012"],
+      "depends_on": [
+        "task-012"
+      ],
       "blocked_reason": null,
-      "description": "render_board.py renders coloured dot per card: passing=green, failing=red, pending=yellow, none=no dot. CSS added to board template with glow. Bats m1–m3 guard the behaviour.",
+      "description": "render_board.py renders coloured dot per card: passing=green, failing=red, pending=yellow, none=no dot. CSS added to board template with glow. Bats m1\u2013m3 guard the behaviour.",
       "created_at": "2026-05-14T18:25:00Z",
       "started_at": "2026-05-14T18:25:00Z",
       "completed_at": "2026-05-14T18:40:00Z",
@@ -325,7 +327,7 @@
       "agent": "orchestrator",
       "depends_on": [],
       "blocked_reason": null,
-      "description": "install.sh appends kaizen-spec reference block to project CLAUDE.md (only when present, no duplicates). Makefile: make update target. Bats n1–n3 guard the behaviour.",
+      "description": "install.sh appends kaizen-spec reference block to project CLAUDE.md (only when present, no duplicates). Makefile: make update target. Bats n1\u2013n3 guard the behaviour.",
       "created_at": "2026-05-14T18:40:00Z",
       "started_at": "2026-05-14T18:40:00Z",
       "completed_at": "2026-05-14T18:55:00Z",
@@ -340,7 +342,9 @@
       "status": "done",
       "wip_column": "done",
       "agent": "orchestrator",
-      "depends_on": ["task-017"],
+      "depends_on": [
+        "task-017"
+      ],
       "blocked_reason": null,
       "description": "Hook now re-renders unconditionally on Agent tool events (subagent JSON never contains tasks.json in tool_input, so old grep silently skipped backlog/in-progress moves). Bats l6 guards.",
       "created_at": "2026-05-14T18:55:00Z",
@@ -359,7 +363,7 @@
       "agent": "i18n-agent",
       "depends_on": [],
       "blocked_reason": null,
-      "description": "README.zh-TW.md + README.ja.md. docs/zh-TW/ and docs/ja/ with getting-started and index pages. VitePress locales config — language switcher in navbar for 繁體中文 and 日本語.",
+      "description": "README.zh-TW.md + README.ja.md. docs/zh-TW/ and docs/ja/ with getting-started and index pages. VitePress locales config \u2014 language switcher in navbar for \u7e41\u9ad4\u4e2d\u6587 and \u65e5\u672c\u8a9e.",
       "created_at": "2026-05-14T19:10:00Z",
       "started_at": "2026-05-14T19:10:00Z",
       "completed_at": "2026-05-14T19:45:00Z",
@@ -374,7 +378,9 @@
       "status": "done",
       "wip_column": "done",
       "agent": "orchestrator",
-      "depends_on": ["task-021"],
+      "depends_on": [
+        "task-021"
+      ],
       "blocked_reason": null,
       "description": "Translated philosophy, glossary, kanban, phases (guide) + kaizen-glossary, kaizen-log, state-schema (reference) for zh-TW and ja. VitePress locale-specific sidebars added to config.mts so all nav links resolve.",
       "created_at": "2026-05-14T19:50:00Z",
@@ -434,6 +440,23 @@
       "cycle_time_s": 300,
       "lead_time_s": 300,
       "test_status": "none"
+    },
+    {
+      "id": "task-026",
+      "title": "docs: Lean Development section in philosophy (all 3 langs)",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "in-progress",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "Add Lean 7-principles + Lean vs Agile comparison to philosophy.md in en, zh-TW, ja. Content provided by user in zh-TW.",
+      "created_at": "2026-05-15T01:30:00Z",
+      "started_at": "2026-05-15T01:30:00Z",
+      "completed_at": "2026-05-15T07:12:43Z",
+      "cycle_time_s": null,
+      "lead_time_s": null,
+      "test_status": "pending"
     }
   ],
   "wip_limits": {
