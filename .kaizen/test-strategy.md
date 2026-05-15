@@ -1,38 +1,24 @@
-# Test Strategy: Playwright Kanban Regression Tests
+# Test Strategy: Stabilize kanban live update
 
-**Framework:** Playwright (TypeScript)
-**Install:** `npm install -D @playwright/test && npx playwright install chromium --with-deps`
-**Test files:** `tests/kanban.spec.ts`
-**Config:** `playwright.config.ts` (webServer: python3 serves .kaizen/ on port 9999)
-**Tests written:** 14
-**Status:** All passing ✓
+**Framework:** bats-core (existing suite - `tests/test_selfhost.bats`)
+**Install:** `make install-bats`
+**Test files:** `tests/test_selfhost.bats` (group r, tests r1-r6)
+**Tests written:** 6
+**Status:** All failing (red) - confirmed before implementation
 
 ## Test List
 
-| # | Group | Test | Covers |
-|---|-------|------|--------|
-| 1 | Column structure | English headers visible | Backlog/In Progress/Review/Done headers render |
-| 2 | Column structure | Japanese subtitles visible | 待辦/在製品/審査/完了 labels present |
-| 3 | Column structure | WIP badges present | Count badges exist on all 4 columns |
-| 4 | Column structure | ? help badges present | `.col-help` on all 4 columns |
-| 5 | Card tooltips | Tooltip appears on hover | `.tooltip.show` in DOM after hover |
-| 6 | Card tooltips | Tooltip contains ✓ Done status | Status badge matches column position |
-| 7 | Card tooltips | Tooltip contains description | `<p>` with task description text |
-| 8 | Card tooltips | Tooltip contains "Completed" | Timestamp table rows render (sanitize:false) |
-| 9 | Column ? tooltips | Backlog ? shows 待辦/Backlog | Column explanation tooltip |
-| 10 | Column ? tooltips | Done ? shows 完了/CT/Lead Time | Done column explanation |
-| 11 | WIP enforcement | 4th card into In Progress shows toast | #wipToast visible |
-| 12 | WIP enforcement | Toast text contains "WIP limit" | Andon message correct |
-| 13 | Theme toggle | data-bs-theme flips on click | ◐ button works |
-| 14 | Theme toggle | localStorage written | Preference persists |
-
-## Bugs found and fixed during test writing
-
-1. **`col` declared after use** - `initCardTooltips()` used `col` on line 355 but declared it on line 377, causing a `ReferenceError` that silently aborted all tooltip initialisation.
-2. **Bootstrap sanitizer stripping `<table>`** - Bootstrap tooltips strip table elements by default. Fixed with `sanitize: false` in tooltip init (content is internal, not user-generated).
+| # | Test | Covers |
+|---|------|--------|
+| r1 | render_board.py writes sentinel with --sentinel flag | Sentinel written when path given explicitly |
+| r2 | Sentinel content is ISO8601 timestamp | Format is machine-parseable datetime |
+| r3 | render_board.py writes sentinel to default path | Default: same dir as tasks.json, named .render-ts |
+| r4 | board.html uses fetch-based smart-poll, not location.reload() | Blind reload removed, fetch() present |
+| r5 | board.html smart-poll interval is 1000ms | 1s cadence confirmed in template |
+| r6 | hook always re-renders, no elif grep tasks.json guard | Hook decoupled from stdin content grep |
 
 ## Run command
 
 ```bash
-npx playwright test tests/kanban.spec.ts
+make eval
 ```

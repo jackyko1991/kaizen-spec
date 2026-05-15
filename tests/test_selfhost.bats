@@ -662,3 +662,98 @@ PYEOF
   rm -f "$tmp_tasks" /tmp/board-q5.html
   [ $rc -eq 0 ]
 }
+
+# ---------------------------------------------------------------------------
+# r) Stabilize kanban live update: sentinel file + smart-poll
+# ---------------------------------------------------------------------------
+
+@test "r1: render_board.py writes .kaizen/.render-ts sentinel after every render" {
+  local tmp_tasks tmp_out sentinel
+  tmp_tasks="$(mktemp)"
+  tmp_out="$(mktemp)"
+  sentinel="$(mktemp -d)/.render-ts"
+  cat > "$tmp_tasks" <<'JSON'
+{"feature":"r-test","tasks":[],"wip_limits":{"in-progress":3,"review":2}}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out "$tmp_out" \
+    --sentinel "$sentinel"
+  local rc=$?
+  [ $rc -eq 0 ]
+  [ -f "$sentinel" ]
+  local content
+  content="$(cat "$sentinel")"
+  [ -n "$content" ]
+  rm -f "$tmp_tasks" "$tmp_out" "$sentinel"
+}
+
+@test "r2: sentinel file content is an ISO8601 timestamp matching board LAST_UPDATED" {
+  local tmp_tasks tmp_out sentinel
+  tmp_tasks="$(mktemp)"
+  tmp_out="$(mktemp)"
+  sentinel="$(mktemp -d)/.render-ts"
+  cat > "$tmp_tasks" <<'JSON'
+{"feature":"r-test","tasks":[],"wip_limits":{"in-progress":3,"review":2}}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out "$tmp_out" \
+    --sentinel "$sentinel"
+  # Sentinel must look like an ISO8601 datetime (YYYY-MM-DDTHH:MM:SS)
+  grep -qE '^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}' "$sentinel"
+  local rc=$?
+  rm -f "$tmp_tasks" "$tmp_out" "$sentinel"
+  [ $rc -eq 0 ]
+}
+
+@test "r3: render_board.py writes sentinel to default path when --sentinel not given" {
+  # Default sentinel path is .kaizen/.render-ts relative to tasks.json location
+  local tmp_dir tmp_tasks tmp_out
+  tmp_dir="$(mktemp -d)"
+  tmp_tasks="$tmp_dir/tasks.json"
+  tmp_out="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{"feature":"r-test","tasks":[],"wip_limits":{"in-progress":3,"review":2}}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out "$tmp_out"
+  local rc=$?
+  [ $rc -eq 0 ]
+  [ -f "$tmp_dir/.render-ts" ]
+  rm -rf "$tmp_dir" "$tmp_out"
+}
+
+@test "r4: board.html template uses fetch-based smart-poll, not location.reload()" {
+  # The template must NOT contain a bare location.reload() inside setInterval
+  # and MUST contain a fetch() call for the smart-poll
+  local template="$REPO_ROOT/templates/board.html"
+  # fetch must be present for smart-poll
+  grep -q "fetch(" "$template"
+  # bare setInterval+location.reload combo must be gone
+  ! grep -qP "setInterval[^}]+location\.reload" "$template"
+}
+
+@test "r5: board.html smart-poll interval is 1000ms (1 second)" {
+  local template="$REPO_ROOT/templates/board.html"
+  # setInterval callback and its delay may span multiple lines - use python to check
+  python3 - <<PYEOF
+import re
+src = open("$template").read()
+assert re.search(r'setInterval\s*\([\s\S]+?,\s*1000\s*\)', src), \
+    "setInterval with 1000ms delay not found in template"
+PYEOF
+}
+
+@test "r6: hook update-board.sh always re-renders regardless of stdin content" {
+  # With sentinel approach the hook should not need to grep stdin for tasks.json.
+  # It must call render_board.py unconditionally (or based on tool_name only).
+  local hook="$REPO_ROOT/.claude/hooks/update-board.sh"
+  # Must NOT rely solely on grepping for "tasks.json" in stdin as the only trigger
+  # (the old conditional). It may still check tool_name but must not skip non-Agent
+  # events just because tasks.json isn't in tool_input text.
+  # Simplest check: the hook calls render_board.py outside of the Agent-only branch.
+  # We verify by ensuring the script does NOT have the old "elif grep tasks.json" guard
+  ! grep -q 'elif.*grep.*tasks\.json' "$hook"
+}

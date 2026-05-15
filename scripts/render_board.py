@@ -114,7 +114,7 @@ def inject_cards(html, col_status, tasks, done_max=None):
 
 
 def parse_args():
-    args = {'tasks': None, 'template': None, 'out': None}
+    args = {'tasks': None, 'template': None, 'out': None, 'sentinel': None}
     i = 1
     while i < len(sys.argv):
         if sys.argv[i] == '--tasks' and i + 1 < len(sys.argv):
@@ -123,6 +123,8 @@ def parse_args():
             args['template'] = Path(sys.argv[i + 1]); i += 2
         elif sys.argv[i] == '--out' and i + 1 < len(sys.argv):
             args['out'] = Path(sys.argv[i + 1]); i += 2
+        elif sys.argv[i] == '--sentinel' and i + 1 < len(sys.argv):
+            args['sentinel'] = Path(sys.argv[i + 1]); i += 2
         else:
             i += 1
     return args
@@ -133,6 +135,7 @@ def main():
     tasks_path    = args['tasks']    or REPO_ROOT / '.kaizen' / 'tasks.json'
     template_path = args['template'] or REPO_ROOT / 'templates' / 'board.html'
     out_path      = args['out']      or REPO_ROOT / '.kaizen' / 'board.html'
+    sentinel_path = args['sentinel'] or tasks_path.parent / '.render-ts'
 
     data     = json.loads(tasks_path.read_text())
     template = template_path.read_text()
@@ -165,6 +168,9 @@ def main():
     tmp = out_path.with_name(out_path.name + '.tmp')
     tmp.write_text(html, encoding='utf-8')
     tmp.rename(out_path)
+
+    # Sentinel: lets the smart-poll and hook detect a new render without grepping HTML
+    sentinel_path.write_text(now, encoding='utf-8')
 
     counts = {c: len(col_map[c]) for c in columns}
     done_visible = min(counts['done'], done_max) if done_max else counts['done']
