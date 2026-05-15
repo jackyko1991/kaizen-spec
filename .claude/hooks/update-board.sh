@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# PostToolUse hook — re-renders .kaizen/board.html when tasks.json is written.
-# Receives tool call JSON on stdin. Runs render_board.py if tasks.json was touched.
+# PostToolUse hook — re-renders .kaizen/board.html after any tool use.
+# render_board.py writes a .render-ts sentinel on every run; the board's
+# smart-poll detects the changed timestamp and reloads without a flash.
 #
-# Trigger logic:
-#   Agent events   → always re-render (subagents edit tasks.json internally;
-#                    the parent hook JSON won't contain "tasks.json" in tool_input)
-#   Write/Edit/Bash → re-render only when "tasks.json" appears in tool_input
+# Strategy: always re-render. The script is fast (<100ms) and idempotent.
+# We no longer grep stdin for "tasks.json" - that was fragile against tool
+# input format changes and missed indirect writes (e.g. via subagents).
 
 REPO="/home/jackyko/Projects/kaizen-spec"
 TASKS="$REPO/.kaizen/tasks.json"
@@ -14,16 +14,6 @@ SCRIPT="$REPO/scripts/render_board.py"
 [ -f "$TASKS" ] || exit 0
 [ -f "$SCRIPT" ] || exit 0
 
-INPUT="$(cat)"
-
-# Detect tool type from JSON
-TOOL_NAME=$(echo "$INPUT" | grep -o '"tool_name"[[:space:]]*:[[:space:]]*"[^"]*"' | grep -o '"[^"]*"$' | tr -d '"')
-
-if [ "$TOOL_NAME" = "Agent" ]; then
-    # Agent subagents may have modified tasks.json — always re-render
-    python3 "$SCRIPT" >/dev/null 2>&1 || true
-elif echo "$INPUT" | grep -q "tasks.json"; then
-    python3 "$SCRIPT" >/dev/null 2>&1 || true
-fi
+python3 "$SCRIPT" >/dev/null 2>&1 || true
 
 exit 0

@@ -737,7 +737,13 @@ JSON
 
 @test "r5: board.html smart-poll interval is 1000ms (1 second)" {
   local template="$REPO_ROOT/templates/board.html"
-  grep -qE "setInterval[^,]+,[[:space:]]*1000" "$template"
+  # setInterval callback and its delay may span multiple lines - use python to check
+  python3 - <<PYEOF
+import re
+src = open("$template").read()
+assert re.search(r'setInterval\s*\([\s\S]+?,\s*1000\s*\)', src), \
+    "setInterval with 1000ms delay not found in template"
+PYEOF
 }
 
 @test "r6: hook update-board.sh always re-renders regardless of stdin content" {

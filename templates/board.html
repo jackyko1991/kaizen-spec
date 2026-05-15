@@ -324,8 +324,21 @@
     });
   });
 
-  // ── Auto-reload (agents rewrite this file; browser picks up changes) ───────
-  setInterval(() => { location.reload(); }, 5000);
+  // ── Smart-poll: reload only when render_board.py has written a new board ────
+  // Fetches this file every 1s, compares the #last-updated text to what is
+  // currently displayed. Reloads only on change - no flash when idle.
+  (function () {
+    const current = document.getElementById('last-updated')?.textContent ?? '';
+    setInterval(() => {
+      fetch(location.href, { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => {
+          const m = html.match(/id="last-updated"[^>]*>([^<]+)</);
+          if (m && m[1].trim() !== current.trim()) location.reload();
+        })
+        .catch(() => {});
+    }, 1000);
+  }());
 </script>
 
 <!--

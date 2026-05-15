@@ -60,7 +60,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-15T07:23:05Z</span>
+    <span id="last-updated">Updated: 2026-05-15T07:27:12Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -79,17 +79,6 @@
       </div>
     </div>
     <div class="column-body" data-status="backlog" data-wip-limit="0" id="body-backlog">
-      <div class="kaizen-card" data-task-id="task-027" data-blocked="false"
-           data-description="1s smart-poll (no flash on idle) + sentinel file to decouple hook from stdin grep"
-           data-created-at="2026-05-15T07:23:05Z" data-started-at="" data-completed-at="">
-        <div class="card-id">task-027</div>
-        <div class="fw-semibold">Stabilize kanban live update</div>
-        <div class="text-secondary card-phase">spec</div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: —</span>
-          <span class="lt" title="Lead Time 交付周期">LT: —</span>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -132,6 +121,17 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-027" data-blocked="false"
+           data-description="1s smart-poll (no flash on idle) + sentinel file to decouple hook from stdin grep"
+           data-created-at="2026-05-15T07:23:05Z" data-started-at="2026-05-15T07:24:12Z" data-completed-at="2026-05-15T07:26:10Z">
+        <div class="card-id">task-027</div>
+        <div class="fw-semibold">Stabilize kanban live update</div>
+        <div class="text-secondary card-phase">spec<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 1m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 3m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-026" data-blocked="false"
            data-description="Add Lean 7-principles + Lean vs Agile comparison to philosophy.md in en, zh-TW, ja. Content provided by user in zh-TW."
            data-created-at="2026-05-15T01:30:00Z" data-started-at="2026-05-15T01:30:00Z" data-completed-at="2026-05-15T07:12:43Z">
@@ -231,19 +231,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 15m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-017" data-blocked="false"
-           data-description="Bats tests verifying: hook script exists, fires on tasks.json write, runs render_board.py, skips non-tasks.json files. Guard against the matcher regression (Agent-only) and timestamp-only action."
-           data-created-at="2026-05-14T17:50:00Z" data-started-at="2026-05-14T18:15:00Z" data-completed-at="2026-05-14T18:25:00Z">
-        <div class="card-id">task-017</div>
-        <div class="fw-semibold">Regression tests for hook live-update fix</div>
-        <div class="text-secondary card-phase">test<span class="test-dot test-passing" data-tooltip="Tests passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 35m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        16 older cards archived — see tasks.json
+        17 older cards archived — see tasks.json
       </div>
     </div>
   </div>
@@ -444,8 +433,21 @@
     });
   });
 
-  // ── Auto-reload (agents rewrite this file; browser picks up changes) ───────
-  setInterval(() => { location.reload(); }, 5000);
+  // ── Smart-poll: reload only when render_board.py has written a new board ────
+  // Fetches this file every 1s, compares the #last-updated text to what is
+  // currently displayed. Reloads only on change - no flash when idle.
+  (function () {
+    const current = document.getElementById('last-updated')?.textContent ?? '';
+    setInterval(() => {
+      fetch(location.href, { cache: 'no-store' })
+        .then(r => r.text())
+        .then(html => {
+          const m = html.match(/id="last-updated"[^>]*>([^<]+)</);
+          if (m && m[1].trim() !== current.trim()) location.reload();
+        })
+        .catch(() => {});
+    }, 1000);
+  }());
 </script>
 
 <!--
