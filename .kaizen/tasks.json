@@ -417,6 +417,23 @@
       "cycle_time_s": 300,
       "lead_time_s": 300,
       "test_status": "none"
+    },
+    {
+      "id": "task-025",
+      "title": "VitePress: locale-agnostic navbar and sidebar links",
+      "phase": "fix",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "Removed hardcoded /zh-TW/ and /ja/ prefixes from locale themeConfig nav/sidebar/hero links. VitePress prepends the locale root automatically - locale-relative paths are the correct pattern.",
+      "created_at": "2026-05-15T01:15:00Z",
+      "started_at": "2026-05-15T01:15:00Z",
+      "completed_at": "2026-05-15T01:20:00Z",
+      "cycle_time_s": 300,
+      "lead_time_s": 300,
+      "test_status": "none"
     }
   ],
   "wip_limits": {

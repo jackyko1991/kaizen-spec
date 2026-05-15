@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: はじめる
-      link: /ja/guide/getting-started
+      link: /guide/getting-started
     - theme: alt
       text: GitHub で見る
       link: https://github.com/jackyko/kaizen-spec

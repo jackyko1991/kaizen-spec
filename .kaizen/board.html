@@ -57,7 +57,7 @@
   </span>
   <span class="ms-2 text-secondary">kaizen-spec Self-Hosting & Developer Experience</span>
   <div class="ms-auto d-flex align-items-center gap-3">
-    <span id="last-updated">Updated: 2026-05-15T07:02:19Z</span>
+    <span id="last-updated">Updated: 2026-05-15T07:03:55Z</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
@@ -118,6 +118,17 @@
       </div>
     </div>
     <div class="column-body" data-status="done" data-wip-limit="0" id="body-done">
+      <div class="kaizen-card" data-task-id="task-025" data-blocked="false"
+           data-description="Removed hardcoded /zh-TW/ and /ja/ prefixes from locale themeConfig nav/sidebar/hero links. VitePress prepends the locale root automatically - locale-relative paths are the correct pattern."
+           data-created-at="2026-05-15T01:15:00Z" data-started-at="2026-05-15T01:15:00Z" data-completed-at="2026-05-15T01:20:00Z">
+        <div class="card-id">task-025</div>
+        <div class="fw-semibold">VitePress: locale-agnostic navbar and sidebar links</div>
+        <div class="text-secondary card-phase">fix</div>
+        <div class="card-times">
+          <span class="ct" title="Cycle Time 週期時間">CT: 5m</span>
+          <span class="lt" title="Lead Time 交付周期">LT: 5m</span>
+        </div>
+      </div>
       <div class="kaizen-card" data-task-id="task-024" data-blocked="false"
            data-description="Added Install section below VitePress hero on docs/index.md: curl one-liner + dev-mode git clone, with scoped CSS. Content visible without clicking through to getting-started."
            data-created-at="2026-05-15T01:05:00Z" data-started-at="2026-05-15T01:05:00Z" data-completed-at="2026-05-15T01:10:00Z">
@@ -217,19 +228,8 @@
           <span class="lt" title="Lead Time 交付周期">LT: 25m</span>
         </div>
       </div>
-      <div class="kaizen-card" data-task-id="task-015" data-blocked="false"
-           data-description="Removed git clone Option B from README and getting-started.md. curl one-liner is now the sole install method. Fixed branch reference main→master in curl URLs. Test g2 updated."
-           data-created-at="2026-05-14T17:35:00Z" data-started-at="2026-05-14T17:35:00Z" data-completed-at="2026-05-14T17:45:00Z">
-        <div class="card-id">task-015</div>
-        <div class="fw-semibold">Install: curl-only, no git clone</div>
-        <div class="text-secondary card-phase">fix<span class="test-dot test-passing" title="Tests passing"></span></div>
-        <div class="card-times">
-          <span class="ct" title="Cycle Time 週期時間">CT: 10m</span>
-          <span class="lt" title="Lead Time 交付周期">LT: 10m</span>
-        </div>
-      </div>
       <div class="kaizen-card kaizen-card-archive" style="opacity:.45;cursor:default;font-size:.8rem;text-align:center;padding:.4rem">
-        14 older cards archived — see tasks.json
+        15 older cards archived — see tasks.json
       </div>
     </div>
   </div>

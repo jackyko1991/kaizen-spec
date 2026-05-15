@@ -1,5 +1,12 @@
 import { defineConfig } from 'vitepress'
 
+// Sidebar structure shared across all locales (paths are locale-relative).
+// VitePress prepends the locale root automatically, so /guide/ resolves to
+// /zh-TW/guide/ when rendered in the zh-TW locale.
+const guideSidebar = (items: { text: string; link: string }[]) => [
+  { text: items[0].text, items }
+]
+
 export default defineConfig({
   title: 'kaizen-spec',
   description: 'Spec-driven, kaizen-informed agentic development for Claude Code',
@@ -18,64 +25,68 @@ export default defineConfig({
         ],
         sidebar: {
           '/guide/': [{ text: 'Guide', items: [
-            { text: 'Getting Started', link: '/guide/getting-started' },
-            { text: 'Philosophy', link: '/guide/philosophy' },
-            { text: 'Glossary', link: '/guide/glossary' },
-            { text: 'The Five Phases', link: '/guide/phases' },
-            { text: 'Kanban Board', link: '/guide/kanban' },
+            { text: 'Getting Started',        link: '/guide/getting-started' },
+            { text: 'Philosophy',             link: '/guide/philosophy' },
+            { text: 'Glossary',               link: '/guide/glossary' },
+            { text: 'The Five Phases',        link: '/guide/phases' },
+            { text: 'Kanban Board',           link: '/guide/kanban' },
           ]}],
           '/reference/': [{ text: 'Reference', items: [
             { text: 'Kaizen & Kanban Terminology', link: '/reference/kaizen-glossary' },
-            { text: 'State Schema', link: '/reference/state-schema' },
-            { text: 'Kaizen Log Format', link: '/reference/kaizen-log' },
+            { text: 'State Schema',               link: '/reference/state-schema' },
+            { text: 'Kaizen Log Format',          link: '/reference/kaizen-log' },
           ]}],
         },
       },
     },
+
     'zh-TW': {
       label: '繁體中文',
       lang: 'zh-TW',
+      // Paths below are locale-relative - VitePress prepends /zh-TW/ automatically.
       themeConfig: {
         nav: [
-          { text: '指南', link: '/zh-TW/guide/getting-started' },
-          { text: '參考', link: '/zh-TW/reference/state-schema' },
+          { text: '指南', link: '/guide/getting-started' },
+          { text: '參考', link: '/reference/state-schema' },
         ],
         sidebar: {
-          '/zh-TW/guide/': [{ text: '指南', items: [
-            { text: '快速入門', link: '/zh-TW/guide/getting-started' },
-            { text: '理念哲學', link: '/zh-TW/guide/philosophy' },
-            { text: '術語表', link: '/zh-TW/guide/glossary' },
-            { text: '五個階段', link: '/zh-TW/guide/phases' },
-            { text: '生產看板', link: '/zh-TW/guide/kanban' },
+          '/guide/': [{ text: '指南', items: [
+            { text: '快速入門',   link: '/guide/getting-started' },
+            { text: '理念哲學',   link: '/guide/philosophy' },
+            { text: '術語表',     link: '/guide/glossary' },
+            { text: '五個階段',   link: '/guide/phases' },
+            { text: '生產看板',   link: '/guide/kanban' },
           ]}],
-          '/zh-TW/reference/': [{ text: '參考', items: [
-            { text: '改善與看板術語', link: '/zh-TW/reference/kaizen-glossary' },
-            { text: '狀態結構', link: '/zh-TW/reference/state-schema' },
-            { text: '改善日誌格式', link: '/zh-TW/reference/kaizen-log' },
+          '/reference/': [{ text: '參考', items: [
+            { text: '改善與看板術語', link: '/reference/kaizen-glossary' },
+            { text: '狀態結構',       link: '/reference/state-schema' },
+            { text: '改善日誌格式',   link: '/reference/kaizen-log' },
           ]}],
         },
       },
     },
+
     'ja': {
       label: '日本語',
       lang: 'ja-JP',
+      // Paths below are locale-relative - VitePress prepends /ja/ automatically.
       themeConfig: {
         nav: [
-          { text: 'ガイド', link: '/ja/guide/getting-started' },
-          { text: 'リファレンス', link: '/ja/reference/state-schema' },
+          { text: 'ガイド',         link: '/guide/getting-started' },
+          { text: 'リファレンス',   link: '/reference/state-schema' },
         ],
         sidebar: {
-          '/ja/guide/': [{ text: 'ガイド', items: [
-            { text: 'はじめに', link: '/ja/guide/getting-started' },
-            { text: '哲学・理念', link: '/ja/guide/philosophy' },
-            { text: '用語集', link: '/ja/guide/glossary' },
-            { text: '5つのフェーズ', link: '/ja/guide/phases' },
-            { text: 'かんばんボード', link: '/ja/guide/kanban' },
+          '/guide/': [{ text: 'ガイド', items: [
+            { text: 'はじめに',           link: '/guide/getting-started' },
+            { text: '哲学・理念',         link: '/guide/philosophy' },
+            { text: '用語集',             link: '/guide/glossary' },
+            { text: '5つのフェーズ',      link: '/guide/phases' },
+            { text: 'かんばんボード',     link: '/guide/kanban' },
           ]}],
-          '/ja/reference/': [{ text: 'リファレンス', items: [
-            { text: '改善・かんばん用語', link: '/ja/reference/kaizen-glossary' },
-            { text: 'ステートスキーマ', link: '/ja/reference/state-schema' },
-            { text: '改善ログ形式', link: '/ja/reference/kaizen-log' },
+          '/reference/': [{ text: 'リファレンス', items: [
+            { text: '改善・かんばん用語',   link: '/reference/kaizen-glossary' },
+            { text: 'ステートスキーマ',     link: '/reference/state-schema' },
+            { text: '改善ログ形式',         link: '/reference/kaizen-log' },
           ]}],
         },
       },
