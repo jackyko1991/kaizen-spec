@@ -32,6 +32,9 @@ features:
 
 ## インストール
 
+<div class="install-cols">
+<div class="install-col">
+
 **標準インストール** - スキルファイルを Claude Code にコピーします：
 
 ```bash
@@ -39,6 +42,9 @@ curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/inst
 ```
 
 インストール後、任意のプロジェクトで Claude Code を開き、`/kaizen-spec` と入力してください。
+
+</div>
+<div class="install-col">
 
 **開発者モード** - リポジトリでの変更がすぐに反映されるシンボリックリンクを作成します：
 
@@ -48,32 +54,44 @@ cd kaizen-spec
 make install-dev
 ```
 
-アップグレード・アンインストール・トラブルシューティングは[完全インストールガイド](/guide/getting-started)を参照してください。
+アップグレード・アンインストール・トラブルシューティングは[完全インストールガイド](/ja/guide/getting-started)を参照してください。
+
+</div>
+</div>
 
 </div>
 
 <style>
 .install-section {
-  max-width: 800px;
+  max-width: 1152px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 3rem;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .install-section h2 {
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.25rem;
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.install-section p {
-  margin: 0.6rem 0 0.4rem;
+.install-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .install-cols { grid-template-columns: 1fr; }
+}
+
+.install-col p {
+  margin: 0.4rem 0;
   color: var(--vp-c-text-2);
   font-size: 0.95rem;
 }
 
-.install-section div[class*="language-"] {
-  margin: 0.4rem 0 1.2rem;
+.install-col div[class*="language-"] {
+  margin: 0.4rem 0 0.8rem;
 }
 </style>

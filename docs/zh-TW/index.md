@@ -32,6 +32,9 @@ features:
 
 ## 安裝
 
+<div class="install-cols">
+<div class="install-col">
+
 **標準安裝** - 將技能檔案複製到 Claude Code：
 
 ```bash
@@ -39,6 +42,9 @@ curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/inst
 ```
 
 安裝完成後，在任意專案中開啟 Claude Code 並輸入 `/kaizen-spec`。
+
+</div>
+<div class="install-col">
 
 **開發者模式** - 建立符號連結，在 repo 中的修改立即生效：
 
@@ -48,32 +54,44 @@ cd kaizen-spec
 make install-dev
 ```
 
-詳見[完整安裝指南](/guide/getting-started)，包含升級、解除安裝與問題排解。
+詳見[完整安裝指南](/zh-TW/guide/getting-started)，包含升級、解除安裝與問題排解。
+
+</div>
+</div>
 
 </div>
 
 <style>
 .install-section {
-  max-width: 800px;
+  max-width: 1152px;
   margin: 0 auto;
   padding: 2.5rem 1.5rem 3rem;
+  border-top: 1px solid var(--vp-c-divider);
 }
 
 .install-section h2 {
   font-size: 1.6rem;
   font-weight: 700;
-  margin-bottom: 1.25rem;
-  border-top: 1px solid var(--vp-c-divider);
-  padding-top: 2rem;
+  margin-bottom: 1.5rem;
 }
 
-.install-section p {
-  margin: 0.6rem 0 0.4rem;
+.install-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .install-cols { grid-template-columns: 1fr; }
+}
+
+.install-col p {
+  margin: 0.4rem 0;
   color: var(--vp-c-text-2);
   font-size: 0.95rem;
 }
 
-.install-section div[class*="language-"] {
-  margin: 0.4rem 0 1.2rem;
+.install-col div[class*="language-"] {
+  margin: 0.4rem 0 0.8rem;
 }
 </style>
