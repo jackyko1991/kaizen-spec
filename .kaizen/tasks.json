@@ -400,6 +400,23 @@
       "cycle_time_s": 1500,
       "lead_time_s": 1500,
       "test_status": "passing"
+    },
+    {
+      "id": "task-024",
+      "title": "docs index: install commands on homepage",
+      "phase": "feat",
+      "status": "done",
+      "wip_column": "done",
+      "agent": "orchestrator",
+      "depends_on": [],
+      "blocked_reason": null,
+      "description": "Added Install section below VitePress hero on docs/index.md: curl one-liner + dev-mode git clone, with scoped CSS. Content visible without clicking through to getting-started.",
+      "created_at": "2026-05-15T01:05:00Z",
+      "started_at": "2026-05-15T01:05:00Z",
+      "completed_at": "2026-05-15T01:10:00Z",
+      "cycle_time_s": 300,
+      "lead_time_s": 300,
+      "test_status": "none"
     }
   ],
   "wip_limits": {

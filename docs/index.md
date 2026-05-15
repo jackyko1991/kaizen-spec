@@ -11,7 +11,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/jackyko/kaizen-spec
+      link: https://github.com/jackyko1991/kaizen-spec
 
 features:
   - title: Spec first, always
@@ -27,3 +27,53 @@ features:
   - title: Fresh-context resilient
     details: All state lives in git-tracked files. Agents can restart from zero and resume exactly where they left off.
 ---
+
+<div class="install-section">
+
+## Install
+
+**Standard** - copies the skill file into Claude Code:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/jackyko1991/kaizen-spec/master/install.sh | bash
+```
+
+Then open any project in Claude Code and type `/kaizen-spec`.
+
+**Dev mode** - symlink so edits in the repo are live everywhere immediately:
+
+```bash
+git clone https://github.com/jackyko1991/kaizen-spec
+cd kaizen-spec
+make install-dev
+```
+
+See the [full install guide](/guide/getting-started) for upgrade, uninstall, and troubleshooting.
+
+</div>
+
+<style>
+.install-section {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 3rem;
+}
+
+.install-section h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  border-top: 1px solid var(--vp-c-divider);
+  padding-top: 2rem;
+}
+
+.install-section p {
+  margin: 0.6rem 0 0.4rem;
+  color: var(--vp-c-text-2);
+  font-size: 0.95rem;
+}
+
+.install-section div[class*="language-"] {
+  margin: 0.4rem 0 1.2rem;
+}
+</style>
