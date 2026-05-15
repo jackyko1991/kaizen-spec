@@ -43,11 +43,12 @@ export default defineConfig({
     'zh-TW': {
       label: '繁體中文',
       lang: 'zh-TW',
-      // Paths below are locale-relative - VitePress prepends /zh-TW/ automatically.
+      // Nav links are absolute paths - must include the /zh-TW/ prefix explicitly.
+      // Sidebar keys are locale-relative - VitePress prepends /zh-TW/ automatically.
       themeConfig: {
         nav: [
-          { text: '指南', link: '/guide/getting-started' },
-          { text: '參考', link: '/reference/state-schema' },
+          { text: '指南', link: '/zh-TW/guide/getting-started' },
+          { text: '參考', link: '/zh-TW/reference/state-schema' },
         ],
         sidebar: {
           '/guide/': [{ text: '指南', items: [
@@ -69,11 +70,12 @@ export default defineConfig({
     'ja': {
       label: '日本語',
       lang: 'ja-JP',
-      // Paths below are locale-relative - VitePress prepends /ja/ automatically.
+      // Nav links are absolute paths - must include the /ja/ prefix explicitly.
+      // Sidebar keys are locale-relative - VitePress prepends /ja/ automatically.
       themeConfig: {
         nav: [
-          { text: 'ガイド',         link: '/guide/getting-started' },
-          { text: 'リファレンス',   link: '/reference/state-schema' },
+          { text: 'ガイド',         link: '/ja/guide/getting-started' },
+          { text: 'リファレンス',   link: '/ja/reference/state-schema' },
         ],
         sidebar: {
           '/guide/': [{ text: 'ガイド', items: [
