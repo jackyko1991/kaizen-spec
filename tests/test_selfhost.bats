@@ -432,3 +432,110 @@ JSON
 @test "o4: make install-dev target exists in Makefile" {
   grep -qE "^install-dev[[:space:]]*:" "$REPO_ROOT/Makefile"
 }
+
+# ---------------------------------------------------------------------------
+# p) Board column routing: backlog and in-progress cards appear in correct columns
+#
+# Regression for the live-update gap: new tasks added to backlog or in-progress
+# must actually show up in those columns, not silently fall into done.
+# ---------------------------------------------------------------------------
+
+@test "p1: task with wip_column=backlog renders in body-backlog column" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "col-test",
+  "tasks": [
+    {"id":"t-backlog","title":"Backlog task","phase":"feat","wip_column":"backlog",
+     "status":"backlog","test_status":"none",
+     "created_at":"2026-01-01T00:00:00Z","started_at":null,"completed_at":null}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-test-backlog.html
+  # Card must appear inside the backlog column body
+  python3 - <<'PYEOF'
+import sys
+html = open("/tmp/board-test-backlog.html").read()
+backlog_start = html.find('id="body-backlog"')
+inprogress_start = html.find('id="body-in-progress"')
+card_pos = html.find('data-task-id="t-backlog"')
+assert backlog_start != -1, "body-backlog not found"
+assert card_pos != -1, "card t-backlog not found in html"
+assert backlog_start < card_pos < inprogress_start, \
+    f"t-backlog card at {card_pos} is not between backlog({backlog_start}) and in-progress({inprogress_start})"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-test-backlog.html
+  [ $rc -eq 0 ]
+}
+
+@test "p2: task with wip_column=in-progress renders in body-in-progress column" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "col-test",
+  "tasks": [
+    {"id":"t-wip","title":"WIP task","phase":"impl","wip_column":"in-progress",
+     "status":"in-progress","test_status":"pending",
+     "created_at":"2026-01-01T00:00:00Z","started_at":"2026-01-01T01:00:00Z","completed_at":null}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-test-wip.html
+  python3 - <<'PYEOF'
+import sys
+html = open("/tmp/board-test-wip.html").read()
+inprogress_start = html.find('id="body-in-progress"')
+review_start = html.find('id="body-review"')
+card_pos = html.find('data-task-id="t-wip"')
+assert inprogress_start != -1, "body-in-progress not found"
+assert card_pos != -1, "card t-wip not found in html"
+assert inprogress_start < card_pos < review_start, \
+    f"t-wip card at {card_pos} is not between in-progress({inprogress_start}) and review({review_start})"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-test-wip.html
+  [ $rc -eq 0 ]
+}
+
+@test "p3: task with wip_column=review renders in body-review column" {
+  local tmp_tasks
+  tmp_tasks="$(mktemp)"
+  cat > "$tmp_tasks" <<'JSON'
+{
+  "feature": "col-test",
+  "tasks": [
+    {"id":"t-review","title":"Review task","phase":"impl","wip_column":"review",
+     "status":"review","test_status":"failing",
+     "created_at":"2026-01-01T00:00:00Z","started_at":"2026-01-01T01:00:00Z","completed_at":null}
+  ],
+  "wip_limits":{"in-progress":3,"review":2}
+}
+JSON
+  python3 "$REPO_ROOT/scripts/render_board.py" \
+    --tasks "$tmp_tasks" \
+    --out /tmp/board-test-review.html
+  python3 - <<'PYEOF'
+import sys
+html = open("/tmp/board-test-review.html").read()
+review_start = html.find('id="body-review"')
+done_start = html.find('id="body-done"')
+card_pos = html.find('data-task-id="t-review"')
+assert review_start != -1, "body-review not found"
+assert card_pos != -1, "card t-review not found in html"
+assert review_start < card_pos < done_start, \
+    f"t-review card at {card_pos} is not between review({review_start}) and done({done_start})"
+PYEOF
+  local rc=$?
+  rm -f "$tmp_tasks" /tmp/board-test-review.html
+  [ $rc -eq 0 ]
+}
