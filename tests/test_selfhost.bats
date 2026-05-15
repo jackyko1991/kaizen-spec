@@ -735,15 +735,16 @@ JSON
   ! grep -qP "setInterval[^}]+location\.reload" "$template"
 }
 
-@test "r5: board.html smart-poll interval is 1000ms (1 second)" {
+@test "r5: board.html smart-poll has a user-configurable rate dropdown with a sensible default" {
   local template="$REPO_ROOT/templates/board.html"
-  # setInterval callback and its delay may span multiple lines - use python to check
-  python3 - <<PYEOF
-import re
-src = open("$template").read()
-assert re.search(r'setInterval\s*\([\s\S]+?,\s*1000\s*\)', src), \
-    "setInterval with 1000ms delay not found in template"
-PYEOF
+  # Dropdown must exist with id poll-rate
+  grep -q 'id="poll-rate"' "$template"
+  # Must offer at least a 1s option
+  grep -q 'value="1000"' "$template"
+  # Must offer an Off option
+  grep -q 'value="0"' "$template"
+  # startPoll function must be wired to the dropdown change event
+  grep -q 'startPoll' "$template"
 }
 
 @test "r6: hook update-board.sh always re-renders regardless of stdin content" {

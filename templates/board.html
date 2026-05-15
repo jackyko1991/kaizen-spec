@@ -62,6 +62,13 @@
   <div class="ms-auto d-flex align-items-center gap-3">
     <span id="last-updated">Updated: {{LAST_UPDATED}}</span>
     <button class="btn btn-sm btn-outline-secondary" onclick="location.reload()" title="Refresh board">↻</button>
+    <select id="poll-rate" class="form-select form-select-sm" style="width:auto" title="Auto-refresh interval">
+      <option value="1000">1s</option>
+      <option value="5000" selected>5s</option>
+      <option value="10000">10s</option>
+      <option value="30000">30s</option>
+      <option value="0">Off</option>
+    </select>
     <button class="btn btn-sm btn-outline-secondary theme-toggle" onclick="toggleTheme()">◐ Theme</button>
   </div>
 </nav>
@@ -325,19 +332,29 @@
   });
 
   // ── Smart-poll: reload only when render_board.py has written a new board ────
-  // Fetches this file every 1s, compares the #last-updated text to what is
-  // currently displayed. Reloads only on change - no flash when idle.
+  // Poll interval is controlled by the #poll-rate dropdown. Default 5s.
+  // Reloads only when the rendered timestamp changes - no flash when idle.
   (function () {
     const current = document.getElementById('last-updated')?.textContent ?? '';
-    setInterval(() => {
-      fetch(location.href, { cache: 'no-store' })
-        .then(r => r.text())
-        .then(html => {
-          const m = html.match(/id="last-updated"[^>]*>([^<]+)</);
-          if (m && m[1].trim() !== current.trim()) location.reload();
-        })
-        .catch(() => {});
-    }, 1000);
+    const sel = document.getElementById('poll-rate');
+    let timer = null;
+
+    function startPoll(ms) {
+      clearInterval(timer);
+      if (!ms) return;
+      timer = setInterval(() => {
+        fetch(location.href, { cache: 'no-store' })
+          .then(r => r.text())
+          .then(html => {
+            const m = html.match(/id="last-updated"[^>]*>([^<]+)</);
+            if (m && m[1].trim() !== current.trim()) location.reload();
+          })
+          .catch(() => {});
+      }, ms);
+    }
+
+    sel.addEventListener('change', () => startPoll(Number(sel.value)));
+    startPoll(Number(sel.value));
   }());
 </script>
 
