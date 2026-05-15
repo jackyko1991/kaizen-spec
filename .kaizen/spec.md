@@ -1,34 +1,34 @@
-# Spec: Playwright Kanban Regression Tests
+# Spec: Stabilize kanban live update
 
-**Date:** 2026-05-14
+**Date:** 2026-05-15
 **Status:** Agreed
 
 ## Intent
-
-Write a Playwright regression test suite that verifies all four kanban board column functions work correctly. This prevents regressions when board.html is updated during future kaizen cycles - the board is the primary visual management tool for this project.
+The kanban board reloads every 5 seconds via `location.reload()`, causing a full-page flash
+even when nothing has changed. The PostToolUse hook also relies solely on grepping stdin for
+the string "tasks.json", which misses edge cases (e.g. tool inputs that touch tasks.json
+indirectly). Both issues reduce the reliability and polish of the live board experience.
 
 ## Target Output
-
-`tests/kanban.spec.ts` - Playwright test file that can be run with `npx playwright test` against a locally served `.kaizen/board.html`.
+Refactor of existing code across three files:
+- `templates/board.html` - replace blind reload with 1s smart-poll (fetch + timestamp diff)
+- `scripts/render_board.py` - write `.kaizen/.render-ts` sentinel file on every render
+- `.claude/hooks/update-board.sh` - trigger on sentinel file presence/change, not stdin grep
 
 ## In Scope
-
-1. **All 4 columns render correctly** - Backlog (待辦), In Progress (在製品), Review (審査), Done (完了): headers present, Japanese subtitle labels visible, WIP badges present, ? help badges present.
-2. **Card hover tooltips** - hovering a card shows a tooltip containing: status badge (✓ Done / ⚙ In Progress / ○ Backlog), description text, and timestamp rows (Created / Started / Completed / Cycle Time / Lead Time).
-3. **Column ? tooltip content** - hovering each ? badge shows an HTML tooltip containing the column's kaizen explanation and Japanese term.
-4. **WIP limit enforcement** - dragging a card past In Progress WIP=3 or Review WIP=2 shows the toast warning.
-5. **Theme toggle + localStorage** - clicking ◐ Theme flips `data-bs-theme` attribute and writes to localStorage.
+- 1s smart-poll: fetch board.html every 1s, extract rendered timestamp, reload only if changed
+- Sentinel file `.kaizen/.render-ts` written by render_board.py on every successful render
+- Hook updated to always re-render (sentinel approach decouples from stdin format)
+- Bats regression tests (group r): sentinel write verified, smart-poll logic documented
 
 ## Out of Scope
-
-Nothing excluded - full coverage requested.
+- No WebSocket or SSE server - stays file-based, no persistent process
+- No React or JS build step - board remains a single self-contained HTML file
+- No changes to tasks.json schema - sentinel is a separate file
+- No changes to board visual design - only reload behaviour changes
 
 ## Risks / Unknowns
-
-- board.html must be served via HTTP (not file://) for Bootstrap tooltips and SortableJS to initialise correctly - a local HTTP server fixture is required in playwright.config.ts
-- Drag-and-drop in Playwright requires `dragAndDrop` or mouse event simulation - SortableJS uses pointer events, need to verify compatibility
-- Tooltip hover timing: Bootstrap tooltips have a 150ms show delay - tests must wait for tooltip visibility
+No known risks. All changes are local file I/O and browser fetch with no external dependencies.
 
 ## Acceptance Criterion
-
 All tests in `.kaizen/test-strategy.md` pass. No manual exceptions.
